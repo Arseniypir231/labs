@@ -18,6 +18,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/vehicles', authenticate, require('./routes/vehicleRoutes'));
 app.use('/api/routes', authenticate, require('./routes/routeRoutes'));
 app.use('/api/shipments', authenticate, require('./routes/shipmentRoutes'));
+app.use('/api/export', require('./routes/exportRoutes'));
 
 // Health check
 app.get('/api/health', (req, res) => {
