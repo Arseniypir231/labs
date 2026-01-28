@@ -134,6 +134,50 @@
         "followUs": "Follow our @{{name}}",
         "post": "Instagram post {{index}}"
     },
+    "content": {
+        "postTitle": "One of Saturn's largest rings may be newer than anyone",
+        "postDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem",
+        "authorName": "Kate Willems",
+        "authorRole": "Food & cooking bloger",
+        "authorDescription": "Hi, I'm Sonia. Cooking is the way I express my creative side to the world. Welcome to my Kitchen Corner on…",
+        "date": "June 6, 2019",
+        "author": "Rickie Baroch"
+    },
+    "categories": {
+        "TOURISM": "TOURISM",
+        "SPORT": "SPORT",
+        "FASHION": "FASHION",
+        "CLOTHES": "CLOTHES",
+        "SUMMER": "SUMMER",
+        "AUTUMN": "AUTUMN",
+        "jeans": "Jeans",
+        "city": "City",
+        "photography": "Photography",
+        "Fashion": "Fashion",
+        "Style & clothes": "Style & clothes",
+        "Minimalism": "Minimalism",
+        "Black & White": "Black & White",
+        "Modern clothes": "Modern clothes"
+    },
+    "tags": {
+        "Business": "Business",
+        "Freelance": "Freelance",
+        "Money": "Money",
+        "Experience": "Experience",
+        "Lifestyle": "Lifestyle",
+        "SEO": "SEO",
+        "Wordpress": "Wordpress",
+        "Marketing": "Marketing",
+        "UX": "UX",
+        "Modern": "Modern",
+        "Success": "Success",
+        "Nature": "Nature"
+    },
+    "social": {
+        "likes": "likes",
+        "followers": "followers",
+        "subscribers": "subscribers"
+    },
     "validation": {
         "titleRequired": "Title is required",
         "titleMaxLength": "Title must be less than 200 characters",

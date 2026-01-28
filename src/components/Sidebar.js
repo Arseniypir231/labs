@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, ListGroup, Badge, Image, Alert } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { translateCategory, translateContent, translateTag, translateSocialLabel } from '../utils/translations';
 import './Sidebar.css';
 
 const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
@@ -24,9 +25,9 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                             fluid
                         />
                         <div className="sidebar-author-text">
-                            <h3 className="author-name">{author.name}</h3>
-                            <h4 className="author-role">{author.role}</h4>
-                            <p className="author-description">{author.description}</p>
+                            <h3 className="author-name">{translateContent(t, 'authorName', author.name)}</h3>
+                            <h4 className="author-role">{translateContent(t, 'authorRole', author.role)}</h4>
+                            <p className="author-description">{translateContent(t, 'authorDescription', author.description)}</p>
                             <hr className="sidebar-divider" />
                             <Alert.Link href="#" className="continue-reading">
                                 {t('sidebar.continueReading')}
@@ -62,12 +63,14 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                                             />
                                             <div className="featured-post-text">
                                                 <Badge bg="secondary" className="featured-category">
-                                                    {post.category}
+                                                    {translateCategory(t, post.category)}
                                                 </Badge>
-                                                <h4 className="featured-title">{post.title}</h4>
+                                                <h4 className="featured-title">
+                                                    {post.titleKey ? t(`content.${post.titleKey}`, { defaultValue: post.title }) : (post.title || translateContent(t, 'postTitle'))}
+                                                </h4>
                                                 <div className="featured-meta">
-                                                    <span>{post.date}</span>
-                                                    <span className="meta-label">{t('hero.by')}</span> {post.author}
+                                                    <span>{post.dateKey ? t(`content.${post.dateKey}`, { defaultValue: post.date }) : (post.date || translateContent(t, 'date'))}</span>
+                                                    <span className="meta-label">{t('hero.by')}</span> {post.authorKey ? t(`content.${post.authorKey}`, { defaultValue: post.author }) : (post.author || translateContent(t, 'author'))}
                                                 </div>
                                             </div>
                                         </div>
@@ -97,7 +100,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                                 <OverlayTrigger key={index} placement="right" overlay={tooltip}>
                                     <ListGroup.Item className="category-item">
                                         <div className="category-content">
-                                            <span className="category-name">{category.name}</span>
+                                            <span className="category-name">{translateCategory(t, category.name)}</span>
                                             <Badge bg="secondary" className="category-count">
                                                 {category.count}
                                             </Badge>
@@ -135,7 +138,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                                                 fluid
                                             />
                                             <span className="social-text">
-                                                {social.count} {social.label}
+                                                {social.count} {translateSocialLabel(t, social.label)}
                                             </span>
                                         </div>
                                     </ListGroup.Item>
@@ -163,7 +166,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                             return (
                                 <OverlayTrigger key={index} placement="top" overlay={tooltip}>
                                     <Badge bg="light" text="dark" className="tag-badge">
-                                        {tag}
+                                        {translateTag(t, tag)}
                                     </Badge>
                                 </OverlayTrigger>
                             );

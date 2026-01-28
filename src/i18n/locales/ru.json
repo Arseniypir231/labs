@@ -134,6 +134,50 @@
         "followUs": "Подписывайтесь на наш @{{name}}",
         "post": "Пост Instagram {{index}}"
     },
+    "content": {
+        "postTitle": "Одно из крупнейших колец Сатурна может быть новее, чем кто-либо думал",
+        "postDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem",
+        "authorName": "Кейт Виллемс",
+        "authorRole": "Блогер о еде и кулинарии",
+        "authorDescription": "Привет, я Соня. Кулинария - это способ выразить мою творческую сторону миру. Добро пожаловать в мой Кухонный Уголок на…",
+        "date": "6 июня 2019",
+        "author": "Рики Барох"
+    },
+    "categories": {
+        "TOURISM": "ТУРИЗМ",
+        "SPORT": "СПОРТ",
+        "FASHION": "МОДА",
+        "CLOTHES": "ОДЕЖДА",
+        "SUMMER": "ЛЕТО",
+        "AUTUMN": "ОСЕНЬ",
+        "jeans": "Джинсы",
+        "city": "Город",
+        "photography": "Фотография",
+        "Fashion": "Мода",
+        "Style & clothes": "Стиль и одежда",
+        "Minimalism": "Минимализм",
+        "Black & White": "Черное и белое",
+        "Modern clothes": "Современная одежда"
+    },
+    "tags": {
+        "Business": "Бизнес",
+        "Freelance": "Фриланс",
+        "Money": "Деньги",
+        "Experience": "Опыт",
+        "Lifestyle": "Образ жизни",
+        "SEO": "SEO",
+        "Wordpress": "Wordpress",
+        "Marketing": "Маркетинг",
+        "UX": "UX",
+        "Modern": "Современный",
+        "Success": "Успех",
+        "Nature": "Природа"
+    },
+    "social": {
+        "likes": "лайков",
+        "followers": "подписчиков",
+        "subscribers": "подписчиков"
+    },
     "validation": {
         "titleRequired": "Заголовок обязателен",
         "titleMaxLength": "Заголовок должен быть менее 200 символов",

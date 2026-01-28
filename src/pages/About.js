@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, Image, ListGroup } from 'react-bootstrap';
 import { FaUsers, FaAward, FaRocket, FaHeart } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { translateContent } from '../utils/translations';
 import authorData from '../data/author.json';
 import './About.css';
 
@@ -57,13 +58,13 @@ const About = () => {
                         <Card.Body className="text-center">
                             <Image 
                                 src={authorData.image} 
-                                alt={authorData.name}
+                                alt={translateContent(t, 'authorName', authorData.name)}
                                 roundedCircle
                                 className="author-main-image mb-3"
                             />
-                            <h2 className="author-name">{authorData.name}</h2>
-                            <h4 className="author-role text-muted mb-3">{authorData.role}</h4>
-                            <p className="author-description">{authorData.description}</p>
+                            <h2 className="author-name">{translateContent(t, 'authorName', authorData.name)}</h2>
+                            <h4 className="author-role text-muted mb-3">{translateContent(t, 'authorRole', authorData.role)}</h4>
+                            <p className="author-description">{translateContent(t, 'authorDescription', authorData.description)}</p>
                         </Card.Body>
                     </Card>
                 </Col>
