@@ -1,6 +1,5 @@
 const excelExportService = require('../services/excelExportService');
 const pdfExportService = require('../services/pdfExportService');
-const { authenticate, authorize } = require('../middleware/auth');
 
 // Экспорт отчета по грузоперевозкам в Excel
 exports.exportShipmentsExcel = async (req, res) => {
