@@ -1,0 +1,52 @@
+.posts-container {
+    width: 100%;
+    max-width: 48.125rem;
+    margin: 0 auto;
+    padding-top: 3.75rem;
+}
+
+.post-row-1,
+.post-row-3 {
+    margin-top: 0;
+}
+
+.post-row-2 {
+    margin-top: 1.875rem;
+}
+
+@media (max-width: 992px) {
+    .posts-container {
+        max-width: 100%;
+        padding-top: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .posts-container {
+        padding-top: 2rem;
+    }
+    
+    .post-row-2 {
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts-container {
+        padding-top: 1.5rem;
+    }
+    
+    .post-row-2 {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .posts-container {
+        padding-top: 1rem;
+    }
+    
+    .post-row-2 {
+        margin-top: 0.75rem;
+    }
+}

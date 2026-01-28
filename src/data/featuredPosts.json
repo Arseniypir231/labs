@@ -1,0 +1,26 @@
+[
+  {
+    "image": "/assets/jeans_feature.png",
+    "alt": "jeans_feature",
+    "category": "jeans",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/city_feature.png",
+    "alt": "city_feature",
+    "category": "city",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/photography_feature.png",
+    "alt": "photography_feature",
+    "category": "photography",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  }
+]
