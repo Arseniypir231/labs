@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
-const { Vehicle, Route, Shipment } = require('./models');
+const { Vehicle, Route, Shipment, User } = require('./models');
+const { authenticate, authorize } = require('./middleware/auth');
 
 const app = express();
 
@@ -10,10 +11,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/vehicles', require('./routes/vehicleRoutes'));
-app.use('/api/routes', require('./routes/routeRoutes'));
-app.use('/api/shipments', require('./routes/shipmentRoutes'));
+// Public routes (авторизация)
+app.use('/api/auth', require('./routes/authRoutes'));
+
+// Protected routes (требуют аутентификации)
+app.use('/api/vehicles', authenticate, require('./routes/vehicleRoutes'));
+app.use('/api/routes', authenticate, require('./routes/routeRoutes'));
+app.use('/api/shipments', authenticate, require('./routes/shipmentRoutes'));
 
 // Health check
 app.get('/api/health', (req, res) => {

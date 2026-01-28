@@ -17,6 +17,8 @@ function Routes() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, loading, error, pagination, filters } = useSelector(state => state.routes);
+  const { user } = useSelector(state => state.auth);
+  const canEdit = user?.role === 'admin' || user?.role === 'manager';
   
   const [showModal, setShowModal] = useState(false);
   const [editingRoute, setEditingRoute] = useState(null);
@@ -134,9 +136,11 @@ function Routes() {
       <div className="card">
         <div className="card-header">
           <h2>Маршруты</h2>
-          <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
-            Добавить маршрут
-          </button>
+          {canEdit && (
+            <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
+              Добавить маршрут
+            </button>
+          )}
         </div>
 
         <div className="filters">
@@ -205,12 +209,16 @@ function Routes() {
                         <button className="btn btn-success" onClick={() => handleViewDetails(route.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
                           Подробнее
                         </button>
-                        <button className="btn btn-secondary" onClick={() => handleEdit(route)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                          Редактировать
-                        </button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(route.id)}>
-                          Удалить
-                        </button>
+                        {canEdit && (
+                          <>
+                            <button className="btn btn-secondary" onClick={() => handleEdit(route)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                              Редактировать
+                            </button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(route.id)}>
+                              Удалить
+                            </button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

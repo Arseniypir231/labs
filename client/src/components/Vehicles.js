@@ -17,6 +17,8 @@ function Vehicles() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, loading, error, pagination, filters } = useSelector(state => state.vehicles);
+  const { user } = useSelector(state => state.auth);
+  const canEdit = user?.role === 'admin' || user?.role === 'manager';
   
   const [showModal, setShowModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
@@ -137,9 +139,11 @@ function Vehicles() {
       <div className="card">
         <div className="card-header">
           <h2>Транспортные средства</h2>
-          <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
-            Добавить транспортное средство
-          </button>
+          {canEdit && (
+            <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
+              Добавить транспортное средство
+            </button>
+          )}
         </div>
 
         <div className="filters">
@@ -222,12 +226,16 @@ function Vehicles() {
                         <button className="btn btn-success" onClick={() => handleViewDetails(vehicle.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
                           Подробнее
                         </button>
-                        <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                          Редактировать
-                        </button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
-                          Удалить
-                        </button>
+                        {canEdit && (
+                          <>
+                            <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                              Редактировать
+                            </button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
+                              Удалить
+                            </button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

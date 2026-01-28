@@ -21,6 +21,8 @@ function Shipments() {
   const { items, loading, error, pagination, filters } = useSelector(state => state.shipments);
   const { items: vehicles } = useSelector(state => state.vehicles);
   const { items: routes } = useSelector(state => state.routes);
+  const { user } = useSelector(state => state.auth);
+  const canEdit = user?.role === 'admin' || user?.role === 'manager';
   
   const [showModal, setShowModal] = useState(false);
   const [editingShipment, setEditingShipment] = useState(null);
@@ -153,9 +155,11 @@ function Shipments() {
       <div className="card">
         <div className="card-header">
           <h2>Грузоперевозки</h2>
-          <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
-            Добавить грузоперевозку
-          </button>
+          {canEdit && (
+            <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
+              Добавить грузоперевозку
+            </button>
+          )}
         </div>
 
         <div className="filters">
@@ -227,12 +231,16 @@ function Shipments() {
                         <button className="btn btn-success" onClick={() => handleViewDetails(shipment.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
                           Подробнее
                         </button>
-                        <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                          Редактировать
-                        </button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
-                          Удалить
-                        </button>
+                        {canEdit && (
+                          <>
+                            <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                              Редактировать
+                            </button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
+                              Удалить
+                            </button>
+                          </>
+                        )}
                       </td>
                     </tr>
                   ))}

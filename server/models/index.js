@@ -1,6 +1,7 @@
 const Vehicle = require('./Vehicle');
 const Route = require('./Route');
 const Shipment = require('./Shipment');
+const User = require('./User');
 
 // Определение связей между моделями
 Shipment.belongsTo(Vehicle, { foreignKey: 'vehicleId', as: 'vehicle' });
@@ -12,5 +13,6 @@ Route.hasMany(Shipment, { foreignKey: 'routeId', as: 'shipments' });
 module.exports = {
   Vehicle,
   Route,
-  Shipment
+  Shipment,
+  User
 };
