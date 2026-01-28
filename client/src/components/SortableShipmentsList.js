@@ -82,6 +82,7 @@ function SortableShipmentItem({ shipment, onViewDetails, onEdit, onDelete, canEd
         <div
           {...attributes}
           {...listeners}
+          data-sortable-handle
           style={{
             cursor: 'grab',
             display: 'flex',
@@ -91,8 +92,8 @@ function SortableShipmentItem({ shipment, onViewDetails, onEdit, onDelete, canEd
           }}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <span style={{ fontSize: '18px' }}>⋮⋮</span>
-          <span style={{ fontSize: '12px', color: '#666' }}>Перетащите</span>
+          <span style={{ fontSize: '18px', lineHeight: '1' }}>⋮⋮</span>
+          <span style={{ fontSize: '11px', color: '#999' }}>Перетащите</span>
         </div>
       </td>
       <td>{shipment.id}</td>

@@ -250,10 +250,11 @@ code {
 .dragging {
   opacity: 0.5;
   background-color: #f0f0f0;
+  transform: scale(0.98);
 }
 
 .data-table tbody tr {
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .data-table tbody tr:hover {
@@ -265,6 +266,26 @@ code {
 }
 
 .data-table tbody tr[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* Стили для индикатора перетаскивания */
+[data-sortable-handle] {
+  cursor: grab;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  color: #666;
+  transition: color 0.2s;
+}
+
+[data-sortable-handle]:hover {
+  color: #3498db;
+}
+
+[data-sortable-handle]:active {
   cursor: grabbing;
 }
 
