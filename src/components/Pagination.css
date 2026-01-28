@@ -16,6 +16,18 @@
     width: 0.5rem;
     height: 0.75rem;
     cursor: pointer;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.left_path:hover,
+.right_path:hover {
+    transform: scale(1.2);
+    opacity: 0.7;
+}
+
+.left_path:active,
+.right_path:active {
+    transform: scale(0.9);
 }
 
 .older_post {
@@ -51,6 +63,24 @@
     font-weight: 400;
     line-height: 1rem;
     cursor: pointer;
+    transition: all var(--transition-base);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.numbers h4:hover {
+    background: #C9A96E;
+    color: white;
+    transform: scale(1.1);
+}
+
+.next_post {
+    transition: color var(--transition-base), transform var(--transition-fast);
+}
+
+.next_post:hover {
+    color: #C9A96E;
+    transform: translateX(0.25rem);
 }
 
 @media (max-width: 768px) {

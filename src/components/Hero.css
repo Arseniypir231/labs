@@ -135,11 +135,30 @@
 
 @media (max-width: 320px) {
     .hero {
-        height: 20rem;
+        height: 18rem;
+    }
+
+    .heroText {
+        width: 95%;
+        bottom: 0.75rem;
+        padding: 0 0.5rem;
     }
 
     .heroText h1 {
-        font-size: 1.25rem;
-        line-height: 1.75rem;
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+    }
+
+    .heroText h3 {
+        font-size: 0.7rem;
+    }
+
+    .h2_container {
+        gap: 0.375rem;
+        margin-top: 0.5rem;
+    }
+
+    .h2_container h2 {
+        font-size: 0.65rem;
     }
 }

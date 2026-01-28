@@ -27,6 +27,51 @@
     color: #171717;
     font-size: 0.875rem;
     cursor: pointer;
+    transition: transform var(--transition-fast), color var(--transition-base);
+    position: relative;
+}
+
+.fashion-header nav ul li::after {
+    content: '';
+    position: absolute;
+    bottom: -0.25rem;
+    left: 0;
+    width: 0;
+    height: 0.125rem;
+    background: #C9A96E;
+    transition: width var(--transition-base);
+}
+
+.fashion-header nav ul li:hover::after {
+    width: 100%;
+}
+
+.fashion-header nav ul li a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+.fashion-header nav ul li a:hover {
+    color: #C9A96E;
+    transform: translateY(-0.125rem);
+}
+
+.fashion-header img {
+    transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.fashion-header img:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.fashion-header nav ul li a.active {
+    color: #C9A96E;
+}
+
+.fashion-header a {
+    text-decoration: none;
 }
 
 .fashion-header .homeSpan {
