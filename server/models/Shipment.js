@@ -92,6 +92,15 @@ const Shipment = sequelize.define('Shipment', {
         }
       }
     }
+  },
+  photoUrl: {
+    type: DataTypes.STRING(500),
+    allowNull: true,
+    validate: {
+      isUrl: {
+        msg: 'URL фотографии должен быть валидным URL'
+      }
+    }
   }
 }, {
   tableName: 'shipments',

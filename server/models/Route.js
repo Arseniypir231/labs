@@ -75,6 +75,15 @@ const Route = sequelize.define('Route', {
         msg: 'Статус должен быть: active, inactive или archived'
       }
     }
+  },
+  photoUrl: {
+    type: DataTypes.STRING(500),
+    allowNull: true,
+    validate: {
+      isUrl: {
+        msg: 'URL фотографии должен быть валидным URL'
+      }
+    }
   }
 }, {
   tableName: 'routes',

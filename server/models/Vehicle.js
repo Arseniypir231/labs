@@ -93,6 +93,15 @@ const Vehicle = sequelize.define('Vehicle', {
         msg: 'Год выпуска не может быть в будущем'
       }
     }
+  },
+  photoUrl: {
+    type: DataTypes.STRING(500),
+    allowNull: true,
+    validate: {
+      isUrl: {
+        msg: 'URL фотографии должен быть валидным URL'
+      }
+    }
   }
 }, {
   tableName: 'vehicles',
