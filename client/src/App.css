@@ -71,16 +71,21 @@
 /* Стили для react-select */
 .react-select__control {
   min-height: 38px;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd !important;
+  border-radius: 4px;
 }
 
 .react-select__control--is-focused {
-  border-color: #3498db;
-  box-shadow: 0 0 0 1px #3498db;
+  border-color: #3498db !important;
+  box-shadow: 0 0 0 1px #3498db !important;
 }
 
 .react-select__control.error {
-  border-color: #e74c3c;
+  border-color: #e74c3c !important;
+}
+
+.react-select__menu {
+  z-index: 9999;
 }
 
 /* Wizard стили */
