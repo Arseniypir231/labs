@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Demo - Posts Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .section h2 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        button.danger {
+            background: #dc3545;
+        }
+        
+        button.danger:hover {
+            background: #c82333;
+        }
+        
+        button.success {
+            background: #28a745;
+        }
+        
+        button.success:hover {
+            background: #218838;
+        }
+        
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .posts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .post-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .post-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .post-card .category {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .post-card .meta {
+            color: #666;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        
+        .post-card .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .post-card button {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .search-results {
+            margin-top: 20px;
+        }
+        
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Posts Management API Demo</h1>
+        
+        <!-- Сообщения -->
+        <div id="messages"></div>
+        
+        <!-- Секция: Получение данных -->
+        <div class="section">
+            <h2>1. Получить данные (GET)</h2>
+            <div class="controls">
+                <button onclick="loadAllPosts()">Загрузить все посты</button>
+                <button onclick="loadPostById()">Загрузить пост по ID</button>
+                <input type="number" id="postIdInput" placeholder="ID поста" value="1" style="width: 150px;">
+            </div>
+            <div id="postsContainer" class="posts-list"></div>
+        </div>
+        
+        <!-- Секция: Поиск (POST) -->
+        <div class="section">
+            <h2>2. Поиск постов (POST)</h2>
+            <div class="form-group">
+                <label>Поисковый запрос:</label>
+                <input type="text" id="searchQuery" placeholder="Введите запрос...">
+            </div>
+            <div class="form-group">
+                <label>Категория:</label>
+                <select id="searchCategory">
+                    <option value="">Все категории</option>
+                    <option value="TOURISM">TOURISM</option>
+                    <option value="SPORT">SPORT</option>
+                    <option value="FASHION">FASHION</option>
+                    <option value="CLOTHES">CLOTHES</option>
+                    <option value="SUMMER">SUMMER</option>
+                    <option value="AUTUMN">AUTUMN</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Автор:</label>
+                <input type="text" id="searchAuthor" placeholder="Имя автора...">
+            </div>
+            <button onclick="searchPosts()">🔍 Найти посты</button>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+        
+        <!-- Секция: Создание поста (POST) -->
+        <div class="section">
+            <h2>3. Создать новый пост (POST)</h2>
+            <div class="form-group">
+                <label>Изображение (URL):</label>
+                <input type="text" id="newPostImage" placeholder="/assets/image.jpg" required>
+            </div>
+            <div class="form-group">
+                <label>Категория:</label>
+                <select id="newPostCategory" required>
+                    <option value="">Выберите категорию</option>
+                    <option value="TOURISM">TOURISM</option>
+                    <option value="SPORT">SPORT</option>
+                    <option value="FASHION">FASHION</option>
+                    <option value="CLOTHES">CLOTHES</option>
+                    <option value="SUMMER">SUMMER</option>
+                    <option value="AUTUMN">AUTUMN</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Заголовок:</label>
+                <input type="text" id="newPostTitle" placeholder="Заголовок поста" required>
+            </div>
+            <div class="form-group">
+                <label>Дата:</label>
+                <input type="text" id="newPostDate" placeholder="June 6, 2019" required>
+            </div>
+            <div class="form-group">
+                <label>Автор:</label>
+                <input type="text" id="newPostAuthor" placeholder="Имя автора" required>
+            </div>
+            <div class="form-group">
+                <label>Комментарии (опционально):</label>
+                <input type="number" id="newPostComments" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label>Описание (опционально):</label>
+                <textarea id="newPostDescription" placeholder="Описание поста..."></textarea>
+            </div>
+            <button class="success" onclick="createPost()">➕ Создать пост</button>
+        </div>
+        
+        <!-- Секция: Удаление поста (DELETE) -->
+        <div class="section">
+            <h2>4. Удалить пост (DELETE)</h2>
+            <div class="controls">
+                <input type="number" id="deletePostId" placeholder="ID поста для удаления" style="width: 250px;">
+                <button class="danger" onclick="deletePost()">🗑️ Удалить пост</button>
+            </div>
+        </div>
+        
+        <!-- Секция: Скачать данные -->
+        <div class="section">
+            <h2>5. Скачать данные в разных форматах</h2>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="downloadFormat" value="json" checked>
+                    JSON
+                </label>
+                <label>
+                    <input type="radio" name="downloadFormat" value="xml">
+                    XML
+                </label>
+                <label>
+                    <input type="radio" name="downloadFormat" value="html">
+                    HTML
+                </label>
+            </div>
+            <div class="download-buttons">
+                <button onclick="downloadData('json')">📥 Скачать JSON</button>
+                <button onclick="downloadData('xml')">📥 Скачать XML</button>
+                <button onclick="downloadData('html')">📥 Скачать HTML</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/api-demo.js"></script>
+</body>
+</html>

@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Статические файлы (React build)
 app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 
 // API Routes
@@ -21,10 +22,17 @@ app.use('/api/posts', postsRouter);
 app.use('/api/data', dataRouter);
 
 /**
- * GET / - Возвращает веб-страницу с фронтенд-кодом
+ * GET / - Возвращает веб-страницу с фронтенд-кодом (React)
  */
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
+/**
+ * GET /api-demo.html - Возвращает HTML страницу для демонстрации API
+ */
+app.get('/api-demo.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/api-demo.html'));
 });
 
 // Обработка ошибок
