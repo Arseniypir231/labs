@@ -266,13 +266,13 @@ function Routes() {
 
       {/* Старая форма (скрыта) */}
       {false && (
-      <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <div className="modal-header">
-            <h2>{editingRoute ? 'Редактировать' : 'Добавить'} маршрут</h2>
-            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-          </div>
-          <form onSubmit={handleSubmit}>
+        <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{editingRoute ? 'Редактировать' : 'Добавить'} маршрут</h2>
+              <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+            </div>
+            <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Название *</label>
               <input
@@ -346,13 +346,14 @@ function Routes() {
               />
               {formErrors.photoUrl && <div className="form-error">{formErrors.photoUrl}</div>}
             </div>
-            <button type="submit" className="btn btn-primary">Сохранить</button>
-            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
-              Отмена
-            </button>
-          </form>
+              <button type="submit" className="btn btn-primary">Сохранить</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
+                Отмена
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

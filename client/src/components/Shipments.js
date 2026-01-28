@@ -359,13 +359,13 @@ function Shipments() {
 
       {/* Старая форма (скрыта, можно удалить после тестирования) */}
       {false && (
-      <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <div className="modal-header">
-            <h2>{editingShipment ? 'Редактировать' : 'Добавить'} грузоперевозку</h2>
-            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-          </div>
-          <form onSubmit={handleSubmit}>
+        <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>{editingShipment ? 'Редактировать' : 'Добавить'} грузоперевозку</h2>
+              <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+            </div>
+            <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Транспортное средство *</label>
               <select
@@ -461,13 +461,14 @@ function Shipments() {
               />
               {formErrors.photoUrl && <div className="form-error">{formErrors.photoUrl}</div>}
             </div>
-            <button type="submit" className="btn btn-primary">Сохранить</button>
-            <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
-              Отмена
-            </button>
-          </form>
+              <button type="submit" className="btn btn-primary">Сохранить</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
+                Отмена
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Модальное окно экспорта */}
       <div className={`modal ${showExportModal ? 'show' : ''}`} onClick={() => setShowExportModal(false)}>
