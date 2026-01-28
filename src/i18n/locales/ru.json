@@ -14,7 +14,8 @@
         "sort": "Сортировка",
         "selectAll": "Выбрать все",
         "deselectAll": "Снять выделение",
-        "selected": "выбрано"
+        "selected": "выбрано",
+        "reset": "Сбросить"
     },
     "navigation": {
         "home": "Главная",

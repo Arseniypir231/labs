@@ -94,10 +94,12 @@ const Favorites = () => {
 };
 
 const FavoritesList = ({ items, onRemove, onView }) => {
+    const { t } = useTranslation();
+    
     if (items.length === 0) {
         return (
             <Alert variant="secondary" className="text-center">
-                В этой категории нет избранных элементов
+                {t('favorites.empty')}
             </Alert>
         );
     }

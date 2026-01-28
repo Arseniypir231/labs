@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import './PostCard.css';
 
 const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
+    const { t } = useTranslation();
     const { toggleFavorite, isFavorite } = useApp();
     const favorite = isFavorite(post.id, post.type || 'post');
     
