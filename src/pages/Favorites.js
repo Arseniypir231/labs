@@ -137,8 +137,8 @@ const FavoritesList = ({ items, onRemove, onView }) => {
                         </div>
                         <Card.Body>
                             <Badge bg="secondary" className="mb-2">
-                                {item.type === 'post' ? 'Пост' : 
-                                 item.type === 'article' ? 'Статья' : 'Рецепт'}
+                                {item.type === 'post' ? t('posts.title') : 
+                                 item.type === 'article' ? t('navigation.article') : t('navigation.recipes')}
                             </Badge>
                             <Card.Title className="favorite-title">{item.title}</Card.Title>
                             <Card.Text className="favorite-meta">
