@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Image, Badge, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { translateCategory, translateContent } from '../utils/translations';
+import { translateCategory, translatePostTitle, translateDate, translateAuthor, translateDescription } from '../utils/translations';
 import './PostDetailModal.css';
 
 const PostDetailModal = ({ isOpen, onClose, post }) => {
@@ -36,12 +36,12 @@ const PostDetailModal = ({ isOpen, onClose, post }) => {
                         {translateCategory(t, post.category)}
                     </Badge>
                     <h2 className="post-detail-title">
-                        {post.titleKey ? t(`content.${post.titleKey}`, { defaultValue: post.title }) : (post.title || translateContent(t, 'postTitle'))}
+                        {translatePostTitle(t, post.title)}
                     </h2>
                     <div className="post-detail-meta mb-3">
-                        <span className="meta-item">{post.dateKey ? t(`content.${post.dateKey}`, { defaultValue: post.date }) : (post.date || translateContent(t, 'date'))}</span>
+                        <span className="meta-item">{translateDate(t, post.date)}</span>
                         <span className="meta-item">
-                            <span className="meta-label">{t('hero.by')}</span> {post.authorKey ? t(`content.${post.authorKey}`, { defaultValue: post.author }) : (post.author || translateContent(t, 'author'))}
+                            <span className="meta-label">{t('hero.by')}</span> {translateAuthor(t, post.author)}
                         </span>
                         {post.comments && (
                             <span className="meta-item comments">{post.comments} {t('hero.comments')}</span>
@@ -49,12 +49,12 @@ const PostDetailModal = ({ isOpen, onClose, post }) => {
                     </div>
                     {post.description && (
                         <p className="post-detail-description">
-                            {post.descriptionKey ? t(`content.${post.descriptionKey}`, { defaultValue: post.description }) : post.description}
+                            {translateDescription(t, post.description)}
                         </p>
                     )}
                     {!post.description && (
                         <p className="post-detail-description">
-                            {translateContent(t, 'postDescription')}
+                            {translateDescription(t, null)}
                         </p>
                     )}
                 </div>

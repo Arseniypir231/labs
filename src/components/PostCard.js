@@ -5,7 +5,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { toast } from 'react-toastify';
-import { translateCategory, translateContent } from '../utils/translations';
+import { translateCategory, translatePostTitle, translateDate, translateAuthor, translateDescription } from '../utils/translations';
 import './PostCard.css';
 
 const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
@@ -82,12 +82,12 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
                         </OverlayTrigger>
                     </div>
                     <Card.Title className="post-card-title">
-                        {post.titleKey ? t(`content.${post.titleKey}`, { defaultValue: post.title }) : (post.title || translateContent(t, 'postTitle'))}
+                        {translatePostTitle(t, post.title)}
                     </Card.Title>
                     <Card.Text as="div" className="post-meta">
-                        <span className="meta-item">{post.dateKey ? t(`content.${post.dateKey}`, { defaultValue: post.date }) : (post.date || translateContent(t, 'date'))}</span>
+                        <span className="meta-item">{translateDate(t, post.date)}</span>
                         <span className="meta-item">
-                            <span className="meta-label">{t('hero.by')}</span> {post.authorKey ? t(`content.${post.authorKey}`, { defaultValue: post.author }) : (post.author || translateContent(t, 'author'))}
+                            <span className="meta-label">{t('hero.by')}</span> {translateAuthor(t, post.author)}
                         </span>
                         {post.comments && (
                             <span className="meta-item comments">{post.comments} {t('hero.comments')}</span>
@@ -95,7 +95,7 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
                     </Card.Text>
                     {post.description && (
                         <Card.Text className="post-description">
-                            {post.descriptionKey ? t(`content.${post.descriptionKey}`, { defaultValue: post.description }) : post.description}
+                            {translateDescription(t, post.description)}
                         </Card.Text>
                     )}
                 </Card.Body>

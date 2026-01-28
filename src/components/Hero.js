@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Image, Badge } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { translateCategory, translateContent } from '../utils/translations';
+import { translateCategory, translatePostTitle, translateDate, translateAuthor } from '../utils/translations';
 import './Hero.css';
 
 const Hero = ({ heroData }) => {
@@ -27,12 +27,12 @@ const Hero = ({ heroData }) => {
                                 {translateCategory(t, heroData.category)}
                             </Badge>
                             <h1 className="hero-title">
-                                {heroData.titleKey ? t(`content.${heroData.titleKey}`, { defaultValue: heroData.title }) : (heroData.title || translateContent(t, 'postTitle'))}
+                                {translatePostTitle(t, heroData.title)}
                             </h1>
                             <div className="hero-meta">
-                                <span className="hero-meta-item">{heroData.dateKey ? t(`content.${heroData.dateKey}`, { defaultValue: heroData.date }) : (heroData.date || translateContent(t, 'date'))}</span>
+                                <span className="hero-meta-item">{translateDate(t, heroData.date)}</span>
                                 <span className="hero-meta-item">
-                                    <span className="meta-label">{t('hero.by')}</span> {heroData.authorKey ? t(`content.${heroData.authorKey}`, { defaultValue: heroData.author }) : (heroData.author || translateContent(t, 'author'))}
+                                    <span className="meta-label">{t('hero.by')}</span> {translateAuthor(t, heroData.author)}
                                 </span>
                                 <span className="hero-meta-item">{heroData.comments} {t('hero.comments')}</span>
                             </div>

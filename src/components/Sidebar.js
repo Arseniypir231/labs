@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, ListGroup, Badge, Image, Alert } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { translateCategory, translateContent, translateTag, translateSocialLabel } from '../utils/translations';
+import { translateCategory, translateContent, translateTag, translateSocialLabel, translatePostTitle, translateDate, translateAuthor } from '../utils/translations';
 import './Sidebar.css';
 
 const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
@@ -66,11 +66,11 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                                                     {translateCategory(t, post.category)}
                                                 </Badge>
                                                 <h4 className="featured-title">
-                                                    {post.titleKey ? t(`content.${post.titleKey}`, { defaultValue: post.title }) : (post.title || translateContent(t, 'postTitle'))}
+                                                    {translatePostTitle(t, post.title)}
                                                 </h4>
                                                 <div className="featured-meta">
-                                                    <span>{post.dateKey ? t(`content.${post.dateKey}`, { defaultValue: post.date }) : (post.date || translateContent(t, 'date'))}</span>
-                                                    <span className="meta-label">{t('hero.by')}</span> {post.authorKey ? t(`content.${post.authorKey}`, { defaultValue: post.author }) : (post.author || translateContent(t, 'author'))}
+                                                    <span>{translateDate(t, post.date)}</span>
+                                                    <span className="meta-label">{t('hero.by')}</span> {translateAuthor(t, post.author)}
                                                 </div>
                                             </div>
                                         </div>
