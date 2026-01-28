@@ -1,18 +1,21 @@
 import React from 'react';
 import { Pagination as BSPagination, Container, Image } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './Pagination.css';
 
 const Pagination = () => {
+    const { t } = useTranslation();
+    
     const tooltipPrev = (
         <Tooltip id="pagination-prev-tooltip">
-            Go to older posts
+            {t('pagination.goToOlder')}
         </Tooltip>
     );
     
     const tooltipNext = (
         <Tooltip id="pagination-next-tooltip">
-            Go to newer posts
+            {t('pagination.goToNewer')}
         </Tooltip>
     );
     
@@ -25,7 +28,7 @@ const Pagination = () => {
                     </BSPagination.Prev>
                 </OverlayTrigger>
                 
-                <span className="pagination-label">OLDER POST</span>
+                <span className="pagination-label">{t('pagination.olderPost')}</span>
                 
                 <BSPagination.Item active>1</BSPagination.Item>
                 <BSPagination.Item>2</BSPagination.Item>
@@ -33,7 +36,7 @@ const Pagination = () => {
                 <BSPagination.Ellipsis />
                 <BSPagination.Item>8</BSPagination.Item>
                 
-                <span className="pagination-label">NEXT POST</span>
+                <span className="pagination-label">{t('pagination.nextPost')}</span>
                 
                 <OverlayTrigger placement="top" overlay={tooltipNext}>
                     <BSPagination.Next className="pagination-nav">

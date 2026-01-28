@@ -124,6 +124,16 @@
         "goToPage": "Go to {{page}} page",
         "socialMedia": "Social media {{index}}"
     },
+    "pagination": {
+        "olderPost": "OLDER POST",
+        "nextPost": "NEXT POST",
+        "goToOlder": "Go to older posts",
+        "goToNewer": "Go to newer posts"
+    },
+    "instagram": {
+        "followUs": "Follow our @{{name}}",
+        "post": "Instagram post {{index}}"
+    },
     "validation": {
         "titleRequired": "Title is required",
         "titleMaxLength": "Title must be less than 200 characters",

@@ -124,6 +124,16 @@
         "goToPage": "Перейти на страницу {{page}}",
         "socialMedia": "Социальная сеть {{index}}"
     },
+    "pagination": {
+        "olderPost": "СТАРЫЕ ПОСТЫ",
+        "nextPost": "НОВЫЕ ПОСТЫ",
+        "goToOlder": "Перейти к старым постам",
+        "goToNewer": "Перейти к новым постам"
+    },
+    "instagram": {
+        "followUs": "Подписывайтесь на наш @{{name}}",
+        "post": "Пост Instagram {{index}}"
+    },
     "validation": {
         "titleRequired": "Заголовок обязателен",
         "titleMaxLength": "Заголовок должен быть менее 200 символов",

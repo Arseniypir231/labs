@@ -1,16 +1,19 @@
 import React from 'react';
 import { Container, Row, Col, Image, Alert } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './InstagramWidget.css';
 
 const InstagramWidget = ({ instagramImages, instagramName }) => {
+    const { t } = useTranslation();
+    
     return (
         <section className="instagram-widget-section">
             <Container fluid className="px-3 px-md-4 px-lg-5">
                 <Row>
                     <Col xs={12} className="text-center mb-4">
                         <Alert variant="info" className="instagram-alert">
-                            <h2 className="instagram-title">Follow our @{instagramName}</h2>
+                            <h2 className="instagram-title">{t('instagram.followUs', { name: instagramName })}</h2>
                         </Alert>
                     </Col>
                 </Row>
@@ -18,7 +21,7 @@ const InstagramWidget = ({ instagramImages, instagramName }) => {
                     {instagramImages.map((image, index) => {
                         const tooltip = (
                             <Tooltip id={`instagram-tooltip-${index}`}>
-                                Instagram post {index + 1}
+                                {t('instagram.post', { index: index + 1 })}
                             </Tooltip>
                         );
                         
