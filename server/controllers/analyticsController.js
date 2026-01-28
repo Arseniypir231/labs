@@ -20,12 +20,12 @@ exports.getShipmentsByMonth = async (req, res) => {
     const shipments = await Shipment.findAll({
       where,
       attributes: [
-        [Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departureDate')), 'month'],
+        [Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departure_date')), 'month'],
         [Sequelize.fn('COUNT', Sequelize.col('id')), 'count'],
         [Sequelize.fn('SUM', Sequelize.col('weight')), 'totalWeight']
       ],
-      group: [Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departureDate'))],
-      order: [[Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departureDate')), 'ASC']],
+      group: [Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departure_date'))],
+      order: [[Sequelize.fn('DATE_TRUNC', 'month', Sequelize.col('departure_date')), 'ASC']],
       raw: true
     });
 
