@@ -1,9 +1,11 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import PostCard from './PostCard';
 import './PostsSection.css';
 
 const PostsSection = ({ posts, onPostClick, selectedPosts, onPostSelect, showCheckbox }) => {
+    const { t } = useTranslation();
     return (
         <Container fluid className="posts-container px-3 px-md-4 px-lg-5">
             {/* First 6 posts in 2 columns */}

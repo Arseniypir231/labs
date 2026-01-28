@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Container, Row, Col, Form, InputGroup, Card, Badge, Button, Spinner, Alert } from 'react-bootstrap';
 import { FaSearch, FaFilter, FaSort } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import PostCard from '../components/PostCard';
 import postsData from '../data/posts.json';
@@ -10,6 +11,7 @@ import recipesData from '../data/recipes.json';
 import './Search.css';
 
 const Search = () => {
+    const { t } = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
     const [filterType, setFilterType] = useState('all');
@@ -107,7 +109,7 @@ const Search = () => {
             setLoading(false);
             
             if (filtered.length === 0 && searchQuery.trim()) {
-                toast.info('Ничего не найдено');
+                toast.info(t('search.noResults', { query: searchQuery }));
             }
         }, 300);
     };
@@ -128,7 +130,7 @@ const Search = () => {
             <Row>
                 <Col xs={12}>
                     <div className="search-header mb-4">
-                        <h1 className="search-title">Поиск</h1>
+                        <h1 className="search-title">{t('search.title')}</h1>
                         <Form onSubmit={handleSearch} className="search-form">
                             <InputGroup size="lg">
                                 <InputGroup.Text>
@@ -136,7 +138,7 @@ const Search = () => {
                                 </InputGroup.Text>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Введите запрос для поиска..."
+                                    placeholder={t('search.placeholder')}
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="search-input"
@@ -146,10 +148,10 @@ const Search = () => {
                                     onClick={() => setShowFilters(!showFilters)}
                                     type="button"
                                 >
-                                    <FaFilter /> Фильтры
+                                    <FaFilter /> {t('common.filter')}
                                 </Button>
                                 <Button variant="primary" type="submit">
-                                    Найти
+                                    {t('common.search')}
                                 </Button>
                             </InputGroup>
                         </Form>
@@ -160,36 +162,36 @@ const Search = () => {
                             <Card.Body>
                                 <Row className="g-3">
                                     <Col xs={12} md={4}>
-                                        <Form.Label>Тип контента</Form.Label>
+                                        <Form.Label>{t('filter.filterBy')}</Form.Label>
                                         <Form.Select 
                                             value={filterType} 
                                             onChange={(e) => setFilterType(e.target.value)}
                                         >
-                                            <option value="all">Все</option>
-                                            <option value="posts">Посты</option>
-                                            <option value="articles">Статьи</option>
-                                            <option value="recipes">Рецепты</option>
+                                            <option value="all">{t('filter.all')}</option>
+                                            <option value="posts">{t('posts.title')}</option>
+                                            <option value="articles">{t('navigation.article')}</option>
+                                            <option value="recipes">{t('navigation.recipes')}</option>
                                         </Form.Select>
                                     </Col>
                                     <Col xs={12} md={4}>
-                                        <Form.Label>Сортировать по</Form.Label>
+                                        <Form.Label>{t('filter.sortBy')}</Form.Label>
                                         <Form.Select 
                                             value={sortBy} 
                                             onChange={(e) => setSortBy(e.target.value)}
                                         >
-                                            <option value="date">Дате</option>
-                                            <option value="title">Названию</option>
-                                            <option value="author">Автору</option>
+                                            <option value="date">{t('filter.date')}</option>
+                                            <option value="title">{t('form.title')}</option>
+                                            <option value="author">{t('filter.author')}</option>
                                         </Form.Select>
                                     </Col>
                                     <Col xs={12} md={4}>
-                                        <Form.Label>Порядок</Form.Label>
+                                        <Form.Label>{t('filter.order')}</Form.Label>
                                         <Form.Select 
                                             value={sortOrder} 
                                             onChange={(e) => setSortOrder(e.target.value)}
                                         >
-                                            <option value="desc">По убыванию</option>
-                                            <option value="asc">По возрастанию</option>
+                                            <option value="desc">{t('filter.descending')}</option>
+                                            <option value="asc">{t('filter.ascending')}</option>
                                         </Form.Select>
                                     </Col>
                                 </Row>
@@ -205,14 +207,14 @@ const Search = () => {
 
                     {!loading && searchQuery && results.length === 0 && (
                         <Alert variant="info" className="text-center">
-                            По запросу "{searchQuery}" ничего не найдено
+                            {t('search.noResults', { query: searchQuery })}
                         </Alert>
                     )}
 
                     {!loading && results.length > 0 && (
                         <>
                             <div className="results-header mb-3">
-                                <h3>Найдено результатов: {results.length}</h3>
+                                <h3>{t('search.results', { count: results.length })}</h3>
                             </div>
                             <Row className="g-4">
                                 {results.map((item, index) => (
@@ -260,7 +262,7 @@ const Search = () => {
 
                     {!loading && !searchQuery && (
                         <Alert variant="secondary" className="text-center">
-                            Введите запрос для начала поиска
+                            {t('search.enterQuery')}
                         </Alert>
                     )}
                 </Col>

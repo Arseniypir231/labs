@@ -1,8 +1,11 @@
 import React from 'react';
 import { Modal, Image, Badge, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './PostDetailModal.css';
 
 const PostDetailModal = ({ isOpen, onClose, post }) => {
+    const { t } = useTranslation();
+    
     if (!post) return null;
 
     return (
@@ -14,7 +17,7 @@ const PostDetailModal = ({ isOpen, onClose, post }) => {
             className="post-detail-modal-custom"
         >
             <Modal.Header closeButton>
-                <Modal.Title>Post Details</Modal.Title>
+                <Modal.Title>{t('posts.viewDetails')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div className="post-detail-content">
@@ -57,7 +60,7 @@ const PostDetailModal = ({ isOpen, onClose, post }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onClose}>
-                    Close
+                    {t('common.close')}
                 </Button>
             </Modal.Footer>
         </Modal>
