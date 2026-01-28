@@ -1,0 +1,129 @@
+.management-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.panel-left,
+.panel-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.selected-count {
+    color: #666;
+    font-weight: 500;
+    padding: 5px 10px;
+    background: white;
+    border-radius: 4px;
+}
+
+.management-panel button {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.management-panel button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.management-panel button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.management-panel button:active {
+    transform: scale(0.95);
+}
+
+.btn-select-all,
+.btn-deselect-all {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-select-all:hover,
+.btn-deselect-all:hover {
+    background: #d0d0d0;
+}
+
+.btn-add {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #45a049;
+}
+
+.btn-edit {
+    background: #2196F3;
+    color: white;
+}
+
+.btn-edit:hover:not(:disabled) {
+    background: #0b7dda;
+}
+
+.btn-edit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-delete {
+    background: #f44336;
+    color: white;
+}
+
+.btn-delete:hover:not(:disabled) {
+    background: #da190b;
+}
+
+.btn-delete:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .management-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .panel-left,
+    .panel-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .management-panel button {
+        flex: 1;
+        min-width: 120px;
+    }
+}

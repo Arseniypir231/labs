@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Delicious Chocolate Cake",
+    "image": "/assets/Post1.1.jpg",
+    "category": "Dessert",
+    "date": "June 10, 2019",
+    "author": "Kate Willems",
+    "description": "A rich and moist chocolate cake recipe that will satisfy your sweet tooth.",
+    "ingredients": ["flour", "sugar", "cocoa powder", "eggs", "butter"],
+    "prepTime": "30 min",
+    "cookTime": "45 min"
+  },
+  {
+    "id": 2,
+    "title": "Fresh Summer Salad",
+    "image": "/assets/Post1.2.png",
+    "category": "Salad",
+    "date": "June 8, 2019",
+    "author": "Kate Willems",
+    "description": "A refreshing salad perfect for hot summer days with fresh vegetables.",
+    "ingredients": ["lettuce", "tomatoes", "cucumbers", "olive oil", "lemon"],
+    "prepTime": "15 min",
+    "cookTime": "0 min"
+  },
+  {
+    "id": 3,
+    "title": "Homemade Pasta",
+    "image": "/assets/Post1.3.png",
+    "category": "Main Course",
+    "date": "June 5, 2019",
+    "author": "Kate Willems",
+    "description": "Learn how to make fresh pasta from scratch with this simple recipe.",
+    "ingredients": ["flour", "eggs", "salt", "water"],
+    "prepTime": "45 min",
+    "cookTime": "10 min"
+  }
+]
