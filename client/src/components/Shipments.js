@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { shipmentsAPI, vehiclesAPI, routesAPI } from '../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import {
+  fetchShipments,
+  createShipment,
+  updateShipment,
+  deleteShipment,
+  setFilters,
+  setPagination,
+  clearError
+} from '../store/slices/shipmentsSlice';
+import { fetchVehicles } from '../store/slices/vehiclesSlice';
+import { fetchRoutes } from '../store/slices/routesSlice';
+import { validateShipment } from '../utils/validation';
 
 function Shipments() {
-  const [shipments, setShipments] = useState([]);
-  const [vehicles, setVehicles] = useState([]);
-  const [routes, setRoutes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { items, loading, error, pagination, filters } = useSelector(state => state.shipments);
+  const { items: vehicles } = useSelector(state => state.vehicles);
+  const { items: routes } = useSelector(state => state.routes);
+  
   const [showModal, setShowModal] = useState(false);
   const [editingShipment, setEditingShipment] = useState(null);
-  const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 0 });
+  const [formErrors, setFormErrors] = useState({});
   
-  const [filters, setFilters] = useState({
-    search: '',
-    status: '',
-    sortBy: 'id',
-    sortOrder: 'ASC'
-  });
-
   const [formData, setFormData] = useState({
     vehicleId: '',
     routeId: '',
@@ -25,59 +33,46 @@ function Shipments() {
     weight: '',
     status: 'pending',
     departureDate: '',
-    deliveryDate: ''
+    deliveryDate: '',
+    photoUrl: ''
   });
 
   useEffect(() => {
     loadShipments();
-    loadVehicles();
-    loadRoutes();
+    if (vehicles.length === 0) {
+      dispatch(fetchVehicles({ limit: 1000 }));
+    }
+    if (routes.length === 0) {
+      dispatch(fetchRoutes({ limit: 1000 }));
+    }
   }, [pagination.page, filters]);
 
-  const loadShipments = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const params = {
-        page: pagination.page,
-        limit: pagination.limit,
-        ...filters
-      };
-      const response = await shipmentsAPI.getAll(params);
-      setShipments(response.data.data);
-      setPagination(prev => ({
-        ...prev,
-        total: response.data.pagination.total,
-        totalPages: response.data.pagination.totalPages
-      }));
-    } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при загрузке данных');
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
-  };
+  }, [error, dispatch]);
 
-  const loadVehicles = async () => {
-    try {
-      const response = await vehiclesAPI.getAll({ limit: 1000 });
-      setVehicles(response.data.data);
-    } catch (err) {
-      console.error('Ошибка при загрузке транспортных средств:', err);
-    }
-  };
-
-  const loadRoutes = async () => {
-    try {
-      const response = await routesAPI.getAll({ limit: 1000 });
-      setRoutes(response.data.data);
-    } catch (err) {
-      console.error('Ошибка при загрузке маршрутов:', err);
-    }
+  const loadShipments = () => {
+    const params = {
+      page: pagination.page,
+      limit: pagination.limit,
+      ...filters
+    };
+    dispatch(fetchShipments(params));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    const errors = validateShipment(formData);
+    setFormErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      toast.error('Пожалуйста, исправьте ошибки в форме');
+      return;
+    }
+
     try {
       const data = {
         ...formData,
@@ -86,15 +81,17 @@ function Shipments() {
         weight: parseFloat(formData.weight)
       };
       if (editingShipment) {
-        await shipmentsAPI.update(editingShipment.id, data);
+        await dispatch(updateShipment({ id: editingShipment.id, data })).unwrap();
+        toast.success('Грузоперевозка успешно обновлена');
       } else {
-        await shipmentsAPI.create(data);
+        await dispatch(createShipment(data)).unwrap();
+        toast.success('Грузоперевозка успешно создана');
       }
       setShowModal(false);
       resetForm();
       loadShipments();
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при сохранении');
+      toast.error(err || 'Ошибка при сохранении');
     }
   };
 
@@ -107,18 +104,21 @@ function Shipments() {
       weight: shipment.weight,
       status: shipment.status,
       departureDate: shipment.departureDate ? shipment.departureDate.split('T')[0] : '',
-      deliveryDate: shipment.deliveryDate ? shipment.deliveryDate.split('T')[0] : ''
+      deliveryDate: shipment.deliveryDate ? shipment.deliveryDate.split('T')[0] : '',
+      photoUrl: shipment.photoUrl || ''
     });
+    setFormErrors({});
     setShowModal(true);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Вы уверены, что хотите удалить эту грузоперевозку?')) {
       try {
-        await shipmentsAPI.delete(id);
+        await dispatch(deleteShipment(id)).unwrap();
+        toast.success('Грузоперевозка успешно удалена');
         loadShipments();
       } catch (err) {
-        setError(err.response?.data?.error || 'Ошибка при удалении');
+        toast.error(err || 'Ошибка при удалении');
       }
     }
   };
@@ -131,27 +131,32 @@ function Shipments() {
       weight: '',
       status: 'pending',
       departureDate: '',
-      deliveryDate: ''
+      deliveryDate: '',
+      photoUrl: ''
     });
     setEditingShipment(null);
+    setFormErrors({});
   };
 
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-    setPagination(prev => ({ ...prev, page: 1 }));
+    dispatch(setFilters({ [key]: value }));
+    dispatch(setPagination({ page: 1 }));
+  };
+
+  const handleViewDetails = (id) => {
+    navigate(`/shipments/${id}`);
   };
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div className="card-header">
           <h2>Грузоперевозки</h2>
           <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
             Добавить грузоперевозку
           </button>
         </div>
-
-        {error && <div className="error">{error}</div>}
 
         <div className="filters">
           <input
@@ -192,54 +197,59 @@ function Shipments() {
           <div>Загрузка...</div>
         ) : (
           <>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Транспорт</th>
-                  <th>Маршрут</th>
-                  <th>Описание груза</th>
-                  <th>Вес (т)</th>
-                  <th>Дата отправления</th>
-                  <th>Дата доставки</th>
-                  <th>Статус</th>
-                  <th>Действия</th>
-                </tr>
-              </thead>
-              <tbody>
-                {shipments.map(shipment => (
-                  <tr key={shipment.id}>
-                    <td>{shipment.id}</td>
-                    <td>{shipment.vehicle ? `${shipment.vehicle.brand} ${shipment.vehicle.model} (${shipment.vehicle.licensePlate})` : 'N/A'}</td>
-                    <td>{shipment.route ? `${shipment.route.origin} → ${shipment.route.destination}` : 'N/A'}</td>
-                    <td>{shipment.cargoDescription}</td>
-                    <td>{shipment.weight}</td>
-                    <td>{shipment.departureDate ? new Date(shipment.departureDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
-                    <td>{shipment.deliveryDate ? new Date(shipment.deliveryDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
-                    <td>{shipment.status}</td>
-                    <td>
-                      <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px' }}>
-                        Редактировать
-                      </button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
-                        Удалить
-                      </button>
-                    </td>
+            <div className="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Транспорт</th>
+                    <th>Маршрут</th>
+                    <th>Описание груза</th>
+                    <th>Вес (т)</th>
+                    <th>Дата отправления</th>
+                    <th>Дата доставки</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {items.map(shipment => (
+                    <tr key={shipment.id}>
+                      <td>{shipment.id}</td>
+                      <td>{shipment.vehicle ? `${shipment.vehicle.brand} ${shipment.vehicle.model} (${shipment.vehicle.licensePlate})` : 'N/A'}</td>
+                      <td>{shipment.route ? `${shipment.route.origin} → ${shipment.route.destination}` : 'N/A'}</td>
+                      <td>{shipment.cargoDescription}</td>
+                      <td>{shipment.weight}</td>
+                      <td>{shipment.departureDate ? new Date(shipment.departureDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
+                      <td>{shipment.deliveryDate ? new Date(shipment.deliveryDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
+                      <td>{shipment.status}</td>
+                      <td>
+                        <button className="btn btn-success" onClick={() => handleViewDetails(shipment.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Подробнее
+                        </button>
+                        <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Редактировать
+                        </button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
+                          Удалить
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="pagination">
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page - 1 }))}
                 disabled={pagination.page === 1}
               >
                 Назад
               </button>
               <span>Страница {pagination.page} из {pagination.totalPages}</span>
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page + 1 }))}
                 disabled={pagination.page >= pagination.totalPages}
               >
                 Вперед
@@ -259,7 +269,7 @@ function Shipments() {
             <div className="form-group">
               <label>Транспортное средство *</label>
               <select
-                required
+                className={formErrors.vehicleId ? 'error' : ''}
                 value={formData.vehicleId}
                 onChange={(e) => setFormData({ ...formData, vehicleId: e.target.value })}
               >
@@ -270,11 +280,12 @@ function Shipments() {
                   </option>
                 ))}
               </select>
+              {formErrors.vehicleId && <div className="form-error">{formErrors.vehicleId}</div>}
             </div>
             <div className="form-group">
               <label>Маршрут *</label>
               <select
-                required
+                className={formErrors.routeId ? 'error' : ''}
                 value={formData.routeId}
                 onChange={(e) => setFormData({ ...formData, routeId: e.target.value })}
               >
@@ -285,46 +296,51 @@ function Shipments() {
                   </option>
                 ))}
               </select>
+              {formErrors.routeId && <div className="form-error">{formErrors.routeId}</div>}
             </div>
             <div className="form-group">
               <label>Описание груза *</label>
               <textarea
-                required
+                className={formErrors.cargoDescription ? 'error' : ''}
                 value={formData.cargoDescription}
                 onChange={(e) => setFormData({ ...formData, cargoDescription: e.target.value })}
               />
+              {formErrors.cargoDescription && <div className="form-error">{formErrors.cargoDescription}</div>}
             </div>
             <div className="form-group">
               <label>Вес (тонн) *</label>
               <input
                 type="number"
                 step="0.01"
-                required
+                className={formErrors.weight ? 'error' : ''}
                 value={formData.weight}
                 onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
               />
+              {formErrors.weight && <div className="form-error">{formErrors.weight}</div>}
             </div>
             <div className="form-group">
               <label>Дата отправления *</label>
               <input
                 type="date"
-                required
+                className={formErrors.departureDate ? 'error' : ''}
                 value={formData.departureDate}
                 onChange={(e) => setFormData({ ...formData, departureDate: e.target.value })}
               />
+              {formErrors.departureDate && <div className="form-error">{formErrors.departureDate}</div>}
             </div>
             <div className="form-group">
               <label>Дата доставки</label>
               <input
                 type="date"
+                className={formErrors.deliveryDate ? 'error' : ''}
                 value={formData.deliveryDate}
                 onChange={(e) => setFormData({ ...formData, deliveryDate: e.target.value })}
               />
+              {formErrors.deliveryDate && <div className="form-error">{formErrors.deliveryDate}</div>}
             </div>
             <div className="form-group">
               <label>Статус *</label>
               <select
-                required
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               >
@@ -333,6 +349,17 @@ function Shipments() {
                 <option value="delivered">Доставлено</option>
                 <option value="cancelled">Отменено</option>
               </select>
+            </div>
+            <div className="form-group">
+              <label>URL фотографии</label>
+              <input
+                type="url"
+                className={formErrors.photoUrl ? 'error' : ''}
+                placeholder="https://example.com/photo.jpg"
+                value={formData.photoUrl}
+                onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
+              />
+              {formErrors.photoUrl && <div className="form-error">{formErrors.photoUrl}</div>}
             </div>
             <button type="submit" className="btn btn-primary">Сохранить</button>
             <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>

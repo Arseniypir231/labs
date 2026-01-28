@@ -1,71 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { routesAPI } from '../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import {
+  fetchRoutes,
+  createRoute,
+  updateRoute,
+  deleteRoute,
+  setFilters,
+  setPagination,
+  clearError
+} from '../store/slices/routesSlice';
+import { validateRoute } from '../utils/validation';
 
 function Routes() {
-  const [routes, setRoutes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { items, loading, error, pagination, filters } = useSelector(state => state.routes);
+  
   const [showModal, setShowModal] = useState(false);
   const [editingRoute, setEditingRoute] = useState(null);
-  const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 0 });
+  const [formErrors, setFormErrors] = useState({});
   
-  const [filters, setFilters] = useState({
-    search: '',
-    status: '',
-    sortBy: 'id',
-    sortOrder: 'ASC'
-  });
-
   const [formData, setFormData] = useState({
     name: '',
     origin: '',
     destination: '',
     distance: '',
     estimatedTime: '',
-    status: 'active'
+    status: 'active',
+    photoUrl: ''
   });
 
   useEffect(() => {
     loadRoutes();
   }, [pagination.page, filters]);
 
-  const loadRoutes = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const params = {
-        page: pagination.page,
-        limit: pagination.limit,
-        ...filters
-      };
-      const response = await routesAPI.getAll(params);
-      setRoutes(response.data.data);
-      setPagination(prev => ({
-        ...prev,
-        total: response.data.pagination.total,
-        totalPages: response.data.pagination.totalPages
-      }));
-    } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при загрузке данных');
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
+  }, [error, dispatch]);
+
+  const loadRoutes = () => {
+    const params = {
+      page: pagination.page,
+      limit: pagination.limit,
+      ...filters
+    };
+    dispatch(fetchRoutes(params));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    const errors = validateRoute(formData);
+    setFormErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      toast.error('Пожалуйста, исправьте ошибки в форме');
+      return;
+    }
+
     try {
       if (editingRoute) {
-        await routesAPI.update(editingRoute.id, formData);
+        await dispatch(updateRoute({ id: editingRoute.id, data: formData })).unwrap();
+        toast.success('Маршрут успешно обновлен');
       } else {
-        await routesAPI.create(formData);
+        await dispatch(createRoute(formData)).unwrap();
+        toast.success('Маршрут успешно создан');
       }
       setShowModal(false);
       resetForm();
       loadRoutes();
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при сохранении');
+      toast.error(err || 'Ошибка при сохранении');
     }
   };
 
@@ -77,18 +86,21 @@ function Routes() {
       destination: route.destination,
       distance: route.distance,
       estimatedTime: route.estimatedTime,
-      status: route.status
+      status: route.status,
+      photoUrl: route.photoUrl || ''
     });
+    setFormErrors({});
     setShowModal(true);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Вы уверены, что хотите удалить этот маршрут?')) {
       try {
-        await routesAPI.delete(id);
+        await dispatch(deleteRoute(id)).unwrap();
+        toast.success('Маршрут успешно удален');
         loadRoutes();
       } catch (err) {
-        setError(err.response?.data?.error || 'Ошибка при удалении');
+        toast.error(err || 'Ошибка при удалении. Возможно, маршрут используется в грузоперевозках.');
       }
     }
   };
@@ -100,27 +112,32 @@ function Routes() {
       destination: '',
       distance: '',
       estimatedTime: '',
-      status: 'active'
+      status: 'active',
+      photoUrl: ''
     });
     setEditingRoute(null);
+    setFormErrors({});
   };
 
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-    setPagination(prev => ({ ...prev, page: 1 }));
+    dispatch(setFilters({ [key]: value }));
+    dispatch(setPagination({ page: 1 }));
+  };
+
+  const handleViewDetails = (id) => {
+    navigate(`/routes/${id}`);
   };
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div className="card-header">
           <h2>Маршруты</h2>
           <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
             Добавить маршрут
           </button>
         </div>
-
-        {error && <div className="error">{error}</div>}
 
         <div className="filters">
           <input
@@ -160,52 +177,57 @@ function Routes() {
           <div>Загрузка...</div>
         ) : (
           <>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Название</th>
-                  <th>Отправление</th>
-                  <th>Назначение</th>
-                  <th>Расстояние (км)</th>
-                  <th>Время (мин)</th>
-                  <th>Статус</th>
-                  <th>Действия</th>
-                </tr>
-              </thead>
-              <tbody>
-                {routes.map(route => (
-                  <tr key={route.id}>
-                    <td>{route.id}</td>
-                    <td>{route.name}</td>
-                    <td>{route.origin}</td>
-                    <td>{route.destination}</td>
-                    <td>{route.distance}</td>
-                    <td>{route.estimatedTime}</td>
-                    <td>{route.status}</td>
-                    <td>
-                      <button className="btn btn-secondary" onClick={() => handleEdit(route)} style={{ marginRight: '5px' }}>
-                        Редактировать
-                      </button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(route.id)}>
-                        Удалить
-                      </button>
-                    </td>
+            <div className="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Отправление</th>
+                    <th>Назначение</th>
+                    <th>Расстояние (км)</th>
+                    <th>Время (мин)</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {items.map(route => (
+                    <tr key={route.id}>
+                      <td>{route.id}</td>
+                      <td>{route.name}</td>
+                      <td>{route.origin}</td>
+                      <td>{route.destination}</td>
+                      <td>{route.distance}</td>
+                      <td>{route.estimatedTime}</td>
+                      <td>{route.status}</td>
+                      <td>
+                        <button className="btn btn-success" onClick={() => handleViewDetails(route.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Подробнее
+                        </button>
+                        <button className="btn btn-secondary" onClick={() => handleEdit(route)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Редактировать
+                        </button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(route.id)}>
+                          Удалить
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="pagination">
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page - 1 }))}
                 disabled={pagination.page === 1}
               >
                 Назад
               </button>
               <span>Страница {pagination.page} из {pagination.totalPages}</span>
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page + 1 }))}
                 disabled={pagination.page >= pagination.totalPages}
               >
                 Вперед
@@ -226,52 +248,56 @@ function Routes() {
               <label>Название *</label>
               <input
                 type="text"
-                required
+                className={formErrors.name ? 'error' : ''}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
+              {formErrors.name && <div className="form-error">{formErrors.name}</div>}
             </div>
             <div className="form-group">
               <label>Точка отправления *</label>
               <input
                 type="text"
-                required
+                className={formErrors.origin ? 'error' : ''}
                 value={formData.origin}
                 onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
               />
+              {formErrors.origin && <div className="form-error">{formErrors.origin}</div>}
             </div>
             <div className="form-group">
               <label>Точка назначения *</label>
               <input
                 type="text"
-                required
+                className={formErrors.destination ? 'error' : ''}
                 value={formData.destination}
                 onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
               />
+              {formErrors.destination && <div className="form-error">{formErrors.destination}</div>}
             </div>
             <div className="form-group">
               <label>Расстояние (км) *</label>
               <input
                 type="number"
                 step="0.01"
-                required
+                className={formErrors.distance ? 'error' : ''}
                 value={formData.distance}
                 onChange={(e) => setFormData({ ...formData, distance: e.target.value })}
               />
+              {formErrors.distance && <div className="form-error">{formErrors.distance}</div>}
             </div>
             <div className="form-group">
               <label>Оценочное время (минуты) *</label>
               <input
                 type="number"
-                required
+                className={formErrors.estimatedTime ? 'error' : ''}
                 value={formData.estimatedTime}
                 onChange={(e) => setFormData({ ...formData, estimatedTime: e.target.value })}
               />
+              {formErrors.estimatedTime && <div className="form-error">{formErrors.estimatedTime}</div>}
             </div>
             <div className="form-group">
               <label>Статус *</label>
               <select
-                required
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               >
@@ -279,6 +305,17 @@ function Routes() {
                 <option value="inactive">Неактивный</option>
                 <option value="archived">Архивирован</option>
               </select>
+            </div>
+            <div className="form-group">
+              <label>URL фотографии</label>
+              <input
+                type="url"
+                className={formErrors.photoUrl ? 'error' : ''}
+                placeholder="https://example.com/photo.jpg"
+                value={formData.photoUrl}
+                onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
+              />
+              {formErrors.photoUrl && <div className="form-error">{formErrors.photoUrl}</div>}
             </div>
             <button type="submit" className="btn btn-primary">Сохранить</button>
             <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>

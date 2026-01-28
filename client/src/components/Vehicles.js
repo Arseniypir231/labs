@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { vehiclesAPI } from '../services/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import {
+  fetchVehicles,
+  createVehicle,
+  updateVehicle,
+  deleteVehicle,
+  setFilters,
+  setPagination,
+  clearError
+} from '../store/slices/vehiclesSlice';
+import { validateVehicle } from '../utils/validation';
 
 function Vehicles() {
-  const [vehicles, setVehicles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { items, loading, error, pagination, filters } = useSelector(state => state.vehicles);
+  
   const [showModal, setShowModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
-  const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 0 });
+  const [formErrors, setFormErrors] = useState({});
   
-  const [filters, setFilters] = useState({
-    search: '',
-    status: '',
-    vehicleType: '',
-    sortBy: 'id',
-    sortOrder: 'ASC'
-  });
-
   const [formData, setFormData] = useState({
     licensePlate: '',
     brand: '',
@@ -24,50 +29,53 @@ function Vehicles() {
     vehicleType: 'truck',
     capacity: '',
     status: 'available',
-    year: ''
+    year: '',
+    photoUrl: ''
   });
 
   useEffect(() => {
     loadVehicles();
   }, [pagination.page, filters]);
 
-  const loadVehicles = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const params = {
-        page: pagination.page,
-        limit: pagination.limit,
-        ...filters
-      };
-      const response = await vehiclesAPI.getAll(params);
-      setVehicles(response.data.data);
-      setPagination(prev => ({
-        ...prev,
-        total: response.data.pagination.total,
-        totalPages: response.data.pagination.totalPages
-      }));
-    } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при загрузке данных');
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
     }
+  }, [error, dispatch]);
+
+  const loadVehicles = () => {
+    const params = {
+      page: pagination.page,
+      limit: pagination.limit,
+      ...filters
+    };
+    dispatch(fetchVehicles(params));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    const errors = validateVehicle(formData);
+    setFormErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      toast.error('Пожалуйста, исправьте ошибки в форме');
+      return;
+    }
+
     try {
       if (editingVehicle) {
-        await vehiclesAPI.update(editingVehicle.id, formData);
+        await dispatch(updateVehicle({ id: editingVehicle.id, data: formData })).unwrap();
+        toast.success('Транспортное средство успешно обновлено');
       } else {
-        await vehiclesAPI.create(formData);
+        await dispatch(createVehicle(formData)).unwrap();
+        toast.success('Транспортное средство успешно создано');
       }
       setShowModal(false);
       resetForm();
       loadVehicles();
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка при сохранении');
+      toast.error(err || 'Ошибка при сохранении');
     }
   };
 
@@ -80,18 +88,21 @@ function Vehicles() {
       vehicleType: vehicle.vehicleType,
       capacity: vehicle.capacity,
       status: vehicle.status,
-      year: vehicle.year
+      year: vehicle.year,
+      photoUrl: vehicle.photoUrl || ''
     });
+    setFormErrors({});
     setShowModal(true);
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Вы уверены, что хотите удалить это транспортное средство?')) {
       try {
-        await vehiclesAPI.delete(id);
+        await dispatch(deleteVehicle(id)).unwrap();
+        toast.success('Транспортное средство успешно удалено');
         loadVehicles();
       } catch (err) {
-        setError(err.response?.data?.error || 'Ошибка при удалении');
+        toast.error(err || 'Ошибка при удалении. Возможно, транспортное средство используется в грузоперевозках.');
       }
     }
   };
@@ -104,27 +115,32 @@ function Vehicles() {
       vehicleType: 'truck',
       capacity: '',
       status: 'available',
-      year: ''
+      year: '',
+      photoUrl: ''
     });
     setEditingVehicle(null);
+    setFormErrors({});
   };
 
   const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-    setPagination(prev => ({ ...prev, page: 1 }));
+    dispatch(setFilters({ [key]: value }));
+    dispatch(setPagination({ page: 1 }));
+  };
+
+  const handleViewDetails = (id) => {
+    navigate(`/vehicles/${id}`);
   };
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <div className="card-header">
           <h2>Транспортные средства</h2>
           <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
             Добавить транспортное средство
           </button>
         </div>
-
-        {error && <div className="error">{error}</div>}
 
         <div className="filters">
           <input
@@ -176,54 +192,59 @@ function Vehicles() {
           <div>Загрузка...</div>
         ) : (
           <>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Номерной знак</th>
-                  <th>Марка</th>
-                  <th>Модель</th>
-                  <th>Тип</th>
-                  <th>Грузоподъемность</th>
-                  <th>Год</th>
-                  <th>Статус</th>
-                  <th>Действия</th>
-                </tr>
-              </thead>
-              <tbody>
-                {vehicles.map(vehicle => (
-                  <tr key={vehicle.id}>
-                    <td>{vehicle.id}</td>
-                    <td>{vehicle.licensePlate}</td>
-                    <td>{vehicle.brand}</td>
-                    <td>{vehicle.model}</td>
-                    <td>{vehicle.vehicleType}</td>
-                    <td>{vehicle.capacity}</td>
-                    <td>{vehicle.year}</td>
-                    <td>{vehicle.status}</td>
-                    <td>
-                      <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px' }}>
-                        Редактировать
-                      </button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
-                        Удалить
-                      </button>
-                    </td>
+            <div className="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Номерной знак</th>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Тип</th>
+                    <th>Грузоподъемность</th>
+                    <th>Год</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {items.map(vehicle => (
+                    <tr key={vehicle.id}>
+                      <td>{vehicle.id}</td>
+                      <td>{vehicle.licensePlate}</td>
+                      <td>{vehicle.brand}</td>
+                      <td>{vehicle.model}</td>
+                      <td>{vehicle.vehicleType}</td>
+                      <td>{vehicle.capacity}</td>
+                      <td>{vehicle.year}</td>
+                      <td>{vehicle.status}</td>
+                      <td>
+                        <button className="btn btn-success" onClick={() => handleViewDetails(vehicle.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Подробнее
+                        </button>
+                        <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                          Редактировать
+                        </button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
+                          Удалить
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             <div className="pagination">
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page - 1 }))}
                 disabled={pagination.page === 1}
               >
                 Назад
               </button>
               <span>Страница {pagination.page} из {pagination.totalPages}</span>
               <button
-                onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
+                onClick={() => dispatch(setPagination({ page: pagination.page + 1 }))}
                 disabled={pagination.page >= pagination.totalPages}
               >
                 Вперед
@@ -244,33 +265,36 @@ function Vehicles() {
               <label>Номерной знак *</label>
               <input
                 type="text"
-                required
+                className={formErrors.licensePlate ? 'error' : ''}
                 value={formData.licensePlate}
                 onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value })}
               />
+              {formErrors.licensePlate && <div className="form-error">{formErrors.licensePlate}</div>}
             </div>
             <div className="form-group">
               <label>Марка *</label>
               <input
                 type="text"
-                required
+                className={formErrors.brand ? 'error' : ''}
                 value={formData.brand}
                 onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
               />
+              {formErrors.brand && <div className="form-error">{formErrors.brand}</div>}
             </div>
             <div className="form-group">
               <label>Модель *</label>
               <input
                 type="text"
-                required
+                className={formErrors.model ? 'error' : ''}
                 value={formData.model}
                 onChange={(e) => setFormData({ ...formData, model: e.target.value })}
               />
+              {formErrors.model && <div className="form-error">{formErrors.model}</div>}
             </div>
             <div className="form-group">
               <label>Тип *</label>
               <select
-                required
+                className={formErrors.vehicleType ? 'error' : ''}
                 value={formData.vehicleType}
                 onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
               >
@@ -285,24 +309,25 @@ function Vehicles() {
               <input
                 type="number"
                 step="0.01"
-                required
+                className={formErrors.capacity ? 'error' : ''}
                 value={formData.capacity}
                 onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
               />
+              {formErrors.capacity && <div className="form-error">{formErrors.capacity}</div>}
             </div>
             <div className="form-group">
               <label>Год выпуска *</label>
               <input
                 type="number"
-                required
+                className={formErrors.year ? 'error' : ''}
                 value={formData.year}
                 onChange={(e) => setFormData({ ...formData, year: e.target.value })}
               />
+              {formErrors.year && <div className="form-error">{formErrors.year}</div>}
             </div>
             <div className="form-group">
               <label>Статус *</label>
               <select
-                required
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               >
@@ -311,6 +336,17 @@ function Vehicles() {
                 <option value="maintenance">На обслуживании</option>
                 <option value="retired">Списано</option>
               </select>
+            </div>
+            <div className="form-group">
+              <label>URL фотографии</label>
+              <input
+                type="url"
+                className={formErrors.photoUrl ? 'error' : ''}
+                placeholder="https://example.com/photo.jpg"
+                value={formData.photoUrl}
+                onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
+              />
+              {formErrors.photoUrl && <div className="form-error">{formErrors.photoUrl}</div>}
             </div>
             <button type="submit" className="btn btn-primary">Сохранить</button>
             <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
