@@ -78,5 +78,20 @@ main {
 @media (max-width: 320px) {
     .posts_and_slidebar {
         padding: 0 0.25rem;
+        gap: 0;
     }
+}
+
+/* Анимация появления для всего приложения */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.App {
+    animation: fadeIn 0.5s ease;
 }
