@@ -14,6 +14,7 @@ import {
 import { fetchVehicles } from '../store/slices/vehiclesSlice';
 import { fetchRoutes } from '../store/slices/routesSlice';
 import { validateShipment } from '../utils/validation';
+import { exportShipmentsReport } from '../utils/exportUtils';
 
 function Shipments() {
   const dispatch = useDispatch();
@@ -21,12 +22,18 @@ function Shipments() {
   const { items, loading, error, pagination, filters } = useSelector(state => state.shipments);
   const { items: vehicles } = useSelector(state => state.vehicles);
   const { items: routes } = useSelector(state => state.routes);
-  const { user } = useSelector(state => state.auth);
+  const { user, token } = useSelector(state => state.auth);
   const canEdit = user?.role === 'admin' || user?.role === 'manager';
   
   const [showModal, setShowModal] = useState(false);
   const [editingShipment, setEditingShipment] = useState(null);
   const [formErrors, setFormErrors] = useState({});
+  const [exporting, setExporting] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [exportPeriod, setExportPeriod] = useState({
+    startDate: '',
+    endDate: ''
+  });
   
   const [formData, setFormData] = useState({
     vehicleId: '',
@@ -149,17 +156,46 @@ function Shipments() {
     navigate(`/shipments/${id}`);
   };
 
+  const handleExport = async (format) => {
+    if (!token) {
+      toast.error('Необходима авторизация для экспорта');
+      return;
+    }
+
+    setExporting(true);
+    try {
+      await exportShipmentsReport(format, exportPeriod.startDate, exportPeriod.endDate, token);
+      toast.success(`Отчет успешно экспортирован в формате ${format.toUpperCase()}`);
+      setShowExportModal(false);
+      setExportPeriod({ startDate: '', endDate: '' });
+    } catch (err) {
+      toast.error('Ошибка при экспорте отчета');
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="card">
         <div className="card-header">
           <h2>Грузоперевозки</h2>
-          {canEdit && (
-            <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
-              Добавить грузоперевозку
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <button 
+              className="btn btn-success" 
+              onClick={() => setShowExportModal(true)}
+              disabled={exporting}
+              title="Экспорт отчета"
+            >
+              {exporting ? 'Экспорт...' : '📊 Экспорт отчета'}
             </button>
-          )}
+            {canEdit && (
+              <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
+                Добавить грузоперевозку
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="filters">
@@ -373,6 +409,60 @@ function Shipments() {
             <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)} style={{ marginLeft: '10px' }}>
               Отмена
             </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Модальное окно экспорта */}
+      <div className={`modal ${showExportModal ? 'show' : ''}`} onClick={() => setShowExportModal(false)}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <h2>Экспорт отчета по грузоперевозкам</h2>
+            <span className="close" onClick={() => setShowExportModal(false)}>&times;</span>
+          </div>
+          <form onSubmit={(e) => { e.preventDefault(); }}>
+            <div className="form-group">
+              <label>Дата начала периода (опционально)</label>
+              <input
+                type="date"
+                value={exportPeriod.startDate}
+                onChange={(e) => setExportPeriod({ ...exportPeriod, startDate: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label>Дата окончания периода (опционально)</label>
+              <input
+                type="date"
+                value={exportPeriod.endDate}
+                onChange={(e) => setExportPeriod({ ...exportPeriod, endDate: e.target.value })}
+              />
+            </div>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+              <button 
+                type="button" 
+                className="btn btn-success" 
+                onClick={() => handleExport('excel')}
+                disabled={exporting}
+              >
+                {exporting ? 'Экспорт...' : '📊 Excel'}
+              </button>
+              <button 
+                type="button" 
+                className="btn btn-danger" 
+                onClick={() => handleExport('pdf')}
+                disabled={exporting}
+              >
+                {exporting ? 'Экспорт...' : '📄 PDF'}
+              </button>
+              <button 
+                type="button" 
+                className="btn btn-secondary" 
+                onClick={() => setShowExportModal(false)}
+                style={{ marginLeft: 'auto' }}
+              >
+                Отмена
+              </button>
+            </div>
           </form>
         </div>
       </div>

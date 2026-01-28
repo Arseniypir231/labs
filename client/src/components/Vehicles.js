@@ -12,13 +12,15 @@ import {
   clearError
 } from '../store/slices/vehiclesSlice';
 import { validateVehicle } from '../utils/validation';
+import { exportVehiclesReport } from '../utils/exportUtils';
 
 function Vehicles() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, loading, error, pagination, filters } = useSelector(state => state.vehicles);
-  const { user } = useSelector(state => state.auth);
+  const { user, token } = useSelector(state => state.auth);
   const canEdit = user?.role === 'admin' || user?.role === 'manager';
+  const [exporting, setExporting] = useState(false);
   
   const [showModal, setShowModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
@@ -133,17 +135,54 @@ function Vehicles() {
     navigate(`/vehicles/${id}`);
   };
 
+  const handleExport = async (format) => {
+    if (!token) {
+      toast.error('Необходима авторизация для экспорта');
+      return;
+    }
+
+    setExporting(true);
+    try {
+      await exportVehiclesReport(format, token);
+      toast.success(`Отчет успешно экспортирован в формате ${format.toUpperCase()}`);
+    } catch (err) {
+      toast.error('Ошибка при экспорте отчета');
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="card">
         <div className="card-header">
           <h2>Транспортные средства</h2>
-          {canEdit && (
-            <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
-              Добавить транспортное средство
-            </button>
-          )}
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <div className="btn-group" style={{ display: 'flex', gap: '5px' }}>
+              <button 
+                className="btn btn-success" 
+                onClick={() => handleExport('excel')}
+                disabled={exporting}
+                title="Экспорт в Excel"
+              >
+                {exporting ? 'Экспорт...' : '📊 Excel'}
+              </button>
+              <button 
+                className="btn btn-danger" 
+                onClick={() => handleExport('pdf')}
+                disabled={exporting}
+                title="Экспорт в PDF"
+              >
+                {exporting ? 'Экспорт...' : '📄 PDF'}
+              </button>
+            </div>
+            {canEdit && (
+              <button className="btn btn-primary" onClick={() => { resetForm(); setShowModal(true); }}>
+                Добавить транспортное средство
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="filters">
