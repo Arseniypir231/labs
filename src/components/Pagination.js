@@ -1,21 +1,47 @@
 import React from 'react';
+import { Pagination as BSPagination, Container, Image } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './Pagination.css';
 
 const Pagination = () => {
+    const tooltipPrev = (
+        <Tooltip id="pagination-prev-tooltip">
+            Go to older posts
+        </Tooltip>
+    );
+    
+    const tooltipNext = (
+        <Tooltip id="pagination-next-tooltip">
+            Go to newer posts
+        </Tooltip>
+    );
+    
     return (
-        <article className="pagination">
-            <img src="/assets/left_path.svg" alt="left_path" className="left_path" />
-            <h4 className="older_post">OLDER POST</h4>
-            <article className="numbers">
-                <h4>1</h4>
-                <h4>2</h4>
-                <h4>3</h4>
-                <h4>...</h4>
-                <h4>8</h4>
-            </article>
-            <h4 className="next_post">NEXT POST</h4>
-            <img src="/assets/right_path.svg" alt="right_path" className="right_path" />
-        </article>
+        <Container fluid className="pagination-container">
+            <BSPagination className="custom-pagination justify-content-center align-items-center">
+                <OverlayTrigger placement="top" overlay={tooltipPrev}>
+                    <BSPagination.Prev className="pagination-nav">
+                        <Image src="/assets/left_path.svg" alt="left_path" className="pagination-icon" />
+                    </BSPagination.Prev>
+                </OverlayTrigger>
+                
+                <span className="pagination-label">OLDER POST</span>
+                
+                <BSPagination.Item active>1</BSPagination.Item>
+                <BSPagination.Item>2</BSPagination.Item>
+                <BSPagination.Item>3</BSPagination.Item>
+                <BSPagination.Ellipsis />
+                <BSPagination.Item>8</BSPagination.Item>
+                
+                <span className="pagination-label">NEXT POST</span>
+                
+                <OverlayTrigger placement="top" overlay={tooltipNext}>
+                    <BSPagination.Next className="pagination-nav">
+                        <Image src="/assets/right_path.svg" alt="right_path" className="pagination-icon" />
+                    </BSPagination.Next>
+                </OverlayTrigger>
+            </BSPagination>
+        </Container>
     );
 };
 
