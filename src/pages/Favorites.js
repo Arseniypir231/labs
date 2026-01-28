@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Badge, Button, Alert, Tabs, Tab } from 'react-bootstrap';
 import { FaHeart, FaTrash, FaEye } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { toast } from 'react-toastify';
 import './Favorites.css';

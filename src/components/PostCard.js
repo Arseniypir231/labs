@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Badge, Form, Button } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FaHeart } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { toast } from 'react-toastify';
 import './PostCard.css';
