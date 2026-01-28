@@ -50,9 +50,21 @@ app.use((req, res) => {
 });
 
 // Запуск сервера
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`API endpoints available at http://localhost:${PORT}/api`);
+});
+
+// Обработка ошибки порта
+server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use.`);
+        console.error('Please stop the process using this port or change the PORT environment variable.');
+        console.error(`To find the process: netstat -ano | findstr :${PORT}`);
+        process.exit(1);
+    } else {
+        throw err;
+    }
 });
 
 module.exports = app;
