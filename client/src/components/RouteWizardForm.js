@@ -199,7 +199,6 @@ function RouteWizardForm({ route, onClose }) {
                 name="origin"
                 render={({ field }) => (
                   <Select
-                    {...field}
                     options={cityOptions}
                     isSearchable
                     placeholder="Выберите или введите город"
@@ -207,10 +206,11 @@ function RouteWizardForm({ route, onClose }) {
                     onChange={(option) => field.onChange(option ? option.value : '')}
                     value={cityOptions.find(c => c.value === field.value) || null}
                     filterOption={filterCities}
-                    onInputChange={(inputValue) => {
-                      if (inputValue && !cityOptions.find(c => c.value === inputValue)) {
-                        // Позволить пользователю ввести свой город
-                      }
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        borderColor: errors.origin ? '#e74c3c' : base.borderColor
+                      })
                     }}
                   />
                 )}
@@ -225,7 +225,6 @@ function RouteWizardForm({ route, onClose }) {
                 name="destination"
                 render={({ field }) => (
                   <Select
-                    {...field}
                     options={cityOptions}
                     isSearchable
                     placeholder="Выберите или введите город"
@@ -233,6 +232,12 @@ function RouteWizardForm({ route, onClose }) {
                     onChange={(option) => field.onChange(option ? option.value : '')}
                     value={cityOptions.find(c => c.value === field.value) || null}
                     filterOption={filterCities}
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        borderColor: errors.destination ? '#e74c3c' : base.borderColor
+                      })
+                    }}
                   />
                 )}
               />
@@ -272,11 +277,18 @@ function RouteWizardForm({ route, onClose }) {
               name="vehicleTypes"
               render={({ field }) => (
                 <Select
-                  {...field}
                   options={vehicleTypeOptions}
                   isMulti
                   placeholder="Выберите типы транспорта"
                   className={errors.vehicleTypes ? 'error' : ''}
+                  onChange={(options) => field.onChange(options || [])}
+                  value={vehicleTypeOptions.filter(opt => field.value?.includes(opt.value))}
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      borderColor: errors.vehicleTypes ? '#e74c3c' : base.borderColor
+                    })
+                  }}
                 />
               )}
             />

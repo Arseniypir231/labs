@@ -258,7 +258,7 @@ function Routes() {
               setShowModal(false);
               setEditingRoute(null);
               resetForm();
-              loadRoutes();
+              dispatch(fetchRoutes({ page: pagination.page, limit: pagination.limit, ...filters }));
             }} 
           />
         </div>
