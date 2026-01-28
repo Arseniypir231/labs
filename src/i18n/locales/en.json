@@ -99,12 +99,12 @@
         "contactUs": "Contact Us",
         "contactText": "Do you have questions or suggestions? We'd love to hear from you!",
         "goToContact": "Go to contact page",
-        "qualityValue": "Quality - We pay attention to every detail",
+        "qualityValue": "We pay attention to every detail",
         "authenticity": "Authenticity",
-        "authenticityValue": "Authenticity - We write from the heart",
-        "innovationValue": "Innovation - We are always looking for new ideas",
+        "authenticityValue": "We write from the heart",
+        "innovationValue": "We are always looking for new ideas",
         "community": "Community",
-        "communityValue": "Community - We value our readers"
+        "communityValue": "We value our readers"
     },
     "sidebar": {
         "aboutAuthor": "About the author",

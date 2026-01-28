@@ -77,16 +77,16 @@ const About = () => {
                             <h3 className="card-title mt-4 mb-4">{t('about.values')}</h3>
                             <ListGroup variant="flush">
                                 <ListGroup.Item className="value-item">
-                                    <strong>{t('about.quality')}</strong> - {t('about.qualityValue').split(' - ')[1]}
+                                    <strong>{t('about.quality')}</strong> - {t('about.qualityValue')}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>{t('about.authenticity')}</strong> - {t('about.authenticityValue').split(' - ')[1]}
+                                    <strong>{t('about.authenticity')}</strong> - {t('about.authenticityValue')}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>{t('about.innovation')}</strong> - {t('about.innovationValue').split(' - ')[1]}
+                                    <strong>{t('about.innovation')}</strong> - {t('about.innovationValue')}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>{t('about.community')}</strong> - {t('about.communityValue').split(' - ')[1]}
+                                    <strong>{t('about.community')}</strong> - {t('about.communityValue')}
                                 </ListGroup.Item>
                             </ListGroup>
                         </Card.Body>
