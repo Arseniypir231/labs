@@ -13,6 +13,7 @@ import {
 } from '../store/slices/vehiclesSlice';
 import { validateVehicle } from '../utils/validation';
 import { exportVehiclesReport } from '../utils/exportUtils';
+import AdvancedVehiclesTable from './AdvancedVehiclesTable';
 
 function Vehicles() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function Vehicles() {
   const { user, token } = useSelector(state => state.auth);
   const canEdit = user?.role === 'admin' || user?.role === 'manager';
   const [exporting, setExporting] = useState(false);
+  const [useAdvancedTable, setUseAdvancedTable] = useState(true);
   
   const [showModal, setShowModal] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState(null);
@@ -231,72 +233,93 @@ function Vehicles() {
           </select>
         </div>
 
+        <div style={{ marginBottom: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={useAdvancedTable}
+              onChange={(e) => setUseAdvancedTable(e.target.checked)}
+            />
+            <span>Использовать расширенную таблицу (сортировка, фильтрация, выбор строк)</span>
+          </label>
+        </div>
+
         {loading ? (
           <div>Загрузка...</div>
         ) : (
           <>
-            <div className="table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Номерной знак</th>
-                    <th>Марка</th>
-                    <th>Модель</th>
-                    <th>Тип</th>
-                    <th>Грузоподъемность</th>
-                    <th>Год</th>
-                    <th>Статус</th>
-                    <th>Действия</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map(vehicle => (
-                    <tr key={vehicle.id}>
-                      <td>{vehicle.id}</td>
-                      <td>{vehicle.licensePlate}</td>
-                      <td>{vehicle.brand}</td>
-                      <td>{vehicle.model}</td>
-                      <td>{vehicle.vehicleType}</td>
-                      <td>{vehicle.capacity}</td>
-                      <td>{vehicle.year}</td>
-                      <td>{vehicle.status}</td>
-                      <td>
-                        <button className="btn btn-success" onClick={() => handleViewDetails(vehicle.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                          Подробнее
-                        </button>
-                        {canEdit && (
-                          <>
-                            <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                              Редактировать
+            {useAdvancedTable ? (
+              <AdvancedVehiclesTable
+                vehicles={items}
+                onEdit={handleEdit}
+                canEdit={canEdit}
+              />
+            ) : (
+              <>
+                <div className="table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Номерной знак</th>
+                        <th>Марка</th>
+                        <th>Модель</th>
+                        <th>Тип</th>
+                        <th>Грузоподъемность</th>
+                        <th>Год</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {items.map(vehicle => (
+                        <tr key={vehicle.id}>
+                          <td>{vehicle.id}</td>
+                          <td>{vehicle.licensePlate}</td>
+                          <td>{vehicle.brand}</td>
+                          <td>{vehicle.model}</td>
+                          <td>{vehicle.vehicleType}</td>
+                          <td>{vehicle.capacity}</td>
+                          <td>{vehicle.year}</td>
+                          <td>{vehicle.status}</td>
+                          <td>
+                            <button className="btn btn-success" onClick={() => handleViewDetails(vehicle.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                              Подробнее
                             </button>
-                            <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
-                              Удалить
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                            {canEdit && (
+                              <>
+                                <button className="btn btn-secondary" onClick={() => handleEdit(vehicle)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                                  Редактировать
+                                </button>
+                                <button className="btn btn-danger" onClick={() => handleDelete(vehicle.id)}>
+                                  Удалить
+                                </button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-            <div className="pagination">
-              <button
-                onClick={() => dispatch(setPagination({ page: pagination.page - 1 }))}
-                disabled={pagination.page === 1}
-              >
-                Назад
-              </button>
-              <span>Страница {pagination.page} из {pagination.totalPages}</span>
-              <button
-                onClick={() => dispatch(setPagination({ page: pagination.page + 1 }))}
-                disabled={pagination.page >= pagination.totalPages}
-              >
-                Вперед
-              </button>
-            </div>
+                <div className="pagination">
+                  <button
+                    onClick={() => dispatch(setPagination({ page: pagination.page - 1 }))}
+                    disabled={pagination.page === 1}
+                  >
+                    Назад
+                  </button>
+                  <span>Страница {pagination.page} из {pagination.totalPages}</span>
+                  <button
+                    onClick={() => dispatch(setPagination({ page: pagination.page + 1 }))}
+                    disabled={pagination.page >= pagination.totalPages}
+                  >
+                    Вперед
+                  </button>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
