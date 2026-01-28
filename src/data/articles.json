@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "The Art of Minimalist Living",
+    "image": "/assets/post_2.jpg",
+    "category": "Lifestyle",
+    "date": "June 12, 2019",
+    "author": "Rickie Baroch",
+    "content": "Minimalism is not about having less, it's about making room for more of what matters. In this article, we explore how to embrace a minimalist lifestyle and find joy in simplicity.",
+    "comments": 12
+  },
+  {
+    "id": 2,
+    "title": "Sustainable Fashion Trends",
+    "image": "/assets/post3.1.png",
+    "category": "Fashion",
+    "date": "June 11, 2019",
+    "author": "Rickie Baroch",
+    "content": "The fashion industry is evolving towards sustainability. Discover the latest trends in eco-friendly fashion and how to build a sustainable wardrobe.",
+    "comments": 8
+  },
+  {
+    "id": 3,
+    "title": "Photography Tips for Beginners",
+    "image": "/assets/post3.2.png",
+    "category": "Photography",
+    "date": "June 9, 2019",
+    "author": "Rickie Baroch",
+    "content": "Starting your photography journey? Here are essential tips and techniques to help you capture stunning images from day one.",
+    "comments": 15
+  }
+]

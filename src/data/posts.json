@@ -1,0 +1,92 @@
+[
+  {
+    "image": "/assets/Post1.1.jpg",
+    "alt": "post_1_1",
+    "category": "TOURISM",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/Post1.2.png",
+    "alt": "post_1_2",
+    "category": "SPORT",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/Post1.3.png",
+    "alt": "post_1_3",
+    "category": "FASHION",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/Post1.4.png",
+    "alt": "post_1_4",
+    "category": "CLOTHES",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/Post1.5.png",
+    "alt": "post_1_5",
+    "category": "CLOTHES",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/Post1.6.png",
+    "alt": "post_1_6",
+    "category": "FASHION",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/post_2.jpg",
+    "alt": "post_2_img",
+    "category": "SUMMER",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch",
+    "comments": 6,
+    "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem"
+  },
+  {
+    "image": "/assets/post3.1.png",
+    "alt": "post_3_1",
+    "category": "AUTUMN",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/post3.2.png",
+    "alt": "post_3_2",
+    "category": "CLOTHES",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/post3.3.png",
+    "alt": "post_3_3",
+    "category": "SUMMER",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/post3.4.png",
+    "alt": "post_3_4",
+    "category": "SUMMER",
+    "title": "One of Saturn's largest rings may be newer than anyone",
+    "date": "June 6, 2019",
+    "author": "Rickie Baroch"
+  }
+]
