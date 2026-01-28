@@ -79,7 +79,50 @@
     "about": {
         "title": "About Us",
         "mission": "Our Mission",
-        "values": "Our Values"
+        "missionText": "We strive to inspire our readers and provide them with useful information about fashion, lifestyle, cooking and other interesting topics. Our goal is to create content that will be useful, interesting and relevant.",
+        "values": "Our Values",
+        "subtitle": "Welcome to our blog! We create quality content about fashion, lifestyle, recipes and much more.",
+        "team": "Our Team",
+        "teamDesc": "Professional authors and editors who create quality content",
+        "quality": "Quality",
+        "qualityDesc": "We guarantee high quality of all our materials",
+        "innovation": "Innovation",
+        "innovationDesc": "We constantly develop and implement new technologies",
+        "passion": "Passion",
+        "passionDesc": "We love what we do, and it shows in every project",
+        "achievements": "Our Achievements",
+        "articles": "Articles",
+        "recipes": "Recipes",
+        "authors": "Authors",
+        "readers": "Readers",
+        "whyChooseUs": "Why Choose Us",
+        "contactUs": "Contact Us",
+        "contactText": "Do you have questions or suggestions? We'd love to hear from you!",
+        "goToContact": "Go to contact page",
+        "qualityValue": "Quality - We pay attention to every detail",
+        "authenticity": "Authenticity",
+        "authenticityValue": "Authenticity - We write from the heart",
+        "innovationValue": "Innovation - We are always looking for new ideas",
+        "community": "Community",
+        "communityValue": "Community - We value our readers"
+    },
+    "sidebar": {
+        "aboutAuthor": "About the author",
+        "continueReading": "Continue Reading",
+        "featuredPosts": "Featured posts",
+        "categories": "Categories",
+        "postsIn": "posts in",
+        "socialMedia": "Social media",
+        "tags": "Tags",
+        "viewPostsTagged": "View posts tagged with"
+    },
+    "hero": {
+        "by": "By",
+        "comments": "comments"
+    },
+    "footer": {
+        "goToPage": "Go to {{page}} page",
+        "socialMedia": "Social media {{index}}"
     },
     "validation": {
         "titleRequired": "Title is required",

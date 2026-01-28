@@ -1,8 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Image, Badge } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './Hero.css';
 
 const Hero = ({ heroData }) => {
+    const { t } = useTranslation();
+    
     return (
         <section className="hero-section">
             <Container fluid className="px-0">
@@ -26,9 +29,9 @@ const Hero = ({ heroData }) => {
                             <div className="hero-meta">
                                 <span className="hero-meta-item">{heroData.date}</span>
                                 <span className="hero-meta-item">
-                                    <span className="meta-label">By</span> {heroData.author}
+                                    <span className="meta-label">{t('hero.by')}</span> {heroData.author}
                                 </span>
-                                <span className="hero-meta-item">{heroData.comments} comments</span>
+                                <span className="hero-meta-item">{heroData.comments} {t('hero.comments')}</span>
                             </div>
                         </div>
                     </Col>

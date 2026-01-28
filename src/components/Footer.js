@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Nav, Image, ListGroup } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 const Footer = ({ organizationName, menuItems, socialIcons, copyrightText }) => {
+    const { t } = useTranslation();
+    
     const getMenuPath = (item) => {
         const paths = {
             'Home': '/',
@@ -34,29 +37,43 @@ const Footer = ({ organizationName, menuItems, socialIcons, copyrightText }) => 
                 <Row className="justify-content-center mb-3">
                     <Col xs={12} md="auto">
                         <Nav className="footer_nav justify-content-center flex-wrap" as="ul">
-                            {menuItems.map((item, index) => (
-                                <Nav.Item as="li" key={index} className="footer-nav-item">
-                                    <Nav.Link 
-                                        as={Link} 
-                                        to={getMenuPath(item)}
-                                        className="footer-nav-link"
-                                    >
-                                        {item}
-                                    </Nav.Link>
-                                </Nav.Item>
-                            ))}
+                            {menuItems.map((item, index) => {
+                                const menuKeyMap = {
+                                    'Home': 'navigation.home',
+                                    'Recipes': 'navigation.recipes',
+                                    'Article': 'navigation.article',
+                                    'Contact': 'navigation.contact',
+                                    'Search': 'navigation.search',
+                                    'Favorites': 'navigation.favorites',
+                                    'About': 'navigation.about'
+                                };
+                                const menuTranslationKey = menuKeyMap[item] || item;
+                                const menuText = t(menuTranslationKey);
+                                
+                                return (
+                                    <Nav.Item as="li" key={index} className="footer-nav-item">
+                                        <Nav.Link 
+                                            as={Link} 
+                                            to={getMenuPath(item)}
+                                            className="footer-nav-link"
+                                        >
+                                            {menuText}
+                                        </Nav.Link>
+                                    </Nav.Item>
+                                );
+                            })}
                         </Nav>
                     </Col>
                 </Row>
                 <Row className="justify-content-center mb-3">
                     <Col xs={12} md="auto">
                         <ListGroup horizontal className="socials-list">
-                            {socialIcons.map((icon, index) => {
-                                const tooltip = (
-                                    <Tooltip id={`social-tooltip-${index}`}>
-                                        Social media {index + 1}
-                                    </Tooltip>
-                                );
+                        {socialIcons.map((icon, index) => {
+                            const tooltip = (
+                                <Tooltip id={`social-tooltip-${index}`}>
+                                    {t('footer.socialMedia', { index: index + 1 })}
+                                </Tooltip>
+                            );
                                 
                                 return (
                                     <OverlayTrigger 

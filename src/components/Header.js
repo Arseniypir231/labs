@@ -43,9 +43,22 @@ const Header = ({ organizationName, menuItems }) => {
                             const path = getMenuPath(item);
                             const isActive = location.pathname === path;
                             
+                            // Получаем перевод для пункта меню
+                            const menuKeyMap = {
+                                'Home': 'navigation.home',
+                                'Recipes': 'navigation.recipes',
+                                'Article': 'navigation.article',
+                                'Contact': 'navigation.contact',
+                                'Search': 'navigation.search',
+                                'Favorites': 'navigation.favorites',
+                                'About': 'navigation.about'
+                            };
+                            const menuTranslationKey = menuKeyMap[item] || item;
+                            const menuText = t(menuTranslationKey);
+                            
                             const tooltip = (
                                 <BSTooltip id={`tooltip-${index}`}>
-                                    Go to {item} page
+                                    {t('footer.goToPage', { page: menuText })}
                                 </BSTooltip>
                             );
                             
@@ -59,9 +72,9 @@ const Header = ({ organizationName, menuItems }) => {
                                             eventKey={path}
                                         >
                                             {index === 0 ? (
-                                                <span className="homeSpan">{item}</span>
+                                                <span className="homeSpan">{menuText}</span>
                                             ) : (
-                                                item
+                                                menuText
                                             )}
                                         </Nav.Link>
                                     </OverlayTrigger>

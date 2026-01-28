@@ -1,38 +1,41 @@
 import React from 'react';
 import { Container, Row, Col, Card, Image, ListGroup } from 'react-bootstrap';
 import { FaUsers, FaAward, FaRocket, FaHeart } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import authorData from '../data/author.json';
 import './About.css';
 
 const About = () => {
+    const { t } = useTranslation();
+    
     const features = [
         {
             icon: <FaUsers />,
-            title: 'Наша команда',
-            description: 'Профессиональные авторы и редакторы, которые создают качественный контент'
+            title: t('about.team'),
+            description: t('about.teamDesc')
         },
         {
             icon: <FaAward />,
-            title: 'Качество',
-            description: 'Мы гарантируем высокое качество всех наших материалов'
+            title: t('about.quality'),
+            description: t('about.qualityDesc')
         },
         {
             icon: <FaRocket />,
-            title: 'Инновации',
-            description: 'Постоянно развиваемся и внедряем новые технологии'
+            title: t('about.innovation'),
+            description: t('about.innovationDesc')
         },
         {
             icon: <FaHeart />,
-            title: 'Страсть',
-            description: 'Мы любим то, что делаем, и это видно в каждом нашем проекте'
+            title: t('about.passion'),
+            description: t('about.passionDesc')
         }
     ];
 
     const stats = [
-        { number: '1000+', label: 'Статей' },
-        { number: '500+', label: 'Рецептов' },
-        { number: '50+', label: 'Авторов' },
-        { number: '10K+', label: 'Читателей' }
+        { number: '1000+', label: t('about.articles') },
+        { number: '500+', label: t('about.recipes') },
+        { number: '50+', label: t('about.authors') },
+        { number: '10K+', label: t('about.readers') }
     ];
 
     return (
@@ -40,10 +43,9 @@ const About = () => {
             <Row>
                 <Col xs={12}>
                     <div className="about-hero mb-5">
-                        <h1 className="about-title">О нас</h1>
+                        <h1 className="about-title">{t('about.title')}</h1>
                         <p className="about-subtitle">
-                            Добро пожаловать в наш блог! Мы создаем качественный контент 
-                            о моде, стиле жизни, рецептах и многом другом.
+                            {t('about.subtitle')}
                         </p>
                     </div>
                 </Col>
@@ -68,26 +70,23 @@ const About = () => {
                 <Col xs={12} md={6}>
                     <Card className="about-card h-100">
                         <Card.Body>
-                            <h3 className="card-title mb-4">Наша миссия</h3>
+                            <h3 className="card-title mb-4">{t('about.mission')}</h3>
                             <p className="mission-text">
-                                Мы стремимся вдохновлять наших читателей и предоставлять им 
-                                полезную информацию о моде, стиле жизни, кулинарии и других 
-                                интересных темах. Наша цель - создавать контент, который 
-                                будет полезен, интересен и актуален.
+                                {t('about.missionText')}
                             </p>
-                            <h3 className="card-title mt-4 mb-4">Наши ценности</h3>
+                            <h3 className="card-title mt-4 mb-4">{t('about.values')}</h3>
                             <ListGroup variant="flush">
                                 <ListGroup.Item className="value-item">
-                                    <strong>Качество</strong> - Мы уделяем внимание каждой детали
+                                    <strong>{t('about.quality')}</strong> - {t('about.qualityValue').split(' - ')[1]}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>Аутентичность</strong> - Мы пишем от души
+                                    <strong>{t('about.authenticity')}</strong> - {t('about.authenticityValue').split(' - ')[1]}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>Инновации</strong> - Мы всегда в поиске новых идей
+                                    <strong>{t('about.innovation')}</strong> - {t('about.innovationValue').split(' - ')[1]}
                                 </ListGroup.Item>
                                 <ListGroup.Item className="value-item">
-                                    <strong>Сообщество</strong> - Мы ценим наших читателей
+                                    <strong>{t('about.community')}</strong> - {t('about.communityValue').split(' - ')[1]}
                                 </ListGroup.Item>
                             </ListGroup>
                         </Card.Body>
@@ -97,7 +96,7 @@ const About = () => {
 
             <Row className="mb-5">
                 <Col xs={12}>
-                    <h2 className="section-title text-center mb-4">Наши достижения</h2>
+                    <h2 className="section-title text-center mb-4">{t('about.achievements')}</h2>
                     <Row className="g-4">
                         {stats.map((stat, index) => (
                             <Col key={index} xs={6} md={3}>
@@ -115,7 +114,7 @@ const About = () => {
 
             <Row className="mb-5">
                 <Col xs={12}>
-                    <h2 className="section-title text-center mb-4">Почему выбирают нас</h2>
+                    <h2 className="section-title text-center mb-4">{t('about.whyChooseUs')}</h2>
                     <Row className="g-4">
                         {features.map((feature, index) => (
                             <Col key={index} xs={12} sm={6} md={3}>
@@ -142,12 +141,12 @@ const About = () => {
                 <Col xs={12}>
                     <Card className="contact-card">
                         <Card.Body className="text-center">
-                            <h3 className="card-title mb-3">Свяжитесь с нами</h3>
+                            <h3 className="card-title mb-3">{t('about.contactUs')}</h3>
                             <p className="contact-text mb-4">
-                                У вас есть вопросы или предложения? Мы будем рады услышать от вас!
+                                {t('about.contactText')}
                             </p>
                             <a href="/contact" className="contact-link">
-                                Перейти на страницу контактов
+                                {t('about.goToContact')}
                             </a>
                         </Card.Body>
                     </Card>

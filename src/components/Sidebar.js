@@ -1,15 +1,18 @@
 import React from 'react';
 import { Card, ListGroup, Badge, Image, Alert } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './Sidebar.css';
 
 const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
+    const { t } = useTranslation();
+    
     return (
         <aside className="sidebar-custom">
             {/* Author Card */}
             <Card className="sidebar-card mb-4">
                 <Card.Header className="sidebar-header">
-                    <h2 className="sidebar-title">About the author</h2>
+                    <h2 className="sidebar-title">{t('sidebar.aboutAuthor')}</h2>
                 </Card.Header>
                 <Card.Body>
                     <div className="sidebar-author-info">
@@ -26,7 +29,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                             <p className="author-description">{author.description}</p>
                             <hr className="sidebar-divider" />
                             <Alert.Link href="#" className="continue-reading">
-                                Continue Reading
+                                {t('sidebar.continueReading')}
                             </Alert.Link>
                         </div>
                     </div>
@@ -36,7 +39,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
             {/* Featured Posts */}
             <Card className="sidebar-card mb-4">
                 <Card.Header className="sidebar-header">
-                    <h2 className="sidebar-title">Featured posts</h2>
+                    <h2 className="sidebar-title">{t('sidebar.featuredPosts')}</h2>
                 </Card.Header>
                 <Card.Body>
                     <ListGroup variant="flush">
@@ -64,7 +67,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
                                                 <h4 className="featured-title">{post.title}</h4>
                                                 <div className="featured-meta">
                                                     <span>{post.date}</span>
-                                                    <span className="meta-label">By</span> {post.author}
+                                                    <span className="meta-label">{t('hero.by')}</span> {post.author}
                                                 </div>
                                             </div>
                                         </div>
@@ -79,14 +82,14 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
             {/* Categories */}
             <Card className="sidebar-card mb-4">
                 <Card.Header className="sidebar-header">
-                    <h2 className="sidebar-title">Categories</h2>
+                    <h2 className="sidebar-title">{t('sidebar.categories')}</h2>
                 </Card.Header>
                 <Card.Body>
                     <ListGroup variant="flush">
                         {categories.map((category, index) => {
                             const tooltip = (
                                 <Tooltip id={`category-tooltip-${index}`}>
-                                    {category.count} posts in {category.name}
+                                    {category.count} {t('sidebar.postsIn')} {category.name}
                                 </Tooltip>
                             );
                             
@@ -110,7 +113,7 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
             {/* Social Media */}
             <Card className="sidebar-card mb-4">
                 <Card.Header className="sidebar-header">
-                    <h2 className="sidebar-title">Social media</h2>
+                    <h2 className="sidebar-title">{t('sidebar.socialMedia')}</h2>
                 </Card.Header>
                 <Card.Body>
                     <ListGroup variant="flush">
@@ -146,14 +149,14 @@ const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
             {/* Tags */}
             <Card className="sidebar-card mb-4">
                 <Card.Header className="sidebar-header">
-                    <h2 className="sidebar-title">Tags</h2>
+                    <h2 className="sidebar-title">{t('sidebar.tags')}</h2>
                 </Card.Header>
                 <Card.Body>
                     <div className="tags-container">
                         {tags.map((tag, index) => {
                             const tooltip = (
                                 <Tooltip id={`tag-tooltip-${index}`}>
-                                    View posts tagged with {tag}
+                                    {t('sidebar.viewPostsTagged')} {tag}
                                 </Tooltip>
                             );
                             

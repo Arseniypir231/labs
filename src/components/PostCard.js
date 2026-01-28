@@ -84,10 +84,10 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
                     <Card.Text as="div" className="post-meta">
                         <span className="meta-item">{post.date}</span>
                         <span className="meta-item">
-                            <span className="meta-label">By</span> {post.author}
+                            <span className="meta-label">{t('hero.by')}</span> {post.author}
                         </span>
                         {post.comments && (
-                            <span className="meta-item comments">{post.comments} comments</span>
+                            <span className="meta-item comments">{post.comments} {t('hero.comments')}</span>
                         )}
                     </Card.Text>
                     {post.description && (
