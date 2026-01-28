@@ -1,4 +1,4 @@
-const PdfPrinter = require('pdfmake');
+const pdfMake = require('pdfmake');
 const { Sequelize } = require('sequelize');
 const { Shipment, Vehicle, Route } = require('../models');
 const path = require('path');
@@ -6,9 +6,6 @@ const fs = require('fs');
 
 // Настройка шрифтов для русского языка
 // Загружаем шрифты Roboto из файловой системы для поддержки кириллицы
-let fonts;
-let printer;
-
 try {
   // Путь к шрифтам Roboto в node_modules/pdfmake
   const fontsPath = path.join(__dirname, '../node_modules/pdfmake/fonts/Roboto');
@@ -22,7 +19,7 @@ try {
   if (fs.existsSync(robotoRegular)) {
     // Загружаем шрифты из файловой системы как Buffer
     // pdfmake требует Buffer для шрифтов TTF
-    fonts = {
+    const fonts = {
       Roboto: {
         normal: fs.readFileSync(robotoRegular),
         bold: fs.existsSync(robotoBold) ? fs.readFileSync(robotoBold) : fs.readFileSync(robotoRegular),
@@ -30,7 +27,8 @@ try {
         bolditalics: fs.existsSync(robotoBoldItalic) ? fs.readFileSync(robotoBoldItalic) : fs.readFileSync(robotoRegular)
       }
     };
-    printer = new PdfPrinter(fonts);
+    // Устанавливаем шрифты в pdfmake
+    pdfMake.setFonts(fonts);
     console.log('Шрифты Roboto успешно загружены для поддержки кириллицы');
   } else {
     throw new Error('Шрифты Roboto не найдены по пути: ' + fontsPath);
@@ -40,7 +38,7 @@ try {
   // ВНИМАНИЕ: стандартные шрифты могут не поддерживать кириллицу полностью
   console.warn('Не удалось загрузить шрифты Roboto:', error.message);
   console.warn('Используем стандартные шрифты PDF (могут не поддерживать кириллицу)');
-  fonts = {
+  const fonts = {
     Roboto: {
       normal: 'Courier',
       bold: 'Courier-Bold',
@@ -48,7 +46,7 @@ try {
       bolditalics: 'Courier-BoldOblique'
     }
   };
-  printer = new PdfPrinter(fonts);
+  pdfMake.setFonts(fonts);
 }
 
 // Экспорт отчета по грузоперевозкам за период в PDF
@@ -206,8 +204,9 @@ exports.exportShipmentsReportPDF = async (startDate, endDate) => {
     }
   };
 
-  const pdfDoc = printer.createPdfKitDocument(docDefinition);
-  return pdfDoc;
+  const pdfDoc = await pdfMake.createPdf(docDefinition);
+  const stream = await pdfDoc.getStream();
+  return stream;
 };
 
 // Экспорт сводки по транспортным средствам в PDF
@@ -368,6 +367,7 @@ exports.exportVehiclesReportPDF = async () => {
     }
   };
 
-  const pdfDoc = printer.createPdfKitDocument(docDefinition);
-  return pdfDoc;
+  const pdfDoc = await pdfMake.createPdf(docDefinition);
+  const stream = await pdfDoc.getStream();
+  return stream;
 };
