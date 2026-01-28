@@ -97,19 +97,23 @@ exports.getTopRoutes = async (req, res) => {
         attributes: [],
         required: false
       }],
-      group: ['Route.id', 'Route.name', 'Route.origin', 'Route.destination'],
+      group: [Sequelize.col('Route.id'), Sequelize.col('Route.name'), Sequelize.col('Route.origin'), Sequelize.col('Route.destination')],
       order: [[Sequelize.fn('COUNT', Sequelize.col('shipments.id')), 'DESC']],
       limit,
-      raw: false
+      raw: false,
+      subQuery: false
     });
 
-    const data = routes.map(route => ({
-      id: route.id,
-      name: route.name,
-      route: `${route.origin} → ${route.destination}`,
-      shipmentCount: parseInt(route.dataValues.shipmentCount || 0),
-      totalWeight: parseFloat(route.dataValues.totalWeight || 0)
-    }));
+    const data = routes.map(route => {
+      const routeData = route.get({ plain: true });
+      return {
+        id: routeData.id,
+        name: routeData.name || `${routeData.origin} → ${routeData.destination}`,
+        route: `${routeData.origin} → ${routeData.destination}`,
+        shipmentCount: parseInt(routeData.shipmentCount || 0),
+        totalWeight: parseFloat(routeData.totalWeight || 0)
+      };
+    });
 
     res.json(data);
   } catch (error) {
