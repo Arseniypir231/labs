@@ -1,0 +1,52 @@
+.posts {
+    width: 100%;
+    max-width: 48.125rem;
+}
+
+.post_1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.875rem;
+    margin-top: 3.75rem;
+}
+
+.post_2 {
+    margin-top: 3.75rem;
+}
+
+.post_3 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.875rem;
+    margin-top: 1.875rem;
+}
+
+@media (max-width: 1024px) {
+    .posts {
+        max-width: 100%;
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .post_1,
+    .post_3 {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .posts {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post_1,
+    .post_3 {
+        gap: 1rem;
+    }
+
+    .posts {
+        padding: 0 0.5rem;
+    }
+}

@@ -1,0 +1,75 @@
+.instagram_widget_footer {
+    width: 100%;
+    max-width: 117.5rem;
+    margin: 5rem auto;
+    padding: 0 1.25rem;
+}
+
+.instagram_widget_footer_text h2 {
+    font-family: "PT Serif", serif;
+    color: #171717;
+    text-align: center;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 2.438rem;
+}
+
+.instagram_widget_footer_img {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.313rem;
+}
+
+.instagram_widget_footer_img img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 1024px) {
+    .instagram_widget_footer_img {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .instagram_widget_footer {
+        margin: 3rem auto;
+        padding: 0 1rem;
+    }
+
+    .instagram_widget_footer_text h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .instagram_widget_footer_img {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .instagram_widget_footer {
+        margin: 2rem auto;
+        padding: 0 0.5rem;
+    }
+
+    .instagram_widget_footer_text h2 {
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+    }
+
+    .instagram_widget_footer_img {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .instagram_widget_footer_img {
+        grid-template-columns: 1fr;
+    }
+}
