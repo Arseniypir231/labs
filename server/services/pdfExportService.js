@@ -1,18 +1,54 @@
 const PdfPrinter = require('pdfmake');
 const { Sequelize } = require('sequelize');
 const { Shipment, Vehicle, Route } = require('../models');
+const path = require('path');
+const fs = require('fs');
 
 // Настройка шрифтов для русского языка
-const fonts = {
-  Roboto: {
-    normal: 'Helvetica',
-    bold: 'Helvetica-Bold',
-    italics: 'Helvetica-Oblique',
-    bolditalics: 'Helvetica-BoldOblique'
-  }
-};
+// Загружаем шрифты Roboto из файловой системы для поддержки кириллицы
+let fonts;
+let printer;
 
-const printer = new PdfPrinter(fonts);
+try {
+  // Путь к шрифтам Roboto в node_modules/pdfmake
+  const fontsPath = path.join(__dirname, '../node_modules/pdfmake/fonts/Roboto');
+  
+  // Проверяем наличие файлов шрифтов
+  const robotoRegular = path.join(fontsPath, 'Roboto-Regular.ttf');
+  const robotoBold = path.join(fontsPath, 'Roboto-Medium.ttf'); // Используем Medium как Bold
+  const robotoItalic = path.join(fontsPath, 'Roboto-Italic.ttf');
+  const robotoBoldItalic = path.join(fontsPath, 'Roboto-MediumItalic.ttf');
+  
+  if (fs.existsSync(robotoRegular)) {
+    // Загружаем шрифты из файловой системы как Buffer
+    fonts = {
+      Roboto: {
+        normal: fs.readFileSync(robotoRegular),
+        bold: fs.existsSync(robotoBold) ? fs.readFileSync(robotoBold) : fs.readFileSync(robotoRegular),
+        italics: fs.existsSync(robotoItalic) ? fs.readFileSync(robotoItalic) : fs.readFileSync(robotoRegular),
+        bolditalics: fs.existsSync(robotoBoldItalic) ? fs.readFileSync(robotoBoldItalic) : fs.readFileSync(robotoRegular)
+      }
+    };
+    printer = new PdfPrinter(fonts);
+    console.log('Шрифты Roboto успешно загружены для поддержки кириллицы');
+  } else {
+    throw new Error('Шрифты Roboto не найдены');
+  }
+} catch (error) {
+  // Если не удалось загрузить шрифты, используем стандартные
+  // ВНИМАНИЕ: стандартные шрифты могут не поддерживать кириллицу полностью
+  console.warn('Не удалось загрузить шрифты Roboto:', error.message);
+  console.warn('Используем стандартные шрифты PDF');
+  fonts = {
+    Roboto: {
+      normal: 'Courier',
+      bold: 'Courier-Bold',
+      italics: 'Courier-Oblique',
+      bolditalics: 'Courier-BoldOblique'
+    }
+  };
+  printer = new PdfPrinter(fonts);
+}
 
 // Экспорт отчета по грузоперевозкам за период в PDF
 exports.exportShipmentsReportPDF = async (startDate, endDate) => {
