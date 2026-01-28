@@ -36,7 +36,8 @@ const Home = () => {
         // Загрузка данных из JSON файлов
         const postsWithIds = postsData.map((post, index) => ({
             ...post,
-            id: index + 1
+            id: post.id || index + 1,
+            type: 'post'
         }));
         setPosts(postsWithIds);
         setHero(heroData);
@@ -131,35 +132,41 @@ const Home = () => {
     return (
         <>
             <Hero heroData={hero} />
-            <article className="posts_and_slidebar">
-                <div style={{ flex: 1 }}>
-                    <ManagementPanel
-                        selectedCount={selectedPosts.size}
-                        onAdd={handleAdd}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
-                        onSelectAll={handleSelectAll}
-                        onDeselectAll={handleDeselectAll}
-                        canEdit={true}
-                        canDelete={true}
-                        canSelectAll={true}
-                    />
-                    <PostsSection 
-                        posts={posts} 
-                        onPostClick={handlePostClick}
-                        selectedPosts={selectedPosts}
-                        onPostSelect={handlePostSelect}
-                        showCheckbox={true}
-                    />
+            <div className="main-content-wrapper">
+                <div className="container-fluid px-3 px-md-4 px-lg-5">
+                    <div className="row g-4">
+                        <div className="col-12 col-lg-8">
+                            <ManagementPanel
+                                selectedCount={selectedPosts.size}
+                                onAdd={handleAdd}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                                onSelectAll={handleSelectAll}
+                                onDeselectAll={handleDeselectAll}
+                                canEdit={true}
+                                canDelete={true}
+                                canSelectAll={true}
+                            />
+                            <PostsSection 
+                                posts={posts} 
+                                onPostClick={handlePostClick}
+                                selectedPosts={selectedPosts}
+                                onPostSelect={handlePostSelect}
+                                showCheckbox={true}
+                            />
+                        </div>
+                        <div className="col-12 col-lg-4">
+                            <Sidebar 
+                                author={author}
+                                featuredPosts={featuredPosts}
+                                categories={categories}
+                                socials={socials}
+                                tags={tags}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <Sidebar 
-                    author={author}
-                    featuredPosts={featuredPosts}
-                    categories={categories}
-                    socials={socials}
-                    tags={tags}
-                />
-            </article>
+            </div>
             <Pagination />
             <InstagramWidget 
                 instagramImages={instagram.images}
