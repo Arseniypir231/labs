@@ -1,87 +1,173 @@
 import React from 'react';
+import { Card, ListGroup, Badge, Image, Alert } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './Sidebar.css';
 
 const Sidebar = ({ author, featuredPosts, categories, socials, tags }) => {
     return (
-        <aside className="sidebar">
-            <article className="sidebar_author">
-                <article className="sidebar_author_text">
-                    <h2>About the author</h2>
-                </article>
-                <article className="sidebar_author_inf">
-                    <img src={author.image} alt="author" />
-                    <article className="sidebar_author_inf_text">
-                        <h2 className="author_name">{author.name}</h2>
-                        <h2 className="food_text">{author.role}</h2>
-                        <p>{author.description}</p>
-                        <hr />
-                        <h2 className="continue_reading">Continue Reading</h2>
-                    </article>
-                </article>
-            </article>
+        <aside className="sidebar-custom">
+            {/* Author Card */}
+            <Card className="sidebar-card mb-4">
+                <Card.Header className="sidebar-header">
+                    <h2 className="sidebar-title">About the author</h2>
+                </Card.Header>
+                <Card.Body>
+                    <div className="sidebar-author-info">
+                        <Image 
+                            src={author.image} 
+                            alt="author" 
+                            className="author-image"
+                            roundedCircle
+                            fluid
+                        />
+                        <div className="sidebar-author-text">
+                            <h3 className="author-name">{author.name}</h3>
+                            <h4 className="author-role">{author.role}</h4>
+                            <p className="author-description">{author.description}</p>
+                            <hr className="sidebar-divider" />
+                            <Alert.Link href="#" className="continue-reading">
+                                Continue Reading
+                            </Alert.Link>
+                        </div>
+                    </div>
+                </Card.Body>
+            </Card>
 
-            <article className="sidebar_featured">
-                <article className="sidebar_featured_text">
-                    <h2>Featured posts</h2>
-                </article>
-                <article className="sidebar_features_inf">
-                    {featuredPosts.map((post, index) => (
-                        <article key={index} className={`feature ${index === 0 ? 'first_feature' : index === 1 ? 'second_feature' : 'third_feature'}`}>
-                            <img src={post.image} alt={post.alt} />
-                            <article className="feature_text">
-                                <h3>{post.category}</h3>
-                                <h2>{post.title}</h2>
-                                <article className="articleText">
-                                    <h2>{post.date} <span>By</span> {post.author}</h2>
-                                </article>
-                            </article>
-                        </article>
-                    ))}
-                </article>
-            </article>
+            {/* Featured Posts */}
+            <Card className="sidebar-card mb-4">
+                <Card.Header className="sidebar-header">
+                    <h2 className="sidebar-title">Featured posts</h2>
+                </Card.Header>
+                <Card.Body>
+                    <ListGroup variant="flush">
+                        {featuredPosts.map((post, index) => {
+                            const tooltip = (
+                                <Tooltip id={`featured-tooltip-${index}`}>
+                                    {post.title}
+                                </Tooltip>
+                            );
+                            
+                            return (
+                                <OverlayTrigger key={index} placement="right" overlay={tooltip}>
+                                    <ListGroup.Item className="featured-post-item">
+                                        <div className="featured-post-content">
+                                            <Image 
+                                                src={post.image} 
+                                                alt={post.alt} 
+                                                className="featured-post-image"
+                                                fluid
+                                            />
+                                            <div className="featured-post-text">
+                                                <Badge bg="secondary" className="featured-category">
+                                                    {post.category}
+                                                </Badge>
+                                                <h4 className="featured-title">{post.title}</h4>
+                                                <div className="featured-meta">
+                                                    <span>{post.date}</span>
+                                                    <span className="meta-label">By</span> {post.author}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ListGroup.Item>
+                                </OverlayTrigger>
+                            );
+                        })}
+                    </ListGroup>
+                </Card.Body>
+            </Card>
 
-            <article className="sidebar_categories">
-                <article className="sidebar_categories_text">
-                    <h2>Categories</h2>
-                </article>
-                <article className="sidebar_categories_inf">
-                    {categories.map((category, index) => (
-                        <article key={index} className={index === categories.length - 1 ? 'sidebar_last_category_block' : 'sidebar_categories_block'}>
-                            <article className={`category ${index === 0 ? 'first_category' : index === 1 ? 'second_category' : index === 2 ? 'third_category' : index === 3 ? 'fourth_category' : 'fifth_category'}`}>
-                                <h2>{category.name}</h2>
-                                <h2>({category.count})</h2>
-                            </article>
-                        </article>
-                    ))}
-                </article>
-            </article>
+            {/* Categories */}
+            <Card className="sidebar-card mb-4">
+                <Card.Header className="sidebar-header">
+                    <h2 className="sidebar-title">Categories</h2>
+                </Card.Header>
+                <Card.Body>
+                    <ListGroup variant="flush">
+                        {categories.map((category, index) => {
+                            const tooltip = (
+                                <Tooltip id={`category-tooltip-${index}`}>
+                                    {category.count} posts in {category.name}
+                                </Tooltip>
+                            );
+                            
+                            return (
+                                <OverlayTrigger key={index} placement="right" overlay={tooltip}>
+                                    <ListGroup.Item className="category-item">
+                                        <div className="category-content">
+                                            <span className="category-name">{category.name}</span>
+                                            <Badge bg="secondary" className="category-count">
+                                                {category.count}
+                                            </Badge>
+                                        </div>
+                                    </ListGroup.Item>
+                                </OverlayTrigger>
+                            );
+                        })}
+                    </ListGroup>
+                </Card.Body>
+            </Card>
 
-            <article className="sidebar_socials">
-                <article className="sidebar_socials_text">
-                    <h2>Social media</h2>
-                </article>
-                <article className="sidebar_socials_socials">
-                    {socials.map((social, index) => (
-                        <article key={index} className="social">
-                            <img src={social.icon} alt={social.name} />
-                            <h3 className={`social_${social.name.toLowerCase()}_text`}>{social.count} {social.label}</h3>
-                        </article>
-                    ))}
-                </article>
-            </article>
+            {/* Social Media */}
+            <Card className="sidebar-card mb-4">
+                <Card.Header className="sidebar-header">
+                    <h2 className="sidebar-title">Social media</h2>
+                </Card.Header>
+                <Card.Body>
+                    <ListGroup variant="flush">
+                        {socials.map((social, index) => {
+                            const tooltip = (
+                                <Tooltip id={`social-tooltip-${index}`}>
+                                    {social.name}: {social.count} {social.label}
+                                </Tooltip>
+                            );
+                            
+                            return (
+                                <OverlayTrigger key={index} placement="right" overlay={tooltip}>
+                                    <ListGroup.Item className="social-item-custom">
+                                        <div className="social-content">
+                                            <Image 
+                                                src={social.icon} 
+                                                alt={social.name} 
+                                                className="social-icon-img"
+                                                fluid
+                                            />
+                                            <span className="social-text">
+                                                {social.count} {social.label}
+                                            </span>
+                                        </div>
+                                    </ListGroup.Item>
+                                </OverlayTrigger>
+                            );
+                        })}
+                    </ListGroup>
+                </Card.Body>
+            </Card>
 
-            <article className="sidebar_tags">
-                <article className="sidebar_tags_text">
-                    <h2>Tags</h2>
-                </article>
-                <article className="sidebar_tags_tags">
-                    {tags.map((tag, index) => (
-                        <article key={index} className={`${tag.toLowerCase()}_tag`}>
-                            <h2>{tag}</h2>
-                        </article>
-                    ))}
-                </article>
-            </article>
+            {/* Tags */}
+            <Card className="sidebar-card mb-4">
+                <Card.Header className="sidebar-header">
+                    <h2 className="sidebar-title">Tags</h2>
+                </Card.Header>
+                <Card.Body>
+                    <div className="tags-container">
+                        {tags.map((tag, index) => {
+                            const tooltip = (
+                                <Tooltip id={`tag-tooltip-${index}`}>
+                                    View posts tagged with {tag}
+                                </Tooltip>
+                            );
+                            
+                            return (
+                                <OverlayTrigger key={index} placement="top" overlay={tooltip}>
+                                    <Badge bg="light" text="dark" className="tag-badge">
+                                        {tag}
+                                    </Badge>
+                                </OverlayTrigger>
+                            );
+                        })}
+                    </div>
+                </Card.Body>
+            </Card>
         </aside>
     );
 };
