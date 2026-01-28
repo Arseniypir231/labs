@@ -111,12 +111,13 @@ const Home = () => {
     };
 
     const handleDelete = () => {
-        if (selectedPosts.size > 0 && window.confirm(`Delete ${selectedPosts.size} post(s)?`)) {
+        const count = selectedPosts.size;
+        if (count > 0 && window.confirm(`Delete ${count} post(s)?`)) {
             selectedPosts.forEach(postId => {
                 dispatch(deletePost(postId));
             });
             setSelectedPosts(new Set());
-            toast.success(`Deleted ${selectedPosts.size} post(s)`);
+            toast.success(`Deleted ${count} post(s)`);
         }
     };
 
