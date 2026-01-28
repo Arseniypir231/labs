@@ -29,13 +29,18 @@ const Article = () => {
     const [nextId, setNextId] = useState(100);
 
     useEffect(() => {
-        setArticles(articlesData);
+        const articlesWithType = articlesData.map((article, index) => ({
+            ...article,
+            id: article.id || index + 1,
+            type: 'article'
+        }));
+        setArticles(articlesWithType);
         setAuthor(authorData);
         setFeaturedPosts(featuredPostsData);
         setCategories(categoriesData);
         setSocials(socialsData);
         setTags(tagsData);
-        setNextId(Math.max(...articlesData.map(a => a.id), 0) + 1);
+        setNextId(Math.max(...articlesWithType.map(a => a.id), 0) + 1);
     }, []);
 
     useEffect(() => {
