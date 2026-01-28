@@ -26,13 +26,18 @@ const Recipes = () => {
     const [nextId, setNextId] = useState(100);
 
     useEffect(() => {
-        setRecipes(recipesData);
+        const recipesWithType = recipesData.map((recipe, index) => ({
+            ...recipe,
+            id: recipe.id || index + 1,
+            type: 'recipe'
+        }));
+        setRecipes(recipesWithType);
         setAuthor(authorData);
         setFeaturedPosts(featuredPostsData);
         setCategories(categoriesData);
         setSocials(socialsData);
         setTags(tagsData);
-        setNextId(Math.max(...recipesData.map(r => r.id), 0) + 1);
+        setNextId(Math.max(...recipesWithType.map(r => r.id), 0) + 1);
     }, []);
 
     const handleRecipeClick = (recipe) => {
