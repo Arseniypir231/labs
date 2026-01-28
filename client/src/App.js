@@ -8,6 +8,7 @@ import Shipments from './components/Shipments';
 import VehicleDetail from './components/VehicleDetail';
 import RouteDetail from './components/RouteDetail';
 import ShipmentDetail from './components/ShipmentDetail';
+import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Register from './components/Register';
 import ChangePassword from './components/ChangePassword';
@@ -33,6 +34,9 @@ function Navigation() {
 
   return (
     <nav className="nav">
+      <Link to="/dashboard" className={location.pathname === '/dashboard' || location.pathname === '/' ? 'active' : ''}>
+        📊 Аналитика
+      </Link>
       <Link to="/vehicles" className={location.pathname === '/vehicles' ? 'active' : ''}>
         Транспортные средства
       </Link>
@@ -87,7 +91,15 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <Vehicles />
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
               </ProtectedRoute>
             }
           />
