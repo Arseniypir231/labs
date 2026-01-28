@@ -1,25 +1,46 @@
 import React from 'react';
-import Modal from './Modal';
+import { Modal, Image, Badge, Button } from 'react-bootstrap';
 import './PostDetailModal.css';
 
 const PostDetailModal = ({ isOpen, onClose, post }) => {
     if (!post) return null;
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="post-detail-modal">
-                <img src={post.image} alt={post.alt || post.title} className="post-detail-image" />
+        <Modal 
+            show={isOpen} 
+            onHide={onClose}
+            size="lg"
+            centered
+            className="post-detail-modal-custom"
+        >
+            <Modal.Header closeButton>
+                <Modal.Title>Post Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
                 <div className="post-detail-content">
-                    <h3 className={`post-detail-category ${post.category === 'SPORT' ? 'sport_h3' : ''}`}>
+                    <Image 
+                        src={post.image} 
+                        alt={post.alt || post.title} 
+                        className="post-detail-image mb-3"
+                        fluid
+                        rounded
+                    />
+                    <Badge 
+                        bg={post.category === 'SPORT' ? 'danger' : 'secondary'} 
+                        className="post-detail-category mb-2"
+                    >
                         {post.category}
-                    </h3>
+                    </Badge>
                     <h2 className="post-detail-title">{post.title}</h2>
-                    <article className="articleText">
-                        <h2>{post.date} <span>By</span> {post.author}</h2>
+                    <div className="post-detail-meta mb-3">
+                        <span className="meta-item">{post.date}</span>
+                        <span className="meta-item">
+                            <span className="meta-label">By</span> {post.author}
+                        </span>
                         {post.comments && (
-                            <h2 className="comments_h2">{post.comments} comments</h2>
+                            <span className="meta-item comments">{post.comments} comments</span>
                         )}
-                    </article>
+                    </div>
                     {post.description && (
                         <p className="post-detail-description">{post.description}</p>
                     )}
@@ -33,7 +54,12 @@ const PostDetailModal = ({ isOpen, onClose, post }) => {
                         </p>
                     )}
                 </div>
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onClose}>
+                    Close
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };
