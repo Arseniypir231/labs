@@ -1,0 +1,501 @@
+{
+  "info": {
+    "name": "Transport Logistics API",
+    "description": "API коллекция для тестирования системы управления транспортной логистикой",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"А123БВ777\",\n  \"brand\": \"Mercedes\",\n  \"model\": \"Actros\",\n  \"vehicleType\": \"truck\",\n  \"capacity\": 20.5,\n  \"status\": \"available\",\n  \"year\": 2020\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles"]
+            }
+          }
+        },
+        {
+          "name": "Get All Vehicles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles?page=1&limit=10&sortBy=id&sortOrder=ASC",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"},
+                {"key": "sortBy", "value": "id"},
+                {"key": "sortOrder", "value": "ASC"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles?status=available&vehicleType=truck&minCapacity=10&maxCapacity=30&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "status", "value": "available"},
+                {"key": "vehicleType", "value": "truck"},
+                {"key": "minCapacity", "value": "10"},
+                {"key": "maxCapacity", "value": "30"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Vehicles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles?search=Mercedes&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "search", "value": "Mercedes"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Vehicle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_use\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Vehicle Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/vehicles/:id/exists",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "vehicles", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Routes",
+      "item": [
+        {
+          "name": "Create Route",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Москва - Санкт-Петербург\",\n  \"origin\": \"Москва\",\n  \"destination\": \"Санкт-Петербург\",\n  \"distance\": 700.5,\n  \"estimatedTime\": 480,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/routes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes"]
+            }
+          }
+        },
+        {
+          "name": "Get All Routes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/routes?page=1&limit=10&sortBy=id&sortOrder=ASC",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"},
+                {"key": "sortBy", "value": "id"},
+                {"key": "sortOrder", "value": "ASC"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Routes with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/routes?status=active&minDistance=100&maxDistance=1000&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes"],
+              "query": [
+                {"key": "status", "value": "active"},
+                {"key": "minDistance", "value": "100"},
+                {"key": "maxDistance", "value": "1000"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Routes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/routes?search=Москва&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes"],
+              "query": [
+                {"key": "search", "value": "Москва"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Route by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/routes/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Route",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inactive\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/routes/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Route",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:5000/api/routes/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Route Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/routes/:id/exists",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "routes", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shipments",
+      "item": [
+        {
+          "name": "Create Shipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 1,\n  \"routeId\": 1,\n  \"cargoDescription\": \"Электроника и бытовая техника\",\n  \"weight\": 15.5,\n  \"status\": \"pending\",\n  \"departureDate\": \"2024-01-15T10:00:00Z\",\n  \"deliveryDate\": \"2024-01-16T18:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/shipments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments"]
+            }
+          }
+        },
+        {
+          "name": "Get All Shipments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments?page=1&limit=10&sortBy=id&sortOrder=ASC",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"},
+                {"key": "sortBy", "value": "id"},
+                {"key": "sortOrder", "value": "ASC"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Shipments with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments?status=pending&vehicleId=1&minWeight=10&maxWeight=20&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments"],
+              "query": [
+                {"key": "status", "value": "pending"},
+                {"key": "vehicleId", "value": "1"},
+                {"key": "minWeight", "value": "10"},
+                {"key": "maxWeight", "value": "20"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Shipments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments?search=электроника&page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments"],
+              "query": [
+                {"key": "search", "value": "электроника"},
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Shipment by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Shipment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_transit\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/shipments/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Shipment",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments", ":id"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Shipment Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/shipments/:id/exists",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "shipments", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": "1"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:5000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health"]
+        }
+      }
+    }
+  ]
+}
