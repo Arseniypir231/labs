@@ -205,8 +205,8 @@ exports.exportShipmentsReportPDF = async (startDate, endDate) => {
   };
 
   const pdfDoc = await pdfMake.createPdf(docDefinition);
-  const stream = await pdfDoc.getStream();
-  return stream;
+  const buffer = await pdfDoc.getBuffer();
+  return buffer;
 };
 
 // Экспорт сводки по транспортным средствам в PDF
@@ -368,6 +368,6 @@ exports.exportVehiclesReportPDF = async () => {
   };
 
   const pdfDoc = await pdfMake.createPdf(docDefinition);
-  const stream = await pdfDoc.getStream();
-  return stream;
+  const buffer = await pdfDoc.getBuffer();
+  return buffer;
 };

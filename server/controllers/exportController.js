@@ -24,21 +24,12 @@ exports.exportShipmentsPDF = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
     
-    const pdfStream = await pdfExportService.exportShipmentsReportPDF(startDate, endDate);
+    const pdfBuffer = await pdfExportService.exportShipmentsReportPDF(startDate, endDate);
     
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=shipments_report_${new Date().toISOString().split('T')[0]}.pdf`);
     
-    pdfStream.pipe(res);
-    pdfStream.on('end', () => {
-      res.end();
-    });
-    pdfStream.on('error', (error) => {
-      console.error('Ошибка потока PDF:', error);
-      if (!res.headersSent) {
-        res.status(500).json({ error: 'Ошибка при генерации PDF' });
-      }
-    });
+    res.send(pdfBuffer);
   } catch (error) {
     console.error('Ошибка при экспорте в PDF:', error);
     res.status(500).json({ error: 'Ошибка при экспорте отчета в PDF: ' + error.message });
@@ -64,21 +55,12 @@ exports.exportVehiclesExcel = async (req, res) => {
 // Экспорт сводки по транспортным средствам в PDF
 exports.exportVehiclesPDF = async (req, res) => {
   try {
-    const pdfStream = await pdfExportService.exportVehiclesReportPDF();
+    const pdfBuffer = await pdfExportService.exportVehiclesReportPDF();
     
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename=vehicles_report_${new Date().toISOString().split('T')[0]}.pdf`);
     
-    pdfStream.pipe(res);
-    pdfStream.on('end', () => {
-      res.end();
-    });
-    pdfStream.on('error', (error) => {
-      console.error('Ошибка потока PDF:', error);
-      if (!res.headersSent) {
-        res.status(500).json({ error: 'Ошибка при генерации PDF' });
-      }
-    });
+    res.send(pdfBuffer);
   } catch (error) {
     console.error('Ошибка при экспорте в PDF:', error);
     res.status(500).json({ error: 'Ошибка при экспорте отчета в PDF: ' + error.message });
