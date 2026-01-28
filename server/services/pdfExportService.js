@@ -17,14 +17,14 @@ try {
   const robotoBoldItalic = path.join(fontsPath, 'Roboto-MediumItalic.ttf');
   
   if (fs.existsSync(robotoRegular)) {
-    // Загружаем шрифты из файловой системы как Buffer
-    // pdfmake требует Buffer для шрифтов TTF
+    // В Node-версии pdfmake шрифты должны быть путями к файлам (string),
+    // иначе URLResolver пытается прочитать url.url (для Buffer это undefined).
     const fonts = {
       Roboto: {
-        normal: fs.readFileSync(robotoRegular),
-        bold: fs.existsSync(robotoBold) ? fs.readFileSync(robotoBold) : fs.readFileSync(robotoRegular),
-        italics: fs.existsSync(robotoItalic) ? fs.readFileSync(robotoItalic) : fs.readFileSync(robotoRegular),
-        bolditalics: fs.existsSync(robotoBoldItalic) ? fs.readFileSync(robotoBoldItalic) : fs.readFileSync(robotoRegular)
+        normal: robotoRegular,
+        bold: fs.existsSync(robotoBold) ? robotoBold : robotoRegular,
+        italics: fs.existsSync(robotoItalic) ? robotoItalic : robotoRegular,
+        bolditalics: fs.existsSync(robotoBoldItalic) ? robotoBoldItalic : robotoRegular
       }
     };
     // Устанавливаем шрифты в pdfmake
@@ -38,15 +38,8 @@ try {
   // ВНИМАНИЕ: стандартные шрифты могут не поддерживать кириллицу полностью
   console.warn('Не удалось загрузить шрифты Roboto:', error.message);
   console.warn('Используем стандартные шрифты PDF (могут не поддерживать кириллицу)');
-  const fonts = {
-    Roboto: {
-      normal: 'Courier',
-      bold: 'Courier-Bold',
-      italics: 'Courier-Oblique',
-      bolditalics: 'Courier-BoldOblique'
-    }
-  };
-  pdfMake.setFonts(fonts);
+  // Не вызываем setFonts с "именами" шрифтов: Node-версия pdfmake ожидает пути к файлам.
+  // Оставляем дефолтную конфигурацию pdfmake.
 }
 
 // Экспорт отчета по грузоперевозкам за период в PDF
