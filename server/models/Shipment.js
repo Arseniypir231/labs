@@ -101,6 +101,40 @@ const Shipment = sequelize.define('Shipment', {
         msg: 'URL фотографии должен быть валидным URL'
       }
     }
+  },
+  displayOrder: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0,
+    comment: 'Порядок отображения для сортировки'
+  },
+  priority: {
+    type: DataTypes.ENUM('low', 'medium', 'high'),
+    allowNull: true,
+    defaultValue: 'medium',
+    validate: {
+      isIn: {
+        args: [['low', 'medium', 'high']],
+        msg: 'Приоритет должен быть: low, medium или high'
+      }
+    }
+  },
+  insuranceValue: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+    validate: {
+      isDecimal: {
+        msg: 'Страховая стоимость должна быть числом'
+      },
+      min: {
+        args: [0],
+        msg: 'Страховая стоимость не может быть отрицательной'
+      }
+    }
+  },
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
   tableName: 'shipments',

@@ -246,6 +246,28 @@ code {
   margin-top: 10px;
 }
 
+/* Стили для drag and drop */
+.dragging {
+  opacity: 0.5;
+  background-color: #f0f0f0;
+}
+
+.data-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.data-table tbody tr[draggable="true"] {
+  cursor: grab;
+}
+
+.data-table tbody tr[draggable="true"]:active {
+  cursor: grabbing;
+}
+
 .success {
   color: #27ae60;
   margin-top: 10px;

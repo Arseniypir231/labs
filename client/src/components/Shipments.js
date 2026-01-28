@@ -16,6 +16,7 @@ import { fetchRoutes } from '../store/slices/routesSlice';
 import { validateShipment } from '../utils/validation';
 import { exportShipmentsReport } from '../utils/exportUtils';
 import ShipmentForm from './ShipmentForm';
+import SortableShipmentsList from './SortableShipmentsList';
 
 function Shipments() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function Shipments() {
     startDate: '',
     endDate: ''
   });
+  const [useDragAndDrop, setUseDragAndDrop] = useState(true);
   
   const [formData, setFormData] = useState({
     vehicleId: '',
@@ -238,52 +240,85 @@ function Shipments() {
           <div>Загрузка...</div>
         ) : (
           <>
-            <div className="table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Транспорт</th>
-                    <th>Маршрут</th>
-                    <th>Описание груза</th>
-                    <th>Вес (т)</th>
-                    <th>Дата отправления</th>
-                    <th>Дата доставки</th>
-                    <th>Статус</th>
-                    <th>Действия</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map(shipment => (
-                    <tr key={shipment.id}>
-                      <td>{shipment.id}</td>
-                      <td>{shipment.vehicle ? `${shipment.vehicle.brand} ${shipment.vehicle.model} (${shipment.vehicle.licensePlate})` : 'N/A'}</td>
-                      <td>{shipment.route ? `${shipment.route.origin} → ${shipment.route.destination}` : 'N/A'}</td>
-                      <td>{shipment.cargoDescription}</td>
-                      <td>{shipment.weight}</td>
-                      <td>{shipment.departureDate ? new Date(shipment.departureDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
-                      <td>{shipment.deliveryDate ? new Date(shipment.deliveryDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
-                      <td>{shipment.status}</td>
-                      <td>
-                        <button className="btn btn-success" onClick={() => handleViewDetails(shipment.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                          Подробнее
-                        </button>
-                        {canEdit && (
-                          <>
-                            <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px', marginBottom: '5px' }}>
-                              Редактировать
-                            </button>
-                            <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
-                              Удалить
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div style={{ marginBottom: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={useDragAndDrop}
+                  onChange={(e) => setUseDragAndDrop(e.target.checked)}
+                />
+                <span>Включить перетаскивание для сортировки</span>
+              </label>
+              {useDragAndDrop && (
+                <div style={{ fontSize: '12px', color: '#666', fontStyle: 'italic' }}>
+                  💡 Перетащите элементы за значок ⋮⋮ для изменения порядка
+                </div>
+              )}
             </div>
+            
+            {useDragAndDrop ? (
+              <SortableShipmentsList
+                shipments={items}
+                onViewDetails={handleViewDetails}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                canEdit={canEdit}
+                onOrderChange={() => {
+                  dispatch(fetchShipments({
+                    page: pagination.page,
+                    limit: pagination.limit,
+                    ...filters
+                  }));
+                }}
+              />
+            ) : (
+              <div className="table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Транспорт</th>
+                      <th>Маршрут</th>
+                      <th>Описание груза</th>
+                      <th>Вес (т)</th>
+                      <th>Дата отправления</th>
+                      <th>Дата доставки</th>
+                      <th>Статус</th>
+                      <th>Действия</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {items.map(shipment => (
+                      <tr key={shipment.id}>
+                        <td>{shipment.id}</td>
+                        <td>{shipment.vehicle ? `${shipment.vehicle.brand} ${shipment.vehicle.model} (${shipment.vehicle.licensePlate})` : 'N/A'}</td>
+                        <td>{shipment.route ? `${shipment.route.origin} → ${shipment.route.destination}` : 'N/A'}</td>
+                        <td>{shipment.cargoDescription}</td>
+                        <td>{shipment.weight}</td>
+                        <td>{shipment.departureDate ? new Date(shipment.departureDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
+                        <td>{shipment.deliveryDate ? new Date(shipment.deliveryDate).toLocaleDateString('ru-RU') : 'N/A'}</td>
+                        <td>{shipment.status}</td>
+                        <td>
+                          <button className="btn btn-success" onClick={() => handleViewDetails(shipment.id)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                            Подробнее
+                          </button>
+                          {canEdit && (
+                            <>
+                              <button className="btn btn-secondary" onClick={() => handleEdit(shipment)} style={{ marginRight: '5px', marginBottom: '5px' }}>
+                                Редактировать
+                              </button>
+                              <button className="btn btn-danger" onClick={() => handleDelete(shipment.id)}>
+                                Удалить
+                              </button>
+                            </>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
             <div className="pagination">
               <button
