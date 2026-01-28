@@ -22,30 +22,44 @@ main {
 .posts_and_slidebar {
     width: 100%;
     max-width: 120rem;
-    display: grid;
-    grid-template-columns: 48.125rem 16.875rem;
-    column-gap: 2rem;
+    display: flex;
+    justify-content: space-between;
     margin: 0 auto;
     padding: 0 5rem;
     box-sizing: border-box;
+    gap: 2rem;
 }
 
 @media (max-width: 1440px) {
     .posts_and_slidebar {
         padding: 0 3rem;
-        column-gap: 1.5rem;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 1280px) {
+    .posts_and_slidebar {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 1100px) {
+    .posts_and_slidebar {
+        gap: 0.5rem;
     }
 }
 
 @media (max-width: 1024px) {
     .posts_and_slidebar {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         padding: 0 2rem;
-        column-gap: 0;
+        gap: 0;
     }
 
     .posts_and_slidebar > aside {
         order: -1;
+        width: 100%;
+        max-width: 100%;
     }
 }
 

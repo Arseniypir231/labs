@@ -1,6 +1,7 @@
 .posts {
-    width: 100%;
+    width: 48.125rem;
     max-width: 48.125rem;
+    flex-shrink: 0;
 }
 
 .post_1 {
@@ -23,8 +24,9 @@
 
 @media (max-width: 1024px) {
     .posts {
+        width: 100%;
         max-width: 100%;
-        padding: 0 2rem;
+        padding: 0;
     }
 }
 
