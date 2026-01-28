@@ -21,6 +21,7 @@ try {
   
   if (fs.existsSync(robotoRegular)) {
     // Загружаем шрифты из файловой системы как Buffer
+    // pdfmake требует Buffer для шрифтов TTF
     fonts = {
       Roboto: {
         normal: fs.readFileSync(robotoRegular),
@@ -32,13 +33,13 @@ try {
     printer = new PdfPrinter(fonts);
     console.log('Шрифты Roboto успешно загружены для поддержки кириллицы');
   } else {
-    throw new Error('Шрифты Roboto не найдены');
+    throw new Error('Шрифты Roboto не найдены по пути: ' + fontsPath);
   }
 } catch (error) {
   // Если не удалось загрузить шрифты, используем стандартные
   // ВНИМАНИЕ: стандартные шрифты могут не поддерживать кириллицу полностью
   console.warn('Не удалось загрузить шрифты Roboto:', error.message);
-  console.warn('Используем стандартные шрифты PDF');
+  console.warn('Используем стандартные шрифты PDF (могут не поддерживать кириллицу)');
   fonts = {
     Roboto: {
       normal: 'Courier',
