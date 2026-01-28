@@ -1,100 +1,92 @@
-.post-form-modal {
-    padding: 30px;
+.post-form-modal-custom .modal-content {
+    border-radius: 0.5rem;
+    animation: modalFadeIn 0.3s ease;
 }
 
-.post-form-modal h2 {
-    font-size: 1.8em;
-    margin-bottom: 25px;
-    color: #333;
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.post-form-modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.post-form-modal-custom .form-control:focus,
+.post-form-modal-custom .form-select:focus {
+    border-color: #C9A96E;
+    box-shadow: 0 0 0 0.2rem rgba(201, 169, 110, 0.25);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
+.post-form-modal-custom .form-control,
+.post-form-modal-custom .form-select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group label {
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: 500;
-    font-size: 0.95em;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1em;
-    font-family: inherit;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
+.post-form-modal-custom .form-control:hover,
+.post-form-modal-custom .form-select:hover {
     border-color: #C9A96E;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
+.post-form-modal-custom .btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-    margin-top: 10px;
+.post-form-modal-custom .btn:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
 }
 
-.btn-cancel,
-.btn-save {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-cancel {
-    background: #e0e0e0;
-    color: #333;
-}
-
-.btn-cancel:hover {
-    background: #d0d0d0;
-}
-
-.btn-save {
-    background: #C9A96E;
-    color: white;
-}
-
-.btn-save:hover {
-    background: #b8995e;
+.post-form-modal-custom .btn:active {
+    transform: scale(0.95);
 }
 
 @media (max-width: 768px) {
-    .post-form-modal {
-        padding: 20px;
+    .post-form-modal-custom .modal-body {
+        padding: 1rem;
     }
-
-    .form-actions {
-        flex-direction: column;
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.9rem;
     }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.9rem;
+    }
+}
 
-    .btn-cancel,
-    .btn-save {
-        width: 100%;
+@media (max-width: 480px) {
+    .post-form-modal-custom .modal-body {
+        padding: 0.75rem;
+    }
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.85rem;
+    }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .post-form-modal-custom .modal-body {
+        padding: 0.5rem;
+    }
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.8rem;
+    }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.8rem;
+        padding: 0.4rem;
     }
 }
