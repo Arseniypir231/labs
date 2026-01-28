@@ -1,0 +1,113 @@
+.fashion-header {
+    min-height: 6.25rem;
+    padding: 1rem 0;
+}
+
+.fashion-header .logo-img {
+    width: 8rem;
+    height: auto;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.fashion-header .logo-img:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.fashion-header .nav-item-custom {
+    font-family: "PT Serif", serif;
+    font-weight: 400;
+    color: #171717;
+    font-size: 0.875rem;
+    position: relative;
+}
+
+.fashion-header .nav-link {
+    color: #171717 !important;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.fashion-header .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.25rem;
+    left: 1rem;
+    width: 0;
+    height: 0.125rem;
+    background: #C9A96E;
+    transition: width 0.3s ease;
+}
+
+.fashion-header .nav-link:hover {
+    color: #C9A96E !important;
+    transform: translateY(-0.125rem);
+}
+
+.fashion-header .nav-link:hover::after {
+    width: calc(100% - 2rem);
+}
+
+.fashion-header .nav-link.active {
+    color: #C9A96E !important;
+}
+
+.fashion-header .nav-link.active::after {
+    width: calc(100% - 2rem);
+}
+
+.fashion-header .homeSpan {
+    color: #C9A96E;
+}
+
+@media (max-width: 1440px) {
+    .fashion-header .logo-img {
+        width: 7rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .fashion-header {
+        min-height: auto;
+    }
+    
+    .fashion-header .nav-link {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .fashion-header .logo-img {
+        width: 6rem;
+    }
+    
+    .fashion-header .nav-link {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .fashion-header .logo-img {
+        width: 5rem;
+    }
+    
+    .fashion-header .nav-link {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.4rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .fashion-header .logo-img {
+        width: 4rem;
+    }
+    
+    .fashion-header .nav-link {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.3rem !important;
+    }
+}

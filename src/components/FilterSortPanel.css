@@ -1,0 +1,50 @@
+.filter-sort-panel {
+    border: 1px solid #E5E5E5;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.filter-sort-panel:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.filter-sort-panel .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    color: #171717;
+}
+
+.toggle-btn {
+    color: #666;
+    padding: 0.25rem 0.5rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.toggle-btn:hover {
+    color: #C9A96E;
+    transform: rotate(90deg);
+}
+
+.filter-info {
+    font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+    .filter-sort-panel .card-header {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .filter-info {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-sort-panel .card-header {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.85rem;
+    }
+}

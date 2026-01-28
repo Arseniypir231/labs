@@ -1,0 +1,192 @@
+{
+    "common": {
+        "loading": "Загрузка...",
+        "error": "Ошибка",
+        "success": "Успешно",
+        "cancel": "Отмена",
+        "save": "Сохранить",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "add": "Добавить",
+        "close": "Закрыть",
+        "search": "Поиск",
+        "filter": "Фильтр",
+        "sort": "Сортировка",
+        "selectAll": "Выбрать все",
+        "deselectAll": "Снять выделение",
+        "selected": "выбрано",
+        "reset": "Сбросить"
+    },
+    "navigation": {
+        "home": "Главная",
+        "recipes": "Рецепты",
+        "article": "Статьи",
+        "contact": "Контакты",
+        "search": "Поиск",
+        "favorites": "Избранное",
+        "about": "О нас"
+    },
+    "posts": {
+        "title": "Посты",
+        "addPost": "Добавить новый пост",
+        "editPost": "Редактировать пост",
+        "deletePost": "Удалить пост",
+        "deleteConfirm": "Удалить {{count}} пост(ов)?",
+        "postAdded": "Пост успешно добавлен",
+        "postUpdated": "Пост успешно обновлен",
+        "postDeleted": "Пост успешно удален",
+        "noPosts": "Посты не найдены",
+        "viewDetails": "Просмотр деталей"
+    },
+    "form": {
+        "imageUrl": "URL изображения",
+        "imageAlt": "Альтернативный текст изображения",
+        "category": "Категория",
+        "title": "Заголовок",
+        "date": "Дата",
+        "author": "Автор",
+        "comments": "Комментарии",
+        "description": "Описание",
+        "required": "Обязательно",
+        "optional": "Необязательно"
+    },
+    "filter": {
+        "filterBy": "Фильтровать по",
+        "sortBy": "Сортировать по",
+        "order": "Порядок",
+        "ascending": "По возрастанию",
+        "descending": "По убыванию",
+        "all": "Все",
+        "category": "Категория",
+        "author": "Автор",
+        "date": "Дате"
+    },
+    "favorites": {
+        "title": "Избранное",
+        "empty": "Избранное пусто",
+        "emptyDescription": "Добавьте посты, статьи или рецепты в избранное, чтобы вернуться к ним позже",
+        "remove": "Удалить",
+        "view": "Просмотр",
+        "add": "Добавлено в избранное"
+    },
+    "search": {
+        "title": "Поиск",
+        "placeholder": "Введите запрос для поиска...",
+        "results": "Найдено результатов: {{count}}",
+        "noResults": "По запросу \"{{query}}\" ничего не найдено",
+        "enterQuery": "Введите запрос для начала поиска"
+    },
+    "about": {
+        "title": "О нас",
+        "mission": "Наша миссия",
+        "missionText": "Мы стремимся вдохновлять наших читателей и предоставлять им полезную информацию о моде, стиле жизни, кулинарии и других интересных темах. Наша цель - создавать контент, который будет полезен, интересен и актуален.",
+        "values": "Наши ценности",
+        "subtitle": "Добро пожаловать в наш блог! Мы создаем качественный контент о моде, стиле жизни, рецептах и многом другом.",
+        "team": "Наша команда",
+        "teamDesc": "Профессиональные авторы и редакторы, которые создают качественный контент",
+        "quality": "Качество",
+        "qualityDesc": "Мы гарантируем высокое качество всех наших материалов",
+        "innovation": "Инновации",
+        "innovationDesc": "Постоянно развиваемся и внедряем новые технологии",
+        "passion": "Страсть",
+        "passionDesc": "Мы любим то, что делаем, и это видно в каждом нашем проекте",
+        "achievements": "Наши достижения",
+        "articles": "Статей",
+        "recipes": "Рецептов",
+        "authors": "Авторов",
+        "readers": "Читателей",
+        "whyChooseUs": "Почему выбирают нас",
+        "contactUs": "Свяжитесь с нами",
+        "contactText": "У вас есть вопросы или предложения? Мы будем рады услышать от вас!",
+        "goToContact": "Перейти на страницу контактов",
+        "qualityValue": "Мы уделяем внимание каждой детали",
+        "authenticity": "Аутентичность",
+        "authenticityValue": "Мы пишем от души",
+        "innovationValue": "Мы всегда в поиске новых идей",
+        "community": "Сообщество",
+        "communityValue": "Мы ценим наших читателей"
+    },
+    "sidebar": {
+        "aboutAuthor": "Об авторе",
+        "continueReading": "Продолжить чтение",
+        "featuredPosts": "Рекомендуемые посты",
+        "categories": "Категории",
+        "postsIn": "постов в",
+        "socialMedia": "Социальные сети",
+        "tags": "Теги",
+        "viewPostsTagged": "Просмотр постов с тегом"
+    },
+    "hero": {
+        "by": "Автор",
+        "comments": "комментариев"
+    },
+    "footer": {
+        "goToPage": "Перейти на страницу {{page}}",
+        "socialMedia": "Социальная сеть {{index}}"
+    },
+    "pagination": {
+        "olderPost": "СТАРЫЕ ПОСТЫ",
+        "nextPost": "НОВЫЕ ПОСТЫ",
+        "goToOlder": "Перейти к старым постам",
+        "goToNewer": "Перейти к новым постам"
+    },
+    "instagram": {
+        "followUs": "Подписывайтесь на наш @{{name}}",
+        "post": "Пост Instagram {{index}}"
+    },
+    "content": {
+        "postTitle": "Одно из крупнейших колец Сатурна может быть новее, чем кто-либо думал",
+        "postDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem",
+        "authorName": "Кейт Виллемс",
+        "authorRole": "Блогер о еде и кулинарии",
+        "authorDescription": "Привет, я Соня. Кулинария - это способ выразить мою творческую сторону миру. Добро пожаловать в мой Кухонный Уголок на…",
+        "date": "6 июня 2019",
+        "author": "Рики Барох"
+    },
+    "categories": {
+        "TOURISM": "ТУРИЗМ",
+        "SPORT": "СПОРТ",
+        "FASHION": "МОДА",
+        "CLOTHES": "ОДЕЖДА",
+        "SUMMER": "ЛЕТО",
+        "AUTUMN": "ОСЕНЬ",
+        "Vehicle": "Транспорт",
+        "VEHICLE": "ТРАНСПОРТ",
+        "jeans": "Джинсы",
+        "city": "Город",
+        "photography": "Фотография",
+        "Fashion": "Мода",
+        "Style & clothes": "Стиль и одежда",
+        "Minimalism": "Минимализм",
+        "Black & White": "Черное и белое",
+        "Modern clothes": "Современная одежда"
+    },
+    "tags": {
+        "Business": "Бизнес",
+        "Freelance": "Фриланс",
+        "Money": "Деньги",
+        "Experience": "Опыт",
+        "Lifestyle": "Образ жизни",
+        "SEO": "SEO",
+        "Wordpress": "Wordpress",
+        "Marketing": "Маркетинг",
+        "UX": "UX",
+        "Modern": "Современный",
+        "Success": "Успех",
+        "Nature": "Природа"
+    },
+    "social": {
+        "likes": "лайков",
+        "followers": "подписчиков",
+        "subscribers": "подписчиков"
+    },
+    "validation": {
+        "titleRequired": "Заголовок обязателен",
+        "titleMaxLength": "Заголовок должен быть менее 200 символов",
+        "imageRequired": "URL изображения обязателен",
+        "categoryRequired": "Категория обязательна",
+        "authorRequired": "Автор обязателен",
+        "dateRequired": "Дата обязательна",
+        "commentsInvalid": "Количество комментариев должно быть неотрицательным числом"
+    }
+}

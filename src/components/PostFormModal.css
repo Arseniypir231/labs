@@ -1,0 +1,92 @@
+.post-form-modal-custom .modal-content {
+    border-radius: 0.5rem;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.post-form-modal-custom .form-control:focus,
+.post-form-modal-custom .form-select:focus {
+    border-color: #C9A96E;
+    box-shadow: 0 0 0 0.2rem rgba(201, 169, 110, 0.25);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-form-modal-custom .form-control,
+.post-form-modal-custom .form-select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-form-modal-custom .form-control:hover,
+.post-form-modal-custom .form-select:hover {
+    border-color: #C9A96E;
+}
+
+.post-form-modal-custom .btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-form-modal-custom .btn:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.post-form-modal-custom .btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .post-form-modal-custom .modal-body {
+        padding: 1rem;
+    }
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.9rem;
+    }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-form-modal-custom .modal-body {
+        padding: 0.75rem;
+    }
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.85rem;
+    }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .post-form-modal-custom .modal-body {
+        padding: 0.5rem;
+    }
+    
+    .post-form-modal-custom .form-label {
+        font-size: 0.8rem;
+    }
+    
+    .post-form-modal-custom .form-control,
+    .post-form-modal-custom .form-select {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+    }
+}

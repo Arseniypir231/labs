@@ -1,0 +1,192 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "close": "Close",
+        "search": "Search",
+        "filter": "Filter",
+        "sort": "Sort",
+        "selectAll": "Select All",
+        "deselectAll": "Deselect All",
+        "selected": "selected",
+        "reset": "Reset"
+    },
+    "navigation": {
+        "home": "Home",
+        "recipes": "Recipes",
+        "article": "Article",
+        "contact": "Contact",
+        "search": "Search",
+        "favorites": "Favorites",
+        "about": "About"
+    },
+    "posts": {
+        "title": "Posts",
+        "addPost": "Add New Post",
+        "editPost": "Edit Post",
+        "deletePost": "Delete Post",
+        "deleteConfirm": "Delete {{count}} post(s)?",
+        "postAdded": "Post added successfully",
+        "postUpdated": "Post updated successfully",
+        "postDeleted": "Post deleted successfully",
+        "noPosts": "No posts found",
+        "viewDetails": "View Details"
+    },
+    "form": {
+        "imageUrl": "Image URL",
+        "imageAlt": "Image Alt Text",
+        "category": "Category",
+        "title": "Title",
+        "date": "Date",
+        "author": "Author",
+        "comments": "Comments",
+        "description": "Description",
+        "required": "Required",
+        "optional": "Optional"
+    },
+    "filter": {
+        "filterBy": "Filter by",
+        "sortBy": "Sort by",
+        "order": "Order",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "all": "All",
+        "category": "Category",
+        "author": "Author",
+        "date": "Date"
+    },
+    "favorites": {
+        "title": "Favorites",
+        "empty": "Favorites is empty",
+        "emptyDescription": "Add posts, articles or recipes to favorites to return to them later",
+        "remove": "Remove",
+        "view": "View",
+        "add": "Added to favorites"
+    },
+    "search": {
+        "title": "Search",
+        "placeholder": "Enter search query...",
+        "results": "Found results: {{count}}",
+        "noResults": "Nothing found for query \"{{query}}\"",
+        "enterQuery": "Enter a query to start searching"
+    },
+    "about": {
+        "title": "About Us",
+        "mission": "Our Mission",
+        "missionText": "We strive to inspire our readers and provide them with useful information about fashion, lifestyle, cooking and other interesting topics. Our goal is to create content that will be useful, interesting and relevant.",
+        "values": "Our Values",
+        "subtitle": "Welcome to our blog! We create quality content about fashion, lifestyle, recipes and much more.",
+        "team": "Our Team",
+        "teamDesc": "Professional authors and editors who create quality content",
+        "quality": "Quality",
+        "qualityDesc": "We guarantee high quality of all our materials",
+        "innovation": "Innovation",
+        "innovationDesc": "We constantly develop and implement new technologies",
+        "passion": "Passion",
+        "passionDesc": "We love what we do, and it shows in every project",
+        "achievements": "Our Achievements",
+        "articles": "Articles",
+        "recipes": "Recipes",
+        "authors": "Authors",
+        "readers": "Readers",
+        "whyChooseUs": "Why Choose Us",
+        "contactUs": "Contact Us",
+        "contactText": "Do you have questions or suggestions? We'd love to hear from you!",
+        "goToContact": "Go to contact page",
+        "qualityValue": "We pay attention to every detail",
+        "authenticity": "Authenticity",
+        "authenticityValue": "We write from the heart",
+        "innovationValue": "We are always looking for new ideas",
+        "community": "Community",
+        "communityValue": "We value our readers"
+    },
+    "sidebar": {
+        "aboutAuthor": "About the author",
+        "continueReading": "Continue Reading",
+        "featuredPosts": "Featured posts",
+        "categories": "Categories",
+        "postsIn": "posts in",
+        "socialMedia": "Social media",
+        "tags": "Tags",
+        "viewPostsTagged": "View posts tagged with"
+    },
+    "hero": {
+        "by": "By",
+        "comments": "comments"
+    },
+    "footer": {
+        "goToPage": "Go to {{page}} page",
+        "socialMedia": "Social media {{index}}"
+    },
+    "pagination": {
+        "olderPost": "OLDER POST",
+        "nextPost": "NEXT POST",
+        "goToOlder": "Go to older posts",
+        "goToNewer": "Go to newer posts"
+    },
+    "instagram": {
+        "followUs": "Follow our @{{name}}",
+        "post": "Instagram post {{index}}"
+    },
+    "content": {
+        "postTitle": "One of Saturn's largest rings may be newer than anyone",
+        "postDescription": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem",
+        "authorName": "Kate Willems",
+        "authorRole": "Food & cooking bloger",
+        "authorDescription": "Hi, I'm Sonia. Cooking is the way I express my creative side to the world. Welcome to my Kitchen Corner on…",
+        "date": "June 6, 2019",
+        "author": "Rickie Baroch"
+    },
+    "categories": {
+        "TOURISM": "TOURISM",
+        "SPORT": "SPORT",
+        "FASHION": "FASHION",
+        "CLOTHES": "CLOTHES",
+        "SUMMER": "SUMMER",
+        "AUTUMN": "AUTUMN",
+        "Vehicle": "Vehicle",
+        "VEHICLE": "VEHICLE",
+        "jeans": "Jeans",
+        "city": "City",
+        "photography": "Photography",
+        "Fashion": "Fashion",
+        "Style & clothes": "Style & clothes",
+        "Minimalism": "Minimalism",
+        "Black & White": "Black & White",
+        "Modern clothes": "Modern clothes"
+    },
+    "tags": {
+        "Business": "Business",
+        "Freelance": "Freelance",
+        "Money": "Money",
+        "Experience": "Experience",
+        "Lifestyle": "Lifestyle",
+        "SEO": "SEO",
+        "Wordpress": "Wordpress",
+        "Marketing": "Marketing",
+        "UX": "UX",
+        "Modern": "Modern",
+        "Success": "Success",
+        "Nature": "Nature"
+    },
+    "social": {
+        "likes": "likes",
+        "followers": "followers",
+        "subscribers": "subscribers"
+    },
+    "validation": {
+        "titleRequired": "Title is required",
+        "titleMaxLength": "Title must be less than 200 characters",
+        "imageRequired": "Image URL is required",
+        "categoryRequired": "Category is required",
+        "authorRequired": "Author is required",
+        "dateRequired": "Date is required",
+        "commentsInvalid": "Comments must be a non-negative number"
+    }
+}

@@ -1,0 +1,130 @@
+.instagram-widget-section {
+    width: 100%;
+    margin: 5rem auto;
+    padding: 2rem 0;
+}
+
+.instagram-alert {
+    background-color: #f8f9fa;
+    border: 1px solid #E5E5E5;
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instagram-alert:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+}
+
+.instagram-title {
+    font-family: "PT Serif", serif;
+    color: #171717;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.instagram-alert:hover .instagram-title {
+    color: #C9A96E;
+}
+
+.instagram-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.instagram-image-wrapper:hover {
+    transform: translateY(-0.25rem);
+}
+
+.instagram-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease, opacity 0.3s ease, filter 0.3s ease;
+    border-radius: 0.25rem;
+}
+
+.instagram-image-wrapper:hover .instagram-image {
+    transform: scale(1.1);
+    opacity: 0.9;
+    filter: brightness(1.1);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 1440px) {
+    .instagram-widget-section {
+        margin: 4rem auto;
+    }
+}
+
+@media (max-width: 992px) {
+    .instagram-widget-section {
+        margin: 3rem auto;
+        padding: 1.5rem 0;
+    }
+    
+    .instagram-title {
+        font-size: 1.25rem;
+    }
+    
+    .instagram-alert {
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .instagram-widget-section {
+        margin: 2.5rem auto;
+        padding: 1rem 0;
+    }
+    
+    .instagram-title {
+        font-size: 1.125rem;
+    }
+    
+    .instagram-alert {
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .instagram-widget-section {
+        margin: 2rem auto;
+        padding: 0.75rem 0;
+    }
+    
+    .instagram-title {
+        font-size: 1rem;
+    }
+    
+    .instagram-alert {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .instagram-widget-section {
+        margin: 1.5rem auto;
+        padding: 0.5rem 0;
+    }
+    
+    .instagram-title {
+        font-size: 0.9rem;
+    }
+    
+    .instagram-alert {
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+}

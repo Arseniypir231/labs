@@ -1,0 +1,62 @@
+.App {
+    width: 100%;
+    min-height: 100vh;
+    background: #fff;
+    animation: fadeIn 0.5s ease;
+}
+
+.fashion {
+    display: flex;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+main {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.main-content-wrapper {
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+/* Анимация появления для всего приложения */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content-wrapper {
+        padding: 1.5rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content-wrapper {
+        padding: 0.75rem 0;
+    }
+}
+
+@media (max-width: 320px) {
+    .main-content-wrapper {
+        padding: 0.5rem 0;
+    }
+}

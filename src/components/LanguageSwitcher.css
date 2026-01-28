@@ -1,0 +1,58 @@
+.language-switcher {
+    margin-left: 0.5rem;
+}
+
+.language-toggle {
+    border: 1px solid #C9A96E;
+    color: #C9A96E;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+}
+
+.language-toggle:hover {
+    background-color: #C9A96E;
+    color: white;
+    transform: translateY(-0.125rem);
+    border-color: #C9A96E;
+}
+
+.language-flag {
+    font-size: 1.125rem;
+    margin-right: 0.25rem;
+}
+
+.language-name {
+    font-size: 0.875rem;
+}
+
+.language-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.language-item:hover {
+    background-color: #f8f9fa;
+}
+
+.language-item.active {
+    background-color: #C9A96E;
+    color: white;
+}
+
+.language-item.active:hover {
+    background-color: #b8965e;
+}
+
+@media (max-width: 768px) {
+    .language-toggle {
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .language-flag {
+        font-size: 1rem;
+    }
+}
