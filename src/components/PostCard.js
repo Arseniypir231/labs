@@ -14,7 +14,7 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
     const handleFavoriteClick = (e) => {
         e.stopPropagation();
         toggleFavorite({ ...post, type: post.type || 'post' });
-        toast.success(favorite ? 'Удалено из избранного' : 'Добавлено в избранное');
+        toast.success(favorite ? t('favorites.remove') : t('favorites.add', 'Added to favorites'));
     };
     const handleCardClick = (e) => {
         if (showCheckbox && e.target.type !== 'checkbox' && !e.target.closest('.form-check')) {
@@ -29,7 +29,7 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
 
     const tooltip = (
         <Tooltip id={`post-tooltip-${post.id}`}>
-            Click to view details
+            {t('posts.viewDetails')}
         </Tooltip>
     );
 
@@ -67,7 +67,7 @@ const PostCard = ({ post, onClick, isSelected, onSelect, showCheckbox }) => {
                         </Badge>
                         <OverlayTrigger
                             placement="top"
-                            overlay={<Tooltip>{favorite ? 'Удалить из избранного' : 'Добавить в избранное'}</Tooltip>}
+                            overlay={<Tooltip>{favorite ? t('favorites.remove') : t('favorites.add', 'Add to favorites')}</Tooltip>}
                         >
                             <Button
                                 variant="link"

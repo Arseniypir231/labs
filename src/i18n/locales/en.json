@@ -14,7 +14,8 @@
         "sort": "Sort",
         "selectAll": "Select All",
         "deselectAll": "Deselect All",
-        "selected": "selected"
+        "selected": "selected",
+        "reset": "Reset"
     },
     "navigation": {
         "home": "Home",
@@ -65,7 +66,8 @@
         "empty": "Favorites is empty",
         "emptyDescription": "Add posts, articles or recipes to favorites to return to them later",
         "remove": "Remove",
-        "view": "View"
+        "view": "View",
+        "add": "Added to favorites"
     },
     "search": {
         "title": "Search",
