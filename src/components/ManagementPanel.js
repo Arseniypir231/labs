@@ -1,5 +1,6 @@
 import React from 'react';
-import Tooltip from './Tooltip';
+import { Container, Row, Col, Button, ButtonGroup, Badge } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './ManagementPanel.css';
 
 const ManagementPanel = ({ 
@@ -14,64 +15,104 @@ const ManagementPanel = ({
     canSelectAll
 }) => {
     return (
-        <div className="management-panel">
-            <div className="panel-left">
-                {canSelectAll && (
-                    <>
-                        <Tooltip text="Select all items" position="bottom">
-                            <button onClick={onSelectAll} className="btn-select-all">
-                                Select All
-                            </button>
-                        </Tooltip>
-                        <Tooltip text="Deselect all items" position="bottom">
-                            <button onClick={onDeselectAll} className="btn-deselect-all">
-                                Deselect All
-                            </button>
-                        </Tooltip>
-                    </>
-                )}
-                {selectedCount > 0 && (
-                    <span className="selected-count">
-                        {selectedCount} selected
-                    </span>
-                )}
-            </div>
-            <div className="panel-right">
-                <Tooltip text="Add a new item" position="bottom">
-                    <button onClick={onAdd} className="btn-add">
-                        + Add New
-                    </button>
-                </Tooltip>
-                {canEdit && (
-                    <Tooltip 
-                        text={selectedCount === 1 ? "Edit selected item" : "Select exactly one item to edit"} 
-                        position="bottom"
-                    >
-                        <button 
-                            onClick={onEdit} 
-                            className="btn-edit"
-                            disabled={selectedCount !== 1}
+        <Container fluid className="management-panel px-3 px-md-4 px-lg-5">
+            <Row className="align-items-center">
+                <Col xs={12} md={6} className="panel-left mb-2 mb-md-0">
+                    {canSelectAll && (
+                        <ButtonGroup className="me-2">
+                            <OverlayTrigger 
+                                placement="bottom" 
+                                overlay={<Tooltip>Select all items</Tooltip>}
+                            >
+                                <Button 
+                                    variant="outline-secondary" 
+                                    size="sm"
+                                    onClick={onSelectAll}
+                                    className="btn-select-all"
+                                >
+                                    Select All
+                                </Button>
+                            </OverlayTrigger>
+                            <OverlayTrigger 
+                                placement="bottom" 
+                                overlay={<Tooltip>Deselect all items</Tooltip>}
+                            >
+                                <Button 
+                                    variant="outline-secondary" 
+                                    size="sm"
+                                    onClick={onDeselectAll}
+                                    className="btn-deselect-all"
+                                >
+                                    Deselect All
+                                </Button>
+                            </OverlayTrigger>
+                        </ButtonGroup>
+                    )}
+                    {selectedCount > 0 && (
+                        <Badge bg="primary" className="selected-count-badge ms-2">
+                            {selectedCount} selected
+                        </Badge>
+                    )}
+                </Col>
+                <Col xs={12} md={6} className="panel-right text-md-end">
+                    <ButtonGroup>
+                        <OverlayTrigger 
+                            placement="bottom" 
+                            overlay={<Tooltip>Add a new item</Tooltip>}
                         >
-                            Edit
-                        </button>
-                    </Tooltip>
-                )}
-                {canDelete && (
-                    <Tooltip 
-                        text={selectedCount > 0 ? `Delete ${selectedCount} selected item(s)` : "Select items to delete"} 
-                        position="bottom"
-                    >
-                        <button 
-                            onClick={onDelete} 
-                            className="btn-delete"
-                            disabled={selectedCount === 0}
-                        >
-                            Delete ({selectedCount})
-                        </button>
-                    </Tooltip>
-                )}
-            </div>
-        </div>
+                            <Button 
+                                variant="success" 
+                                size="sm"
+                                onClick={onAdd}
+                                className="btn-add"
+                            >
+                                + Add New
+                            </Button>
+                        </OverlayTrigger>
+                        {canEdit && (
+                            <OverlayTrigger 
+                                placement="bottom" 
+                                overlay={
+                                    <Tooltip>
+                                        {selectedCount === 1 ? "Edit selected item" : "Select exactly one item to edit"}
+                                    </Tooltip>
+                                }
+                            >
+                                <Button 
+                                    variant="warning" 
+                                    size="sm"
+                                    onClick={onEdit} 
+                                    disabled={selectedCount !== 1}
+                                    className="btn-edit"
+                                >
+                                    Edit
+                                </Button>
+                            </OverlayTrigger>
+                        )}
+                        {canDelete && (
+                            <OverlayTrigger 
+                                placement="bottom" 
+                                overlay={
+                                    <Tooltip>
+                                        {selectedCount > 0 ? `Delete ${selectedCount} selected item(s)` : "Select items to delete"}
+                                    </Tooltip>
+                                }
+                            >
+                                <Button 
+                                    variant="danger" 
+                                    size="sm"
+                                    onClick={onDelete} 
+                                    disabled={selectedCount === 0}
+                                    className="btn-delete"
+                                >
+                                    Delete ({selectedCount})
+                                </Button>
+                            </OverlayTrigger>
+                        )}
+                    </ButtonGroup>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
