@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { fetchPosts, addPost, updatePost, deletePost, clearError } from '../store/slices/postsSlice';
+import { openModal, closeModal } from '../store/slices/uiStateSlice';
+import { toast } from 'react-toastify';
 import Hero from '../components/Hero';
 import PostsSection from '../components/PostsSection';
 import Sidebar from '../components/Sidebar';
@@ -7,7 +11,6 @@ import InstagramWidget from '../components/InstagramWidget';
 import PostDetailModal from '../components/PostDetailModal';
 import PostFormModal from '../components/PostFormModal';
 import ManagementPanel from '../components/ManagementPanel';
-import postsData from '../data/posts.json';
 import heroData from '../data/hero.json';
 import authorData from '../data/author.json';
 import featuredPostsData from '../data/featuredPosts.json';
@@ -17,7 +20,10 @@ import tagsData from '../data/tags.json';
 import instagramData from '../data/instagram.json';
 
 const Home = () => {
-    const [posts, setPosts] = useState([]);
+    const dispatch = useAppDispatch();
+    const { posts, loading, error, validationErrors } = useAppSelector((state) => state.posts);
+    const { modalOpen, modalType, selectedItemId } = useAppSelector((state) => state.uiState);
+    
     const [hero, setHero] = useState(null);
     const [author, setAuthor] = useState(null);
     const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -26,20 +32,15 @@ const Home = () => {
     const [tags, setTags] = useState([]);
     const [instagram, setInstagram] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [editingPost, setEditingPost] = useState(null);
     const [selectedPosts, setSelectedPosts] = useState(new Set());
-    const [nextId, setNextId] = useState(100);
 
     useEffect(() => {
-        // Загрузка данных из JSON файлов
-        const postsWithIds = postsData.map((post, index) => ({
-            ...post,
-            id: post.id || index + 1,
-            type: 'post'
-        }));
-        setPosts(postsWithIds);
+        // Загрузка постов из Redux
+        dispatch(fetchPosts());
+        
+        // Загрузка других данных
         setHero(heroData);
         setAuthor(authorData);
         setFeaturedPosts(featuredPostsData);
@@ -47,18 +48,28 @@ const Home = () => {
         setSocials(socialsData);
         setTags(tagsData);
         setInstagram(instagramData);
-        setNextId(postsWithIds.length + 1);
-    }, []);
+    }, [dispatch]);
+
+    // Обработка ошибок
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+            if (validationErrors) {
+                validationErrors.forEach(err => toast.error(err));
+            }
+            dispatch(clearError());
+        }
+    }, [error, validationErrors, dispatch]);
 
     const handlePostClick = (post) => {
         if (selectedPosts.size === 0) {
             setSelectedPost(post);
-            setIsModalOpen(true);
+            dispatch(openModal({ type: 'post', itemId: post.id }));
         }
     };
 
     const handleCloseModal = () => {
-        setIsModalOpen(false);
+        dispatch(closeModal());
         setSelectedPost(null);
     };
 
@@ -101,39 +112,50 @@ const Home = () => {
 
     const handleDelete = () => {
         if (selectedPosts.size > 0 && window.confirm(`Delete ${selectedPosts.size} post(s)?`)) {
-            setPosts(prev => prev.filter(post => !selectedPosts.has(post.id)));
+            selectedPosts.forEach(postId => {
+                dispatch(deletePost(postId));
+            });
             setSelectedPosts(new Set());
+            toast.success(`Deleted ${selectedPosts.size} post(s)`);
         }
     };
 
-    const handleSavePost = (postData, postId) => {
-        if (postId) {
-            // Редактирование
-            setPosts(prev => prev.map(post => 
-                post.id === postId ? { ...postData, id: postId } : post
-            ));
-        } else {
-            // Добавление
-            const newPost = {
-                ...postData,
-                id: nextId
-            };
-            setPosts(prev => [...prev, newPost]);
-            setNextId(prev => prev + 1);
+    const handleSavePost = async (postData, postId) => {
+        try {
+            if (postId) {
+                // Редактирование
+                await dispatch(updatePost({ id: postId, postData })).unwrap();
+                toast.success('Post updated successfully');
+            } else {
+                // Добавление
+                await dispatch(addPost(postData)).unwrap();
+                toast.success('Post added successfully');
+            }
+            setIsFormModalOpen(false);
+            setEditingPost(null);
+        } catch (error) {
+            // Ошибка уже обработана в useEffect
         }
-        setIsFormModalOpen(false);
-        setEditingPost(null);
     };
 
     if (!hero || !author || !instagram) {
         return <div>Loading...</div>;
     }
 
+    const isModalOpen = modalOpen && modalType === 'post';
+
     return (
         <>
             <Hero heroData={hero} />
             <div className="main-content-wrapper">
                 <div className="container-fluid px-3 px-md-4 px-lg-5">
+                    {loading && (
+                        <div className="text-center my-3">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    )}
                     <div className="row g-4">
                         <div className="col-12 col-lg-8">
                             <ManagementPanel

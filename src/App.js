@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { store } from './store';
 import { AppProvider } from './context/AppContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -30,48 +32,50 @@ const App = () => {
     }
 
     return (
-        <AppProvider>
-            <Router>
-                <div className="App">
-                    <article className="fashion">
-                        <Header 
+        <Provider store={store}>
+            <AppProvider>
+                <Router>
+                    <div className="App">
+                        <article className="fashion">
+                            <Header 
+                                organizationName={appConfig.organizationName}
+                                menuItems={menuItems}
+                            />
+                        </article>
+                        <main>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/recipes" element={<Recipes />} />
+                                <Route path="/article" element={<Article />} />
+                                <Route path="/article/:id" element={<Article />} />
+                                <Route path="/contact" element={<Contact />} />
+                                <Route path="/search" element={<Search />} />
+                                <Route path="/favorites" element={<Favorites />} />
+                                <Route path="/about" element={<About />} />
+                            </Routes>
+                        </main>
+                        <Footer 
                             organizationName={appConfig.organizationName}
                             menuItems={menuItems}
+                            socialIcons={appConfig.socialIcons}
+                            copyrightText={appConfig.copyrightText}
                         />
-                    </article>
-                    <main>
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/recipes" element={<Recipes />} />
-                            <Route path="/article" element={<Article />} />
-                            <Route path="/article/:id" element={<Article />} />
-                            <Route path="/contact" element={<Contact />} />
-                            <Route path="/search" element={<Search />} />
-                            <Route path="/favorites" element={<Favorites />} />
-                            <Route path="/about" element={<About />} />
-                        </Routes>
-                    </main>
-                    <Footer 
-                        organizationName={appConfig.organizationName}
-                        menuItems={menuItems}
-                        socialIcons={appConfig.socialIcons}
-                        copyrightText={appConfig.copyrightText}
-                    />
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={3000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
-                    />
-                </div>
-            </Router>
-        </AppProvider>
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                        />
+                    </div>
+                </Router>
+            </AppProvider>
+        </Provider>
     );
 };
 
