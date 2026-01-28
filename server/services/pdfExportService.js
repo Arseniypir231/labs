@@ -1,4 +1,5 @@
 const PdfPrinter = require('pdfmake');
+const { Sequelize } = require('sequelize');
 const { Shipment, Vehicle, Route } = require('../models');
 
 // Настройка шрифтов для русского языка
@@ -17,12 +18,12 @@ const printer = new PdfPrinter(fonts);
 exports.exportShipmentsReportPDF = async (startDate, endDate) => {
   const where = {};
   if (startDate) {
-    where.departureDate = { [require('sequelize').Op.gte]: startDate };
+    where.departureDate = { [Sequelize.Op.gte]: startDate };
   }
   if (endDate) {
     where.departureDate = {
       ...where.departureDate,
-      [require('sequelize').Op.lte]: endDate
+      [Sequelize.Op.lte]: endDate
     };
   }
 
