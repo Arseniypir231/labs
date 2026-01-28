@@ -84,6 +84,46 @@ const Route = sequelize.define('Route', {
         msg: 'URL фотографии должен быть валидным URL'
       }
     }
+  },
+  waypoints: {
+    type: DataTypes.JSONB,
+    allowNull: true,
+    defaultValue: []
+  },
+  vehicleTypes: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: true,
+    defaultValue: []
+  },
+  restrictions: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  tollCost: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+    validate: {
+      isDecimal: {
+        msg: 'Стоимость платных дорог должна быть числом'
+      },
+      min: {
+        args: [0],
+        msg: 'Стоимость не может быть отрицательной'
+      }
+    }
+  },
+  fuelCost: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+    validate: {
+      isDecimal: {
+        msg: 'Расходы на топливо должны быть числом'
+      },
+      min: {
+        args: [0],
+        msg: 'Расходы не могут быть отрицательными'
+      }
+    }
   }
 }, {
   tableName: 'routes',

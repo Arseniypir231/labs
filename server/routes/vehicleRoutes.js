@@ -5,6 +5,7 @@ const { authorize } = require('../middleware/auth');
 
 // Все пользователи могут просматривать
 router.get('/', vehicleController.getAll);
+router.get('/:id/check-availability', vehicleController.checkAvailability);
 router.get('/:id', vehicleController.getById);
 router.get('/:id/exists', vehicleController.exists);
 

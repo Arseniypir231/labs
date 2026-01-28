@@ -15,6 +15,7 @@ import { fetchVehicles } from '../store/slices/vehiclesSlice';
 import { fetchRoutes } from '../store/slices/routesSlice';
 import { validateShipment } from '../utils/validation';
 import { exportShipmentsReport } from '../utils/exportUtils';
+import ShipmentForm from './ShipmentForm';
 
 function Shipments() {
   const dispatch = useDispatch();
@@ -303,6 +304,26 @@ function Shipments() {
         )}
       </div>
 
+      <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
+        <div className="modal-content" style={{ maxWidth: '900px', maxHeight: '90vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <h2>{editingShipment ? 'Редактировать' : 'Добавить'} грузоперевозку</h2>
+            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+          </div>
+          <ShipmentForm 
+            shipment={editingShipment} 
+            onClose={() => {
+              setShowModal(false);
+              setEditingShipment(null);
+              resetForm();
+              loadShipments();
+            }} 
+          />
+        </div>
+      </div>
+
+      {/* Старая форма (скрыта, можно удалить после тестирования) */}
+      {false && (
       <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">

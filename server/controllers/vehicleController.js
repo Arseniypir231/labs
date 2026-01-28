@@ -147,6 +147,46 @@ exports.delete = async (req, res) => {
   }
 };
 
+// Проверка доступности транспортного средства на дату
+exports.checkAvailability = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { date } = req.query;
+    
+    const vehicle = await Vehicle.findByPk(id);
+    if (!vehicle) {
+      return res.status(404).json({ error: 'Транспортное средство не найдено' });
+    }
+
+    // Проверка статуса транспортного средства
+    if (vehicle.status !== 'available') {
+      return res.json({ available: false, reason: 'Транспортное средство не доступно' });
+    }
+
+    // Проверка наличия других грузоперевозок на эту дату
+    const { Shipment } = require('../models');
+    const checkDate = new Date(date);
+    const startOfDay = new Date(checkDate.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(checkDate.setHours(23, 59, 59, 999));
+
+    const conflictingShipments = await Shipment.count({
+      where: {
+        vehicleId: id,
+        status: { [Op.in]: ['pending', 'in_transit'] },
+        departureDate: {
+          [Op.between]: [startOfDay, endOfDay]
+        }
+      }
+    });
+
+    const available = conflictingShipments === 0;
+    res.json({ available, reason: available ? 'Доступно' : 'Уже используется в другой грузоперевозке' });
+  } catch (error) {
+    console.error('Ошибка при проверке доступности:', error);
+    res.status(500).json({ error: 'Ошибка при проверке доступности транспортного средства' });
+  }
+};
+
 // Проверка существования транспортного средства
 exports.exists = async (req, res) => {
   try {

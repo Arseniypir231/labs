@@ -16,3 +16,186 @@
     font-size: 14px;
   }
 }
+
+/* Стили для форм */
+.shipment-form,
+.route-wizard-form {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.form-section h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.form-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Стили для react-datepicker */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.react-datepicker__input-container input.error {
+  border-color: #e74c3c;
+}
+
+/* Стили для react-select */
+.react-select__control {
+  min-height: 38px;
+  border: 1px solid #ddd;
+}
+
+.react-select__control--is-focused {
+  border-color: #3498db;
+  box-shadow: 0 0 0 1px #3498db;
+}
+
+.react-select__control.error {
+  border-color: #e74c3c;
+}
+
+/* Wizard стили */
+.wizard-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.wizard-steps::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ddd;
+  z-index: 0;
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ddd;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  transition: all 0.3s;
+}
+
+.wizard-step.active .step-number {
+  background: #3498db;
+  transform: scale(1.1);
+}
+
+.wizard-step.completed .step-number {
+  background: #27ae60;
+}
+
+.step-label {
+  font-size: 12px;
+  text-align: center;
+  color: #666;
+}
+
+.wizard-step.active .step-label {
+  color: #3498db;
+  font-weight: bold;
+}
+
+.wizard-step-content {
+  min-height: 400px;
+  padding: 20px;
+}
+
+.wizard-step-content h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* Промежуточные точки */
+.waypoints-list {
+  margin-bottom: 20px;
+}
+
+.waypoint-item {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .wizard-steps {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .wizard-steps::before {
+    display: none;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+}

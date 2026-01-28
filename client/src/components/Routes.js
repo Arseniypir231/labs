@@ -12,6 +12,7 @@ import {
   clearError
 } from '../store/slices/routesSlice';
 import { validateRoute } from '../utils/validation';
+import RouteWizardForm from './RouteWizardForm';
 
 function Routes() {
   const dispatch = useDispatch();
@@ -245,6 +246,26 @@ function Routes() {
         )}
       </div>
 
+      <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
+        <div className="modal-content" style={{ maxWidth: '900px', maxHeight: '90vh', overflowY: 'auto' }} onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <h2>{editingRoute ? 'Редактировать' : 'Добавить'} маршрут</h2>
+            <span className="close" onClick={() => setShowModal(false)}>&times;</span>
+          </div>
+          <RouteWizardForm 
+            route={editingRoute} 
+            onClose={() => {
+              setShowModal(false);
+              setEditingRoute(null);
+              resetForm();
+              loadRoutes();
+            }} 
+          />
+        </div>
+      </div>
+
+      {/* Старая форма (скрыта) */}
+      {false && (
       <div className={`modal ${showModal ? 'show' : ''}`} onClick={() => setShowModal(false)}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">
