@@ -58,13 +58,34 @@ CREATE DATABASE transport_logistics;
 Создайте файл `server/.env` на основе `server/.env.example`:
 
 ```env
+# База данных
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=transport_logistics
 DB_USER=postgres
 DB_PASSWORD=postgres
 PORT=5000
+
+# JWT Configuration (обязательно для авторизации)
+JWT_SECRET=your-secret-key-change-in-production-use-random-string
+JWT_EXPIRES_IN=24h
+
+# Frontend URL (для ссылок восстановления пароля)
+FRONTEND_URL=http://localhost:3000
+
+# SMTP Configuration (опционально, для восстановления пароля через email)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+
+# Environment
+NODE_ENV=development
 ```
+
+**Важно:** 
+- `JWT_SECRET` - обязательно измените на случайную строку в production
+- SMTP настройки нужны только если планируете использовать восстановление пароля через email
 
 ### 5. Запуск приложения
 
@@ -77,18 +98,93 @@ npm run server  # Запуск только сервера на http://localhost
 npm run client  # Запуск только клиента на http://localhost:3000
 ```
 
-При первом запуске сервер автоматически создаст таблицы в базе данных.
+При первом запуске сервер автоматически создаст таблицы в базе данных, включая таблицу пользователей.
+
+### 6. Создание первого пользователя
+
+После запуска приложения необходимо создать пользователя для входа в систему. Вы можете:
+
+**Вариант 1:** Использовать форму регистрации в приложении:
+1. Откройте `http://localhost:3000`
+2. Перейдите на страницу регистрации
+3. Заполните форму и создайте аккаунт
+
+**Вариант 2:** Использовать API напрямую (через Postman):
+```bash
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@test.com",
+  "password": "password123",
+  "firstName": "Администратор",
+  "lastName": "Системы",
+  "role": "admin"
+}
+```
+
+**Роли пользователей:**
+- `admin` - полный доступ ко всем функциям
+- `manager` - может создавать, редактировать и удалять записи
+- `user` - может только просматривать данные
+
+**Примечание:** Для тестирования восстановления пароля без настройки SMTP, токен сброса будет возвращен в ответе API в режиме разработки (`NODE_ENV=development`).
 
 ## API Endpoints
 
+### Авторизация и аутентификация (Auth)
+
+**Важно:** Все эндпоинты ниже `/api/auth` требуют JWT токен в заголовке `Authorization: Bearer <token>`
+
+- `POST /api/auth/register` - Регистрация нового пользователя
+- `POST /api/auth/login` - Авторизация пользователя (возвращает JWT токен)
+- `GET /api/auth/me` - Получение информации о текущем пользователе (требует токен)
+- `PUT /api/auth/change-password` - Смена пароля (требует токен)
+- `POST /api/auth/forgot-password` - Запрос на восстановление пароля
+- `POST /api/auth/reset-password` - Сброс пароля по токену
+
+**Пример регистрации:**
+```json
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "role": "user"
+}
+```
+
+**Пример авторизации:**
+```json
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+**Использование токена:**
+После успешной авторизации добавьте заголовок ко всем запросам:
+```
+Authorization: Bearer <ваш_jwt_токен>
+```
+
 ### Транспортные средства (Vehicles)
 
-- `POST /api/vehicles` - Создание нового транспортного средства
-- `GET /api/vehicles` - Получение списка с пагинацией, сортировкой, фильтрацией и поиском
-- `GET /api/vehicles/:id` - Получение транспортного средства по ID
-- `PUT /api/vehicles/:id` - Обновление транспортного средства
-- `DELETE /api/vehicles/:id` - Удаление транспортного средства
-- `GET /api/vehicles/:id/exists` - Проверка существования транспортного средства
+**Требует аутентификации:** Да (JWT токен)
+**Создание/обновление/удаление:** Только для ролей `admin` и `manager`
+
+- `POST /api/vehicles` - Создание нового транспортного средства (требует роль admin/manager)
+- `GET /api/vehicles` - Получение списка с пагинацией, сортировкой, фильтрацией и поиском (доступно всем авторизованным)
+- `GET /api/vehicles/:id` - Получение транспортного средства по ID (доступно всем авторизованным)
+- `PUT /api/vehicles/:id` - Обновление транспортного средства (требует роль admin/manager)
+- `DELETE /api/vehicles/:id` - Удаление транспортного средства (требует роль admin/manager)
+- `GET /api/vehicles/:id/exists` - Проверка существования транспортного средства (доступно всем авторизованным)
 
 **Параметры запроса для GET /api/vehicles:**
 - `page` - номер страницы (по умолчанию: 1)
@@ -104,6 +200,9 @@ npm run client  # Запуск только клиента на http://localhost
 - `maxYear` - максимальный год выпуска
 
 ### Маршруты (Routes)
+
+**Требует аутентификации:** Да (JWT токен)
+**Создание/обновление/удаление:** Только для ролей `admin` и `manager`
 
 - `POST /api/routes` - Создание нового маршрута
 - `GET /api/routes` - Получение списка с пагинацией, сортировкой, фильтрацией и поиском
@@ -124,6 +223,9 @@ npm run client  # Запуск только клиента на http://localhost
 - `maxTime` - максимальное время в минутах
 
 ### Грузоперевозки (Shipments)
+
+**Требует аутентификации:** Да (JWT токен)
+**Создание/обновление/удаление:** Только для ролей `admin` и `manager`
 
 - `POST /api/shipments` - Создание новой грузоперевозки
 - `GET /api/shipments` - Получение списка с пагинацией, сортировкой, фильтрацией и поиском
