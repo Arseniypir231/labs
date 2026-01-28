@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Vehicles from './components/Vehicles';
-import Routes from './components/Routes';
+import RoutesList from './components/Routes';
 import Shipments from './components/Shipments';
 import VehicleDetail from './components/VehicleDetail';
 import RouteDetail from './components/RouteDetail';
@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<Vehicles />} />
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/vehicles/:id" element={<VehicleDetail />} />
-          <Route path="/routes" element={<Routes />} />
+          <Route path="/routes" element={<RoutesList />} />
           <Route path="/routes/:id" element={<RouteDetail />} />
           <Route path="/shipments" element={<Shipments />} />
           <Route path="/shipments/:id" element={<ShipmentDetail />} />
