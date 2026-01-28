@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Form, Button, ButtonGroup } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './PostFormModal.css';
 
 const PostFormModal = ({ isOpen, onClose, post, onSave }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         image: '',
         alt: '',
@@ -74,43 +76,43 @@ const PostFormModal = ({ isOpen, onClose, post, onSave }) => {
             className="post-form-modal-custom"
         >
             <Modal.Header closeButton>
-                <Modal.Title>{post ? 'Edit Post' : 'Add New Post'}</Modal.Title>
+                <Modal.Title>{post ? t('posts.editPost') : t('posts.addPost')}</Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <Form.Group className="mb-3">
-                        <Form.Label>Image URL</Form.Label>
+                        <Form.Label>{t('form.imageUrl')} <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="image"
                             value={formData.image}
                             onChange={handleChange}
                             required
-                            placeholder="Enter image URL"
+                            placeholder={t('form.imageUrl')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Image Alt Text</Form.Label>
+                        <Form.Label>{t('form.imageAlt')} <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="alt"
                             value={formData.alt}
                             onChange={handleChange}
                             required
-                            placeholder="Enter alt text"
+                            placeholder={t('form.imageAlt')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Category</Form.Label>
+                        <Form.Label>{t('form.category')} <span className="text-danger">*</span></Form.Label>
                         <Form.Select
                             name="category"
                             value={formData.category}
                             onChange={handleChange}
                             required
                         >
-                            <option value="">Select Category</option>
+                            <option value="">{t('form.category')}</option>
                             <option value="TOURISM">TOURISM</option>
                             <option value="SPORT">SPORT</option>
                             <option value="FASHION">FASHION</option>
@@ -121,72 +123,72 @@ const PostFormModal = ({ isOpen, onClose, post, onSave }) => {
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Title</Form.Label>
+                        <Form.Label>{t('form.title')} <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
                             required
-                            placeholder="Enter post title"
+                            placeholder={t('form.title')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Date</Form.Label>
+                        <Form.Label>{t('form.date')} <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="date"
                             value={formData.date}
                             onChange={handleChange}
                             required
-                            placeholder="Enter date"
+                            placeholder={t('form.date')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Author</Form.Label>
+                        <Form.Label>{t('form.author')} <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                             type="text"
                             name="author"
                             value={formData.author}
                             onChange={handleChange}
                             required
-                            placeholder="Enter author name"
+                            placeholder={t('form.author')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Comments (optional)</Form.Label>
+                        <Form.Label>{t('form.comments')} ({t('form.optional')})</Form.Label>
                         <Form.Control
                             type="number"
                             name="comments"
                             value={formData.comments}
                             onChange={handleChange}
                             min="0"
-                            placeholder="Enter number of comments"
+                            placeholder={t('form.comments')}
                         />
                     </Form.Group>
                     
                     <Form.Group className="mb-3">
-                        <Form.Label>Description (optional)</Form.Label>
+                        <Form.Label>{t('form.description')} ({t('form.optional')})</Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={4}
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
-                            placeholder="Enter post description"
+                            placeholder={t('form.description')}
                         />
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
                     <ButtonGroup>
                         <Button variant="secondary" onClick={onClose}>
-                            Cancel
+                            {t('common.cancel')}
                         </Button>
                         <Button variant="primary" type="submit">
-                            {post ? 'Update' : 'Create'}
+                            {post ? t('common.save') : t('common.add')}
                         </Button>
                     </ButtonGroup>
                 </Modal.Footer>

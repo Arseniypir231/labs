@@ -2,11 +2,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container, Image } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip as BSTooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from './LanguageSwitcher';
 import './Header.css';
 
 const Header = ({ organizationName, menuItems }) => {
     const location = useLocation();
+    const { t } = useTranslation();
     
     const getMenuPath = (item) => {
         const paths = {
@@ -30,6 +33,9 @@ const Header = ({ organizationName, menuItems }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto align-items-center" as="ul">
+                        <Nav.Item as="li" className="me-2">
+                            <LanguageSwitcher />
+                        </Nav.Item>
                         <Nav.Item as="li" className="me-3">
                             <ThemeToggle />
                         </Nav.Item>

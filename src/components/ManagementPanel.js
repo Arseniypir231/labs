@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, ButtonGroup, Badge } from 'react-bootstrap';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './ManagementPanel.css';
 
 const ManagementPanel = ({ 
@@ -14,6 +15,7 @@ const ManagementPanel = ({
     canDelete,
     canSelectAll
 }) => {
+    const { t } = useTranslation();
     return (
         <Container fluid className="management-panel px-3 px-md-4 px-lg-5">
             <Row className="align-items-center">
@@ -22,7 +24,7 @@ const ManagementPanel = ({
                         <ButtonGroup className="me-2">
                             <OverlayTrigger 
                                 placement="bottom" 
-                                overlay={<Tooltip>Select all items</Tooltip>}
+                                overlay={<Tooltip>{t('common.selectAll')}</Tooltip>}
                             >
                                 <Button 
                                     variant="outline-secondary" 
@@ -30,12 +32,12 @@ const ManagementPanel = ({
                                     onClick={onSelectAll}
                                     className="btn-select-all"
                                 >
-                                    Select All
+                                    {t('common.selectAll')}
                                 </Button>
                             </OverlayTrigger>
                             <OverlayTrigger 
                                 placement="bottom" 
-                                overlay={<Tooltip>Deselect all items</Tooltip>}
+                                overlay={<Tooltip>{t('common.deselectAll')}</Tooltip>}
                             >
                                 <Button 
                                     variant="outline-secondary" 
@@ -43,14 +45,14 @@ const ManagementPanel = ({
                                     onClick={onDeselectAll}
                                     className="btn-deselect-all"
                                 >
-                                    Deselect All
+                                    {t('common.deselectAll')}
                                 </Button>
                             </OverlayTrigger>
                         </ButtonGroup>
                     )}
                     {selectedCount > 0 && (
                         <Badge bg="primary" className="selected-count-badge ms-2">
-                            {selectedCount} selected
+                            {selectedCount} {t('common.selected')}
                         </Badge>
                     )}
                 </Col>
@@ -58,7 +60,7 @@ const ManagementPanel = ({
                     <ButtonGroup>
                         <OverlayTrigger 
                             placement="bottom" 
-                            overlay={<Tooltip>Add a new item</Tooltip>}
+                            overlay={<Tooltip>{t('posts.addPost')}</Tooltip>}
                         >
                             <Button 
                                 variant="success" 
@@ -66,7 +68,7 @@ const ManagementPanel = ({
                                 onClick={onAdd}
                                 className="btn-add"
                             >
-                                + Add New
+                                + {t('common.add')}
                             </Button>
                         </OverlayTrigger>
                         {canEdit && (
@@ -74,7 +76,7 @@ const ManagementPanel = ({
                                 placement="bottom" 
                                 overlay={
                                     <Tooltip>
-                                        {selectedCount === 1 ? "Edit selected item" : "Select exactly one item to edit"}
+                                        {selectedCount === 1 ? t('posts.editPost') : t('posts.editPost')}
                                     </Tooltip>
                                 }
                             >
@@ -85,7 +87,7 @@ const ManagementPanel = ({
                                     disabled={selectedCount !== 1}
                                     className="btn-edit"
                                 >
-                                    Edit
+                                    {t('common.edit')}
                                 </Button>
                             </OverlayTrigger>
                         )}
@@ -94,7 +96,7 @@ const ManagementPanel = ({
                                 placement="bottom" 
                                 overlay={
                                     <Tooltip>
-                                        {selectedCount > 0 ? `Delete ${selectedCount} selected item(s)` : "Select items to delete"}
+                                        {selectedCount > 0 ? t('posts.deletePost') : t('posts.deletePost')}
                                     </Tooltip>
                                 }
                             >
@@ -105,7 +107,7 @@ const ManagementPanel = ({
                                     disabled={selectedCount === 0}
                                     className="btn-delete"
                                 >
-                                    Delete ({selectedCount})
+                                    {t('common.delete')} ({selectedCount})
                                 </Button>
                             </OverlayTrigger>
                         )}

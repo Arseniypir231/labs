@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { fetchPosts, addPost, updatePost, deletePost, clearError } from '../store/slices/postsSlice';
 import { openModal, closeModal } from '../store/slices/uiStateSlice';
@@ -11,6 +12,7 @@ import InstagramWidget from '../components/InstagramWidget';
 import PostDetailModal from '../components/PostDetailModal';
 import PostFormModal from '../components/PostFormModal';
 import ManagementPanel from '../components/ManagementPanel';
+import FilterSortPanel from '../components/FilterSortPanel';
 import heroData from '../data/hero.json';
 import authorData from '../data/author.json';
 import featuredPostsData from '../data/featuredPosts.json';
@@ -20,6 +22,7 @@ import tagsData from '../data/tags.json';
 import instagramData from '../data/instagram.json';
 
 const Home = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const { posts, loading, error, validationErrors } = useAppSelector((state) => state.posts);
     const { modalOpen, modalType, selectedItemId } = useAppSelector((state) => state.uiState);
@@ -35,6 +38,71 @@ const Home = () => {
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [editingPost, setEditingPost] = useState(null);
     const [selectedPosts, setSelectedPosts] = useState(new Set());
+    const [filters, setFilters] = useState({
+        category: 'all',
+        author: 'all',
+        searchQuery: ''
+    });
+    const [sortConfig, setSortConfig] = useState({
+        sortBy: 'date',
+        sortOrder: 'desc'
+    });
+    
+    // Фильтрация и сортировка постов
+    const filteredAndSortedPosts = useMemo(() => {
+        let filtered = [...posts];
+        
+        // Применяем фильтры
+        if (filters.category !== 'all') {
+            filtered = filtered.filter(post => post.category === filters.category);
+        }
+        if (filters.author !== 'all') {
+            filtered = filtered.filter(post => post.author === filters.author);
+        }
+        if (filters.searchQuery) {
+            const query = filters.searchQuery.toLowerCase();
+            filtered = filtered.filter(post => 
+                post.title?.toLowerCase().includes(query) ||
+                post.description?.toLowerCase().includes(query) ||
+                post.category?.toLowerCase().includes(query)
+            );
+        }
+        
+        // Применяем сортировку
+        filtered.sort((a, b) => {
+            let aValue, bValue;
+            
+            switch (sortConfig.sortBy) {
+                case 'date':
+                    aValue = new Date(a.date || 0);
+                    bValue = new Date(b.date || 0);
+                    break;
+                case 'title':
+                    aValue = (a.title || '').toLowerCase();
+                    bValue = (b.title || '').toLowerCase();
+                    break;
+                case 'author':
+                    aValue = (a.author || '').toLowerCase();
+                    bValue = (b.author || '').toLowerCase();
+                    break;
+                case 'category':
+                    aValue = (a.category || '').toLowerCase();
+                    bValue = (b.category || '').toLowerCase();
+                    break;
+                default:
+                    aValue = a.title || '';
+                    bValue = b.title || '';
+            }
+            
+            if (sortConfig.sortOrder === 'asc') {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return aValue < bValue ? 1 : -1;
+            }
+        });
+        
+        return filtered;
+    }, [posts, filters, sortConfig]);
 
     useEffect(() => {
         // Загрузка постов из Redux
@@ -60,6 +128,14 @@ const Home = () => {
             dispatch(clearError());
         }
     }, [error, validationErrors, dispatch]);
+    
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+    };
+    
+    const handleSortChange = (newSortConfig) => {
+        setSortConfig(newSortConfig);
+    };
 
     const handlePostClick = (post) => {
         if (selectedPosts.size === 0) {
@@ -112,12 +188,12 @@ const Home = () => {
 
     const handleDelete = () => {
         const count = selectedPosts.size;
-        if (count > 0 && window.confirm(`Delete ${count} post(s)?`)) {
+        if (count > 0 && window.confirm(t('posts.deleteConfirm', { count }))) {
             selectedPosts.forEach(postId => {
                 dispatch(deletePost(postId));
             });
             setSelectedPosts(new Set());
-            toast.success(`Deleted ${count} post(s)`);
+            toast.success(t('posts.postDeleted'));
         }
     };
 
@@ -126,11 +202,11 @@ const Home = () => {
             if (postId) {
                 // Редактирование
                 await dispatch(updatePost({ id: postId, postData })).unwrap();
-                toast.success('Post updated successfully');
+                toast.success(t('posts.postUpdated'));
             } else {
                 // Добавление
                 await dispatch(addPost(postData)).unwrap();
-                toast.success('Post added successfully');
+                toast.success(t('posts.postAdded'));
             }
             setIsFormModalOpen(false);
             setEditingPost(null);
@@ -140,7 +216,7 @@ const Home = () => {
     };
 
     if (!hero || !author || !instagram) {
-        return <div>Loading...</div>;
+        return <div>{t('common.loading')}</div>;
     }
 
     const isModalOpen = modalOpen && modalType === 'post';
@@ -153,12 +229,16 @@ const Home = () => {
                     {loading && (
                         <div className="text-center my-3">
                             <div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
+                                <span className="visually-hidden">{t('common.loading')}</span>
                             </div>
                         </div>
                     )}
                     <div className="row g-4">
                         <div className="col-12 col-lg-8">
+                            <FilterSortPanel
+                                onFilterChange={handleFilterChange}
+                                onSortChange={handleSortChange}
+                            />
                             <ManagementPanel
                                 selectedCount={selectedPosts.size}
                                 onAdd={handleAdd}
@@ -171,7 +251,7 @@ const Home = () => {
                                 canSelectAll={true}
                             />
                             <PostsSection 
-                                posts={posts} 
+                                posts={filteredAndSortedPosts} 
                                 onPostClick={handlePostClick}
                                 selectedPosts={selectedPosts}
                                 onPostSelect={handlePostSelect}
