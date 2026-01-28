@@ -236,7 +236,14 @@ function SortableShipmentsList({ shipments, onViewDetails, onEdit, onDelete, can
 
   const sortedShipments = items
     .map(id => shipments.find(s => s.id === id))
-    .filter(Boolean);
+    .filter(Boolean)
+    .sort((a, b) => {
+      // Сортировка по displayOrder, если доступно
+      if (a.displayOrder !== undefined && b.displayOrder !== undefined) {
+        return a.displayOrder - b.displayOrder;
+      }
+      return 0;
+    });
 
   return (
     <DndContext
