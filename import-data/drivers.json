@@ -1,0 +1,322 @@
+[
+  {
+    "firstName": "Иван",
+    "lastName": "Иванов",
+    "phone": "+79123456789",
+    "email": "ivan.ivanov@example.com",
+    "licenseNumber": "77АВ123456",
+    "licenseCategory": ["C", "CE"],
+    "experience": 5,
+    "status": "available",
+    "hireDate": "2020-01-15T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Ленина, 1",
+      "zipCode": "101000"
+    }
+  },
+  {
+    "firstName": "Петр",
+    "lastName": "Петров",
+    "phone": "+79123456790",
+    "email": "petr.petrov@example.com",
+    "licenseNumber": "77БГ234567",
+    "licenseCategory": ["C", "CE", "D"],
+    "experience": 8,
+    "status": "on_delivery",
+    "hireDate": "2018-03-20T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "пр. Мира, 25",
+      "zipCode": "129090"
+    }
+  },
+  {
+    "firstName": "Сергей",
+    "lastName": "Сергеев",
+    "phone": "+79123456791",
+    "email": "sergey.sergeev@example.com",
+    "licenseNumber": "77ВД345678",
+    "licenseCategory": ["C"],
+    "experience": 3,
+    "status": "available",
+    "hireDate": "2022-06-10T00:00:00.000Z",
+    "address": {
+      "city": "Санкт-Петербург",
+      "street": "Невский пр., 50",
+      "zipCode": "191186"
+    }
+  },
+  {
+    "firstName": "Александр",
+    "lastName": "Александров",
+    "phone": "+79123456792",
+    "email": "alex.aleksandrov@example.com",
+    "licenseNumber": "77ГЕ456789",
+    "licenseCategory": ["C", "CE"],
+    "experience": 12,
+    "status": "available",
+    "hireDate": "2015-09-05T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Тверская, 10",
+      "zipCode": "125009"
+    }
+  },
+  {
+    "firstName": "Дмитрий",
+    "lastName": "Дмитриев",
+    "phone": "+79123456793",
+    "email": "dmitry.dmitriev@example.com",
+    "licenseNumber": "77ДЖ567890",
+    "licenseCategory": ["C"],
+    "experience": 4,
+    "status": "on_delivery",
+    "hireDate": "2021-02-14T00:00:00.000Z",
+    "address": {
+      "city": "Казань",
+      "street": "ул. Баумана, 58",
+      "zipCode": "420111"
+    }
+  },
+  {
+    "firstName": "Андрей",
+    "lastName": "Андреев",
+    "phone": "+79123456794",
+    "email": "andrey.andreev@example.com",
+    "licenseNumber": "77ЕЗ678901",
+    "licenseCategory": ["C", "CE", "D"],
+    "experience": 15,
+    "status": "available",
+    "hireDate": "2012-11-30T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Арбат, 20",
+      "zipCode": "119002"
+    }
+  },
+  {
+    "firstName": "Михаил",
+    "lastName": "Михайлов",
+    "phone": "+79123456795",
+    "email": "mikhail.mikhailov@example.com",
+    "licenseNumber": "77ЖИ789012",
+    "licenseCategory": ["C"],
+    "experience": 6,
+    "status": "vacation",
+    "hireDate": "2019-07-22T00:00:00.000Z",
+    "address": {
+      "city": "Новосибирск",
+      "street": "Красный пр., 30",
+      "zipCode": "630091"
+    }
+  },
+  {
+    "firstName": "Алексей",
+    "lastName": "Алексеев",
+    "phone": "+79123456796",
+    "email": "alexey.alekseev@example.com",
+    "licenseNumber": "77ЗК890123",
+    "licenseCategory": ["C", "CE"],
+    "experience": 7,
+    "status": "available",
+    "hireDate": "2018-04-18T00:00:00.000Z",
+    "address": {
+      "city": "Екатеринбург",
+      "street": "пр. Ленина, 50",
+      "zipCode": "620075"
+    }
+  },
+  {
+    "firstName": "Владимир",
+    "lastName": "Владимиров",
+    "phone": "+79123456797",
+    "email": "vladimir.vladimirov@example.com",
+    "licenseNumber": "77ИЛ901234",
+    "licenseCategory": ["C"],
+    "experience": 2,
+    "status": "available",
+    "hireDate": "2023-01-10T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Садовая, 15",
+      "zipCode": "115035"
+    }
+  },
+  {
+    "firstName": "Николай",
+    "lastName": "Николаев",
+    "phone": "+79123456798",
+    "email": "nikolay.nikolaev@example.com",
+    "licenseNumber": "77КМ012345",
+    "licenseCategory": ["C", "CE", "D", "DE"],
+    "experience": 20,
+    "status": "available",
+    "hireDate": "2008-05-12T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Пушкина, 8",
+      "zipCode": "105062"
+    }
+  },
+  {
+    "firstName": "Олег",
+    "lastName": "Олегов",
+    "phone": "+79123456799",
+    "email": "oleg.olegov@example.com",
+    "licenseNumber": "77ЛН123456",
+    "licenseCategory": ["C"],
+    "experience": 4,
+    "status": "sick_leave",
+    "hireDate": "2021-08-25T00:00:00.000Z",
+    "address": {
+      "city": "Ростов-на-Дону",
+      "street": "ул. Большая Садовая, 100",
+      "zipCode": "344006"
+    }
+  },
+  {
+    "firstName": "Роман",
+    "lastName": "Романов",
+    "phone": "+79123456800",
+    "email": "roman.romanov@example.com",
+    "licenseNumber": "77МО234567",
+    "licenseCategory": ["C", "CE"],
+    "experience": 9,
+    "status": "available",
+    "hireDate": "2017-03-15T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Кутузовский пр., 12",
+      "zipCode": "121248"
+    }
+  },
+  {
+    "firstName": "Юрий",
+    "lastName": "Юрьев",
+    "phone": "+79123456801",
+    "email": "yury.yuriev@example.com",
+    "licenseNumber": "77НП345678",
+    "licenseCategory": ["C"],
+    "experience": 5,
+    "status": "on_delivery",
+    "hireDate": "2020-09-08T00:00:00.000Z",
+    "address": {
+      "city": "Самара",
+      "street": "ул. Московское ш., 18",
+      "zipCode": "443086"
+    }
+  },
+  {
+    "firstName": "Евгений",
+    "lastName": "Евгеньев",
+    "phone": "+79123456802",
+    "email": "evgeny.evgeniev@example.com",
+    "licenseNumber": "77ПР456789",
+    "licenseCategory": ["C", "CE"],
+    "experience": 11,
+    "status": "available",
+    "hireDate": "2016-06-20T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Ломоносовский пр., 27",
+      "zipCode": "119991"
+    }
+  },
+  {
+    "firstName": "Максим",
+    "lastName": "Максимов",
+    "phone": "+79123456803",
+    "email": "maxim.maximov@example.com",
+    "licenseNumber": "77РС567890",
+    "licenseCategory": ["C"],
+    "experience": 3,
+    "status": "available",
+    "hireDate": "2022-11-12T00:00:00.000Z",
+    "address": {
+      "city": "Воронеж",
+      "street": "пр. Революции, 33",
+      "zipCode": "394036"
+    }
+  },
+  {
+    "firstName": "Артем",
+    "lastName": "Артемов",
+    "phone": "+79123456804",
+    "email": "artem.artemov@example.com",
+    "licenseNumber": "77СТ678901",
+    "licenseCategory": ["C", "CE"],
+    "experience": 6,
+    "status": "available",
+    "hireDate": "2019-10-05T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Профсоюзная, 15",
+      "zipCode": "117342"
+    }
+  },
+  {
+    "firstName": "Игорь",
+    "lastName": "Игорев",
+    "phone": "+79123456805",
+    "email": "igor.igorev@example.com",
+    "licenseNumber": "77ТУ789012",
+    "licenseCategory": ["C"],
+    "experience": 8,
+    "status": "available",
+    "hireDate": "2018-02-28T00:00:00.000Z",
+    "address": {
+      "city": "Краснодар",
+      "street": "ул. Красная, 122",
+      "zipCode": "350000"
+    }
+  },
+  {
+    "firstName": "Василий",
+    "lastName": "Васильев",
+    "phone": "+79123456806",
+    "email": "vasily.vasiliev@example.com",
+    "licenseNumber": "77УФ890123",
+    "licenseCategory": ["C", "CE", "D"],
+    "experience": 13,
+    "status": "available",
+    "hireDate": "2014-12-01T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Варшавское ш., 47",
+      "zipCode": "117105"
+    }
+  },
+  {
+    "firstName": "Константин",
+    "lastName": "Константинов",
+    "phone": "+79123456807",
+    "email": "konstantin.konstantinov@example.com",
+    "licenseNumber": "77ФХ901234",
+    "licenseCategory": ["C"],
+    "experience": 4,
+    "status": "on_delivery",
+    "hireDate": "2021-05-14T00:00:00.000Z",
+    "address": {
+      "city": "Нижний Новгород",
+      "street": "ул. Покровка, 7",
+      "zipCode": "603000"
+    }
+  },
+  {
+    "firstName": "Павел",
+    "lastName": "Павлов",
+    "phone": "+79123456808",
+    "email": "pavel.pavlov@example.com",
+    "licenseNumber": "77ХЦ012345",
+    "licenseCategory": ["C", "CE"],
+    "experience": 10,
+    "status": "available",
+    "hireDate": "2017-08-30T00:00:00.000Z",
+    "address": {
+      "city": "Москва",
+      "street": "ул. Смоленская, 10",
+      "zipCode": "121099"
+    }
+  }
+]

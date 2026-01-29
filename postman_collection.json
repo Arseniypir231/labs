@@ -1,0 +1,490 @@
+{
+  "info": {
+    "name": "Transport Logistics API",
+    "description": "Collection for testing Transport Logistics REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"А123БВ777\",\n  \"brand\": \"Камаз\",\n  \"model\": \"65117\",\n  \"year\": 2020,\n  \"vehicleType\": \"truck\",\n  \"capacity\": 10000,\n  \"capacityUnit\": \"kg\",\n  \"status\": \"available\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/vehicles",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles"]
+            }
+          }
+        },
+        {
+          "name": "Get All Vehicles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles with Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles?search=камаз",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "search", "value": "камаз"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles?vehicleType=truck&status=available&minCapacity=5000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "vehicleType", "value": "truck"},
+                {"key": "status", "value": "available"},
+                {"key": "minCapacity", "value": "5000"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicles with Sorting",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles?sort=year&order=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles"],
+              "query": [
+                {"key": "sort", "value": "year"},
+                {"key": "order", "value": "desc"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Vehicle by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Vehicle Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles/:id/exists",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Vehicle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"maintenance\",\n  \"mileage\": 50000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/vehicles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/api/vehicles/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "vehicles", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Drivers",
+      "item": [
+        {
+          "name": "Create Driver",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Иван\",\n  \"lastName\": \"Иванов\",\n  \"phone\": \"+79123456789\",\n  \"email\": \"ivan@example.com\",\n  \"licenseNumber\": \"77АВ123456\",\n  \"licenseCategory\": [\"C\", \"CE\"],\n  \"experience\": 5,\n  \"status\": \"available\",\n  \"hireDate\": \"2020-01-15\",\n  \"address\": {\n    \"city\": \"Москва\",\n    \"street\": \"Ленина, 1\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/drivers",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers"]
+            }
+          }
+        },
+        {
+          "name": "Get All Drivers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Drivers with Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers?search=иванов",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers"],
+              "query": [
+                {"key": "search", "value": "иванов"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Drivers with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers?status=available&licenseCategory=C&minExperience=3",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers"],
+              "query": [
+                {"key": "status", "value": "available"},
+                {"key": "licenseCategory", "value": "C"},
+                {"key": "minExperience", "value": "3"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Drivers with Sorting",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers?sort=experience&order=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers"],
+              "query": [
+                {"key": "sort", "value": "experience"},
+                {"key": "order", "value": "desc"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Driver by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Driver Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/drivers/:id/exists",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Driver",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"on_delivery\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/drivers/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Driver",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/api/drivers/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "drivers", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deliveries",
+      "item": [
+        {
+          "name": "Create Delivery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"driver\": \"{{driver_id}}\",\n  \"vehicle\": \"{{vehicle_id}}\",\n  \"origin\": {\n    \"address\": \"ул. Ленина, 1\",\n    \"city\": \"Москва\"\n  },\n  \"destination\": {\n    \"address\": \"пр. Мира, 10\",\n    \"city\": \"Санкт-Петербург\"\n  },\n  \"cargo\": {\n    \"description\": \"Мебель\",\n    \"weight\": 2000,\n    \"weightUnit\": \"kg\",\n    \"volume\": 15,\n    \"volumeUnit\": \"cubic_meters\"\n  },\n  \"scheduledDate\": \"2024-12-20T10:00:00Z\",\n  \"distance\": 700,\n  \"distanceUnit\": \"km\",\n  \"cost\": 50000,\n  \"currency\": \"RUB\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/deliveries",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries"]
+            }
+          }
+        },
+        {
+          "name": "Get All Deliveries",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries"],
+              "query": [
+                {"key": "page", "value": "1"},
+                {"key": "limit", "value": "10"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Deliveries with Search",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries?search=москва",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries"],
+              "query": [
+                {"key": "search", "value": "москва"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Deliveries with Filters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries?status=in_transit&originCity=Москва&minWeight=1000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries"],
+              "query": [
+                {"key": "status", "value": "in_transit"},
+                {"key": "originCity", "value": "Москва"},
+                {"key": "minWeight", "value": "1000"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Deliveries with Sorting",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries?sort=scheduledDate&order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries"],
+              "query": [
+                {"key": "sort", "value": "scheduledDate"},
+                {"key": "order", "value": "asc"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Delivery by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Check Delivery Exists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries/:id/exists",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries", ":id", "exists"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Delivery",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"delivered\",\n  \"actualEndDate\": \"2024-12-20T18:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/deliveries/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Delivery",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/api/deliveries/:id",
+              "host": ["{{base_url}}"],
+              "path": ["api", "deliveries", ":id"],
+              "variable": [
+                {"key": "id", "value": ""}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": ["{{base_url}}"],
+          "path": ["api", "health"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "vehicle_id",
+      "value": ""
+    },
+    {
+      "key": "driver_id",
+      "value": ""
+    }
+  ]
+}
