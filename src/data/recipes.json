@@ -34,5 +34,29 @@
     "ingredients": ["flour", "eggs", "salt", "water"],
     "prepTime": "45 min",
     "cookTime": "10 min"
+  },
+  {
+    "id": 4,
+    "title": "Creamy Pumpkin Soup",
+    "image": "/assets/post3.3.png",
+    "category": "Soup",
+    "date": "October 10, 2019",
+    "author": "Kate Willems",
+    "description": "A smooth and comforting pumpkin soup that is perfect for chilly evenings.",
+    "ingredients": ["pumpkin", "onion", "garlic", "vegetable broth", "cream"],
+    "prepTime": "20 min",
+    "cookTime": "30 min"
+  },
+  {
+    "id": 5,
+    "title": "Berry Breakfast Smoothie",
+    "image": "/assets/post3.4.png",
+    "category": "Drink",
+    "date": "June 2, 2019",
+    "author": "Kate Willems",
+    "description": "A quick and healthy smoothie packed with berries and protein for a busy morning.",
+    "ingredients": ["mixed berries", "banana", "yogurt", "milk", "honey"],
+    "prepTime": "10 min",
+    "cookTime": "0 min"
   }
 ]

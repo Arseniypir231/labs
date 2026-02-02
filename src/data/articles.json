@@ -28,5 +28,55 @@
     "author": "Rickie Baroch",
     "content": "Starting your photography journey? Here are essential tips and techniques to help you capture stunning images from day one.",
     "comments": 15
+  },
+  {
+    "id": 4,
+    "title": "Designing a Cozy Home Workspace",
+    "image": "/assets/heroImage.png",
+    "category": "Interior",
+    "date": "June 7, 2019",
+    "author": "Rickie Baroch",
+    "content": "A comfortable and inspiring workspace boosts both productivity and creativity. We look at lighting, ergonomics and decor tricks that help you feel focused at home.",
+    "comments": 5
+  },
+  {
+    "id": 5,
+    "title": "City Photography: Capturing Urban Stories",
+    "image": "/assets/city_feature.png",
+    "category": "Photography",
+    "date": "May 28, 2019",
+    "author": "Rickie Baroch",
+    "content": "Busy streets, reflections in windows and late‑night neon all tell stories. Learn how to work with natural and artificial light to make your city shots stand out.",
+    "comments": 21
+  },
+  {
+    "id": 6,
+    "title": "Building a Capsule Wardrobe for Every Season",
+    "image": "/assets/jeans_feature.png",
+    "category": "Fashion",
+    "date": "April 15, 2019",
+    "author": "Rickie Baroch",
+    "content": "Capsule wardrobes reduce decision fatigue and save money. We break down how to choose versatile pieces and combine them for work, weekends and travel.",
+    "comments": 9
+  },
+  {
+    "id": 7,
+    "title": "Mindful Mornings: Routines That Actually Work",
+    "image": "/assets/photography_feature.png",
+    "category": "Lifestyle",
+    "date": "June 1, 2019",
+    "author": "Rickie Baroch",
+    "content": "From journaling to short walks, small rituals can completely change how you feel during the day. Here are morning habits that are realistic and sustainable.",
+    "comments": 17
+  },
+  {
+    "id": 8,
+    "title": "Planning Content for Your Instagram Grid",
+    "image": "/assets/instagram.png",
+    "category": "Social Media",
+    "date": "March 30, 2019",
+    "author": "Rickie Baroch",
+    "content": "A cohesive grid helps new visitors instantly understand your style. We cover color palettes, content pillars and simple tools to schedule posts ahead of time.",
+    "comments": 4
   }
 ]

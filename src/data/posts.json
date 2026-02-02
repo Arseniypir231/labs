@@ -3,31 +3,31 @@
     "image": "/assets/Post1.1.jpg",
     "alt": "post_1_1",
     "category": "TOURISM",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Hidden hiking trails you should visit this year",
+    "date": "June 3, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/Post1.2.png",
     "alt": "post_1_2",
     "category": "SPORT",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "5 simple workouts to stay fit without a gym",
+    "date": "June 4, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/Post1.3.png",
     "alt": "post_1_3",
     "category": "FASHION",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "How to build a timeless wardrobe on a budget",
+    "date": "June 5, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/Post1.4.png",
     "alt": "post_1_4",
     "category": "CLOTHES",
-    "title": "One of Saturn's largest rings may be newer than anyone",
+    "title": "Choosing the perfect jacket for mid‑season weather",
     "date": "June 6, 2019",
     "author": "Rickie Baroch"
   },
@@ -35,24 +35,24 @@
     "image": "/assets/Post1.5.png",
     "alt": "post_1_5",
     "category": "CLOTHES",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Denim trends that will never go out of style",
+    "date": "June 7, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/Post1.6.png",
     "alt": "post_1_6",
     "category": "FASHION",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Street style inspiration from the world’s biggest cities",
+    "date": "June 8, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/post_2.jpg",
     "alt": "post_2_img",
     "category": "SUMMER",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "How to plan the ultimate summer road trip",
+    "date": "June 9, 2019",
     "author": "Rickie Baroch",
     "comments": 6,
     "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem"
@@ -61,32 +61,50 @@
     "image": "/assets/post3.1.png",
     "alt": "post_3_1",
     "category": "AUTUMN",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Cozy autumn weekend ideas for the whole family",
+    "date": "September 21, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/post3.2.png",
     "alt": "post_3_2",
     "category": "CLOTHES",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Layering basics: staying warm without losing style",
+    "date": "October 2, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/post3.3.png",
     "alt": "post_3_3",
     "category": "SUMMER",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Packing list for a minimalist beach vacation",
+    "date": "July 15, 2019",
     "author": "Rickie Baroch"
   },
   {
     "image": "/assets/post3.4.png",
     "alt": "post_3_4",
     "category": "SUMMER",
-    "title": "One of Saturn's largest rings may be newer than anyone",
-    "date": "June 6, 2019",
+    "title": "Best sunglasses shapes for your face type",
+    "date": "August 1, 2019",
     "author": "Rickie Baroch"
+  },
+  {
+    "image": "/assets/jeans_feature.png",
+    "alt": "post_extra_1",
+    "category": "FASHION",
+    "title": "From skinny to wide‑leg: how jeans silhouettes changed",
+    "date": "May 28, 2019",
+    "author": "Rickie Baroch",
+    "comments": 3
+  },
+  {
+    "image": "/assets/city_feature.png",
+    "alt": "post_extra_2",
+    "category": "TOURISM",
+    "title": "48 hours in a new city: a guide for curious travelers",
+    "date": "April 18, 2019",
+    "author": "Rickie Baroch",
+    "comments": 9
   }
 ]
